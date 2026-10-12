@@ -521,7 +521,14 @@
   function boardSlug(line) { var s = line.trim(); if (!s) return ''; var m = s.match(/are\.na\/[^/\s]+\/([^/?#\s]+)/); return m ? m[1] : s.replace(/^\/+|\/+$/g, ''); }
   function renderBio() {
     var a = S.about, cr = a.cameraRoll || (a.cameraRoll = { every: 600, arena: '', imgs: [] });
-    cats.innerHTML = '<section class="cat"><h2>Bio</h2><div class="bio">' +
+    var site = S.site || {}, secs = site.sections || {};
+    cats.innerHTML = '<section class="cat"><h2>The site</h2><div class="bio">' +
+      '<span class="k mono">NAME</span><div><textarea class="raw" data-site="nameLines" rows="2" style="min-height:3.2em">' + esc((site.nameLines || []).join('\n')) + '</textarea><p class="note">One line per row, as it breaks top-right on every page.</p></div>' +
+      '<span class="k mono">UNDER IT</span><input type="text" class="raw" data-site="city" value="' + esc(site.city || '') + '" placeholder="Los Angeles">' +
+      '<span class="k mono">HOME PAGE</span><div><textarea class="raw" data-site="homeLines">' + esc((site.homeLines || []).join('\n\n')) + '</textarea><p class="note">The lines on the home page. A blank line between paragraphs.</p></div>' +
+      '<span class="k mono">SECTIONS</span><div class="lines">' + S.pillars.map(function (pl) { return '<div class="ln"><span class="mono">' + (pl.n ? pl.n + ' ' : '') + pl.id.toUpperCase() + '</span><input type="text" class="raw" data-section="' + pl.id + '" value="' + esc(secs[pl.id] || pl.name) + '"><span></span></div>'; }).join('') + '<p class="note">The names of the pages, in the title, the nav and the hub.</p></div>' +
+      '<span class="k mono">DOORS</span><div class="lines">' + (S.about.links || []).map(function (l, i) { return '<div class="ln"><span class="mono">' + esc(l.href).toUpperCase() + '</span><input type="text" class="raw" data-door="' + i + '" value="' + esc(l.t) + '"><span></span></div>'; }).join('') + '<p class="note">The two brackets on the home page and the bio sheet.</p></div>' +
+      '</div></section><section class="cat"><h2>Bio</h2><div class="bio">' +
       '<span class="k mono">THE WORDS</span><div><textarea class="raw" data-bio="paras" spellcheck="true">' + esc(a.paras.map(unkeep).join('\n\n')) + '</textarea><p class="note">One paragraph per block, a blank line between. The sheet sets everything in capitals; a word in braces keeps its own letters: {enc0re}.</p></div>' +
       '<span class="k mono">CONTACT</span><div class="lines" id="contact">' + a.contact.map(function (c, i) { return '<div class="ln"><input type="text" class="raw" data-ct="' + i + '" data-f="t" value="' + esc(c.t) + '" placeholder="LINE"><input type="text" class="raw" data-ct="' + i + '" data-f="href" value="' + esc(c.href || '') + '" placeholder="link (mailto:… or https://…), or blank"><button class="mono" data-ctdel="' + i + '"><span class="b">[</span> × <span class="b">]</span></button></div>'; }).join('') + '<div><button class="add mono" id="ctAdd"><span class="b">[</span> + LINE <span class="b">]</span></button></div></div>' +
       '<span class="k mono">PORTRAIT</span><div class="portrait">' + (a.portrait ? '<img src="' + esc(ST.urlOf(a.portrait) || a.portrait) + '" alt="">' : '') + '<div class="drop zone" id="portraitDrop" tabindex="0"><span class="mono">DROP A NEW PORTRAIT HERE — OR CLICK TO CHOOSE</span></div></div>' +
@@ -553,7 +560,18 @@
       if (k === 'camEvery') a.cameraRoll.every = Math.max(100, parseInt(inp.value, 10) || 600);
       ST.touch(k === 'arena' ? 'INSPIRATIONS BOARDS' : k === 'paras' ? 'BIO · WORDS' : 'BIO · CAMERA ROLL'); return;
     }
-    if (inp.matches('[data-ct]')) { var c = a.contact[+inp.getAttribute('data-ct')]; if (!c) return; var f = inp.getAttribute('data-f'); if (f === 'href') { if (inp.value.trim()) c.href = inp.value.trim(); else delete c.href; } else c.t = inp.value; ST.touch('BIO · CONTACT'); }
+    if (inp.matches('[data-ct]')) { var c = a.contact[+inp.getAttribute('data-ct')]; if (!c) return; var f = inp.getAttribute('data-f'); if (f === 'href') { if (inp.value.trim()) c.href = inp.value.trim(); else delete c.href; } else c.t = inp.value; ST.touch('BIO · CONTACT'); return; }
+    /* the fixed words of the site */
+    var site = S.site;
+    if (inp.matches('[data-site]')) {
+      var sk = inp.getAttribute('data-site');
+      if (sk === 'nameLines') site.nameLines = inp.value.split('\n').map(function (t) { return t.trim(); }).filter(Boolean);
+      if (sk === 'city') site.city = inp.value.trim();
+      if (sk === 'homeLines') site.homeLines = inp.value.split(/\n\s*\n/).map(function (t) { return t.trim().replace(/\s*\n\s*/g, ' '); }).filter(Boolean);
+      ST.touch('SITE · ' + (sk === 'city' ? 'CITY' : sk === 'nameLines' ? 'NAME' : 'HOME LINES')); return;
+    }
+    if (inp.matches('[data-section]')) { var id = inp.getAttribute('data-section'), nm = inp.value.trim(); site.sections = site.sections || {}; if (nm) site.sections[id] = nm; S.pillars.forEach(function (pl) { if (pl.id === id && nm) pl.name = nm; }); ST.touch('SITE · SECTION NAMES'); tabsEl.innerHTML = tabsHtml(); Array.prototype.forEach.call(tabsEl.children, function (a) { a.classList.toggle('on', a.getAttribute('data-id') === cur.id); }); return; }
+    if (inp.matches('[data-door]')) { var l = S.about.links[+inp.getAttribute('data-door')]; if (l) { l.t = inp.value; ST.touch('SITE · DOORS'); } }
   });
   cats.addEventListener('click', function (e) { var b = e.target.closest('button[data-ctdel]'); if (!b) return; S.about.contact.splice(+b.getAttribute('data-ctdel'), 1); ST.touch('BIO · CONTACT'); renderBio(); });
 
@@ -583,11 +601,13 @@
     if (!cur.bio) { if (!states[cur.id]) states[cur.id] = fromBase(cur); load(cur); }
     Array.prototype.forEach.call(tabsEl.children, function (a) { a.classList.toggle('on', a.getAttribute('data-id') === cur.id); });
     var pg = S.pillars.filter(function (p) { return p.id === cur.id; })[0];
-    howEl.textContent = cur.how; back.href = pg ? pg.file : (cur.bio ? 'index.html#about' : 'index.html'); back.innerHTML = '[ ' + (cur.bio ? 'BIO SHEET' : cur.label.toUpperCase() + ' PAGE') + ' ]';
+    howEl.textContent = cur.how; back.href = pg ? pg.file : (cur.bio ? 'index.html#about' : 'index.html'); back.innerHTML = '[ ' + (cur.bio ? 'BIO SHEET' : labelOf(cur).toUpperCase() + ' PAGE') + ' ]';
     var placeLink = document.getElementById('placeLink'); placeLink.hidden = !pg; if (pg) placeLink.href = pg.file + '#place';
     render(); log('');
   }
-  tabsEl.innerHTML = sections.map(function (s) { return '<a href="#' + s.id + '" data-id="' + s.id + '"><span class="b">[</span> ' + s.label.toUpperCase() + ' <span class="b">]</span></a>'; }).join('');
+  function labelOf(sec) { var pl = S.pillars.filter(function (p) { return p.id === sec.id; })[0]; return pl ? (pl.n ? pl.n + ' ' : '') + pl.name : sec.label; }
+  function tabsHtml() { return sections.map(function (s) { return '<a href="#' + s.id + '" data-id="' + s.id + '"><span class="b">[</span> ' + labelOf(s).toUpperCase() + ' <span class="b">]</span></a>'; }).join(''); }
+  tabsEl.innerHTML = tabsHtml();
   window.addEventListener('hashchange', function () { open(location.hash.slice(1)); });
   drawConn(); drawState();
   open(location.hash.slice(1));

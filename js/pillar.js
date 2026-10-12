@@ -13,7 +13,7 @@
 
   /* title and nav from the structure */
   var ttl = document.querySelector('.ttl');
-  if (ttl) { ttl.innerHTML = (pillar.n ? '<span class="n">' + pillar.n + '</span>' : '') + '<span class="w">' + pillar.name + '</span>'; document.title = (pillar.n ? pillar.n + ' ' : '') + pillar.name + ' — Cameron Bunge'; }
+  if (ttl) { ttl.innerHTML = (pillar.n ? '<span class="n">' + pillar.n + '</span>' : '') + '<span class="w">' + pillar.name + '</span>'; document.title = (pillar.n ? pillar.n + ' ' : '') + pillar.name + ' — ' + (S.site && S.site.nameLines && S.site.nameLines.length ? S.site.nameLines.join(' ') : 'Cameron Bunge'); }
   var nav = document.getElementById('pillars');
   nav.innerHTML = [{ id: 'home', n: '', name: 'Home', file: 'index.html' }].concat(structure.pillars).filter(function (p) { return p.file !== pillar.file; }).map(function (p) {
     return '<a href="' + p.file + '"><span class="b">[</span> ' + (p.n ? p.n + ' ' : '') + p.name.toUpperCase() + ' <span class="b">]</span></a>';

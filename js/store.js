@@ -15,17 +15,29 @@
   /* ---- the content over SITE ---- */
   function overlay() {
     ['about', 'arena', 'projects', 'photo', 'home', 'homeHover'].forEach(function (k) { if (C[k] !== undefined) S[k] = C[k]; });
+    /* the fixed words: content over the site's defaults, field by field, and the section names onto the sections */
+    var site = S.site || (S.site = {}); if (C.site) Object.keys(C.site).forEach(function (k) { site[k] = C.site[k]; }); C.site = site;
+    var names = site.sections || {}; [S.pillars].concat(Object.keys(S.structures || {}).map(function (k) { return S.structures[k].pillars; })).forEach(function (list) { (list || []).forEach(function (p) { if (names[p.id]) p.name = names[p.id]; }); });
     C.state = C.state || {};
   }
   function fromSite() {   /* no content.js yet: the site's own data is the content */
-    return { v: 1, savedAt: '', about: S.about, arena: S.arena, projects: S.projects, photo: S.photo, home: S.home, homeHover: S.homeHover, state: {} };
+    return { v: 1, savedAt: '', about: S.about, arena: S.arena, projects: S.projects, photo: S.photo, home: S.home, homeHover: S.homeHover, site: S.site, state: {} };
+  }
+  /* the fixed words onto the page: the name top-right, the city under it, the lines on the home page */
+  function words() {
+    var site = S.site || {}, h1 = document.querySelector('.mark h1'), city = document.querySelector('.mark .under .city'), col = document.querySelector('.bioCol');
+    var escape = function (t) { return String(t == null ? '' : t).replace(/&/g, '&amp;').replace(/</g, '&lt;'); };
+    if (h1 && site.nameLines && site.nameLines.length) h1.innerHTML = site.nameLines.map(escape).join('<br>');
+    if (city && site.city != null) city.textContent = site.city;
+    if (col && site.homeLines) col.innerHTML = site.homeLines.map(function (l) { return '<p class="bio">' + escape(l) + '</p>'; }).join('');
+    if (site.nameLines && site.nameLines.length && /^(index\.html)?$/.test(location.pathname.split('/').pop())) document.title = site.nameLines.join(' ');
   }
   if (!C) C = fromSite();
   /* unpublished changes left in this browser come back, as long as nothing was published in between */
   var pending = null; try { pending = JSON.parse(localStorage.getItem(PEND) || 'null'); } catch (e) {}
   if (pending && pending.content && pending.base === loadedAt) { C = pending.content; changes = pending.changes || ['UNPUBLISHED CHANGES']; }
   else if (pending) { try { localStorage.removeItem(PEND); } catch (e) {} pending = null; }
-  overlay();
+  overlay(); words();
 
   /* ---- the token ---- */
   function token() { try { return localStorage.getItem(KEY) || ''; } catch (e) { return ''; } }
@@ -139,7 +151,7 @@
   window.SITE_STORE = { content: function () { return C; }, repo: REPO, token: token, setToken: setToken, canWrite: canWrite, verify: verify, tree: tree,
     get: get, set: set, touch: touch, changes: function () { return changes.slice(); }, dirty: function () { return changes.length > 0 || Object.keys(files).length > 0; },
     stage: stage, unstage: unstage, purge: purge, urlOf: urlOf, staged: staged, fileOf: function (p) { return files[p]; }, ready: ready,
-    publish: publish, status: function () { return status; }, onChange: function (f) { listeners.push(f); }, loadedAt: function () { return loadedAt; } };
+    publish: publish, status: function () { return status; }, onChange: function (f) { listeners.push(f); }, loadedAt: function () { return loadedAt; }, words: words };
 
   /* ---- the review strip: a PUBLISH button on every page for the writer, visible even with the strip folded ---- */
   function strip() {

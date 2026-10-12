@@ -25,6 +25,14 @@ window.SITE = {
       { t: 'LOS ANGELES' }
     ]
   },
+  /* the fixed words of the site — editable in the hub's Bio tab (10/12): the name (one line per entry), the city under it, the two lines on
+     the home page, the section names. The hub writes them to content.js; store.js lays them over the pages. */
+  site: {
+    nameLines: ['Cameron', 'Bunge'], city: 'Los Angeles',
+    homeLines: ['Cameron works at the intersection of creative, content and strategy — building brands across the music, fashion and media industries.',
+                'His work spans creative direction, photography, video, editorial, social media, brand development, product development and partnerships.'],
+    sections: { brand: 'Brand', campaign: 'Campaign', photo: 'Photo + Video', product: 'Product', archive: 'Archive' }
+  },
   /* the working sections every project is tagged with (pillars: [...]) — the sort tool and the tags use these */
   pillars: [
     { id: 'brand',    n: '01', name: 'Brand',         file: 'brand.html' },
