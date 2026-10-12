@@ -69,3 +69,15 @@ body.about-open { overflow: hidden; }
   .about-wall .cells { height: auto; flex-wrap: wrap; overflow: visible; cursor: auto; }
   .about-wall .cells a { height: auto; width: calc((100% - 4px) / 3); }
 }
+
+/* the review strip is the editor's: the artifact preview, or a browser holding the GitHub token (store.js; this sheet is on every page, so the rule lives here). Visitors never see it. */
+html:not(.editor) .switch { display: none !important; }
+/* PUBLISH (store.js): on every page, visible even with the strip folded; lit while there is something to publish */
+.switch .pub { color: var(--muted); border: 1px solid var(--pale); }
+.switch .pub.on { color: var(--ink); border-color: var(--ink); }
+.switch .pub:disabled { cursor: default; }
+.switch .pub .b { color: var(--pale); }
+.switch .pub.on .b { color: var(--muted); }
+.switch .pubnote { color: var(--muted); max-width: 46ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.switch .pubnote.on { color: var(--ink); }
+.switch .pubnote[hidden] { display: none; }

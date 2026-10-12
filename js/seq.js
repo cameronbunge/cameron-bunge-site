@@ -114,14 +114,14 @@
   }
   function remember(c) { var k = c.getAttribute('data-src'), v = layout[k] || {}; ['x', 'y', 'w'].forEach(function (p) { var s = c.style.getPropertyValue('--' + p); if (s) v[p] = s; }); layout[k] = v; }
   function save() {
-    if (!db) { note('NOT SAVED: OPEN FROM YOUR OWN ACCOUNT'); return; }
+    if (!db) { note('NOT SAVED: CONNECT GITHUB IN THE HUB'); return; }
     note('…'); if (saveTimer) clearTimeout(saveTimer);
-    saveTimer = setTimeout(function () { db.doc('layout/photo').set({ pics: layout, tune: tune, savedAt: new Date().toISOString() }).then(function () { note('PLACED · SAVED', true); }, function () { note('NOT SAVED'); }); }, 500);
+    saveTimer = setTimeout(function () { db.doc('layout/photo').set({ pics: layout, tune: tune, savedAt: new Date().toISOString() }).then(function () { note('PLACED · PUBLISH TO MAKE IT LIVE', true); }, function () { note('NOT SAVED'); }); }, 500);
   }
   function placeable(c) {
     var sx, sy, ox, oy, ow, moved = false, active = false, sizing = false, el = null, fr = null, wasPlaced = false;
     c.addEventListener('pointerdown', function (e) {
-      if (!desktop() || e.button !== 0 || window.SITE_LIVE) return;
+      if (!desktop() || e.button !== 0 || !(window.SITE_STORE && SITE_STORE.canWrite())) return;   /* placing: the writer only */
       el = c.closest('.fr'); wasPlaced = el.classList.contains('placed');
       if (!wasPlaced) freeze(el);   /* the first touch fixes every picture of the frame where it stands */
       fr = el.getBoundingClientRect();
@@ -251,7 +251,7 @@
   });
 
   build(); show(0);
-  window.claude && claude.use('db').then(function (d) {
+  window.SITE_DB && SITE_DB.then(function (d) {
     db = d; if (!db) { note('PLACING NOT SAVED HERE (READ-ONLY)'); return; }
     return Promise.all([db.doc('sort/photo').get(), db.doc('sort/removed').get()]).then(function (r) {
       var v = r[0].exists ? r[0].data() : null;
@@ -263,7 +263,7 @@
       var v = snap.exists ? snap.data() : null; if (v && v.pics) layout = v.pics;
       if (v && v.tune) tune = v.tune;
       build(); show(Math.min(cur, els.length - 1));
-      note(Object.keys(layout).length ? 'PLACED · SAVED ' + new Date(v.savedAt).toLocaleString() : 'DRAG A PICTURE TO PLACE IT · ITS CORNER TO SIZE IT', true);
+      note(Object.keys(layout).length ? 'PLACED ' + new Date(v.savedAt).toLocaleString() : 'DRAG A PICTURE TO PLACE IT · ITS CORNER TO SIZE IT', true);
     });
   }).catch(function () { note('PLACING NOT SAVED HERE'); });
 })();

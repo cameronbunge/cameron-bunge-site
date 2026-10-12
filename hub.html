@@ -1,0 +1,587 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Hub — Cameron Bunge</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wdth,wght@62..125,100..900&family=Space+Mono:wght@400;700&display=swap">
+<style>
+  /* THE HUB — the site's back room, on the site itself. One tab per section: drop pictures and films in, arrange them, write the words,
+     add projects; then PUBLISH sends everything to the repository the site is served from (store.js), live within a minute or so.
+     Nothing here needs Claude. Changes wait in this browser until published, so a closed tab loses nothing. */
+  :root { --bg: #fff; --ink: #111; --muted: #8a8a8a; --pale: #c9c9c9; --cell: #f0f0f0; --display: "Archivo", Helvetica, Arial, sans-serif; --black: "Archivo Black", "Arial Black", Helvetica, Arial, sans-serif; --mono: "Space Mono", monospace; --gutter: clamp(16px, 1.8vw, 32px); color-scheme: light; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--display); font-size: 13px; line-height: 1.4; -webkit-font-smoothing: antialiased; padding: 14px var(--gutter) 160px; }
+  a { color: inherit; text-decoration: none; }
+  button { all: unset; cursor: pointer; }
+  button:disabled { cursor: default; opacity: .45; }
+  input, textarea { font: inherit; color: inherit; }
+  .mono { font-family: var(--mono); font-weight: 700; font-size: 10.5px; letter-spacing: 0.02em; }
+  .b { color: var(--muted); }
+  header { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; margin-bottom: 22px; }
+  h1 { margin: 0; font-family: var(--black); font-weight: 400; font-size: clamp(22px, 2.6vw, 40px); letter-spacing: -0.045em; line-height: 0.9; text-transform: uppercase; }
+  .how { max-width: 60ch; font-size: 13px; margin: 10px 0 0; }
+  .state { text-align: right; flex: 0 0 auto; display: grid; gap: 6px; justify-items: end; }
+  .state .mono { color: var(--muted); }
+  .state .mono.on { color: var(--ink); }
+  .state button:hover, .state a:hover, .tabs a:hover, .tools button:hover, .add:hover, .lnk:hover { text-decoration: underline; text-underline-offset: 3px; }
+  #publish { color: var(--muted); border: 1px solid var(--pale); padding: 5px 9px; }
+  #publish.on { color: var(--ink); border-color: var(--ink); }
+  #publish.on .b { color: var(--muted); }
+  .pubrow { display: flex; align-items: center; gap: 10px; }
+  .panel { border: 1px solid var(--ink); padding: 12px 14px; margin: 0 0 22px; max-width: 76ch; }
+  .panel p { margin: 0 0 8px; }
+  .panel input[type="password"], .panel input[type="text"] { all: unset; font-family: var(--mono); font-size: 11px; border-bottom: 1px solid var(--pale); min-width: 36ch; padding: 2px 0; }
+  .panel input:focus { border-bottom-color: var(--ink); }
+  .panel .row { display: flex; gap: 14px; align-items: baseline; flex-wrap: wrap; }
+  .tabs { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 30px; }
+  .tabs a { padding: 2px 0; }
+  .tabs a.on { text-decoration: underline; text-underline-offset: 4px; }
+
+  .cat { margin-bottom: 44px; }
+  .cat h2 { margin: 0 0 10px; font-family: var(--black); font-weight: 400; font-size: clamp(20px, 2.9vw, 42px); letter-spacing: -0.04em; line-height: 1.08; text-transform: uppercase; }
+  .cat h2 input { all: unset; font: inherit; letter-spacing: inherit; text-transform: inherit; min-width: 8ch; border-bottom: 1px solid transparent; }
+  .cat h2 input:hover, .cat h2 input:focus { border-bottom-color: var(--pale); }
+  .cathead { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; margin-bottom: 10px; }
+  .cathead .meta input { all: unset; font-family: var(--mono); font-weight: 700; font-size: 10.5px; letter-spacing: 0.02em; min-width: 20ch; border-bottom: 1px solid var(--pale); }
+  .cathead .tools { margin-left: auto; }
+  .zone { display: flex; flex-wrap: wrap; gap: 6px; min-height: 86px; padding: 6px; border: 1px solid var(--pale); transition: border-color .15s, background .15s; }
+  .zone.over { border-color: var(--ink); background: #fafafa; }
+  .zone.filedrop { border-style: solid; border-color: var(--ink); background: #fafafa; }
+  .pool .zone { border-style: dashed; }
+  .lbl { display: flex; align-items: baseline; gap: 12px; margin: 14px 0 6px; flex-wrap: wrap; }
+  .lbl .mono { color: var(--muted); }
+  .grp .lbl input.name { all: unset; font-family: var(--black); font-weight: 400; font-size: 18px; letter-spacing: -0.03em; text-transform: uppercase; min-width: 12ch; border-bottom: 1px solid var(--pale); padding-bottom: 2px; }
+  .grp .lbl input.name.lc { text-transform: none; }
+  .grp .lbl input::placeholder { color: var(--pale); }
+  .grp .lbl input:focus { border-bottom-color: var(--ink); }
+  .grp .lbl .tools { margin-left: auto; display: flex; gap: 10px; flex-wrap: wrap; }
+  .th { height: 72px; min-width: 40px; flex: 0 0 auto; cursor: grab; position: relative; background: var(--cell); outline: 1px solid transparent; }
+  .th img, .th video { display: block; height: 100%; width: auto; pointer-events: none; }
+  .th video { aspect-ratio: auto 3 / 4; }
+  .th.new::after { content: "NEW"; position: absolute; left: 2px; bottom: 2px; font-family: var(--mono); font-weight: 700; font-size: 8px; background: var(--ink); color: var(--bg); padding: 1px 3px; }
+  .th.drag { opacity: .35; }
+  .th.before::before, .th.after::after { content: ""; position: absolute; top: 0; bottom: 0; width: 2px; background: var(--ink); }
+  .th.before::before { left: -4px; } .th.after::after { right: -4px; }
+  .add { display: inline-block; margin-top: 10px; }
+  .add .b { color: var(--muted); }
+  .frames { display: flex; flex-wrap: wrap; gap: 8px 10px; align-items: flex-start; padding-left: 14px; border-left: 1px solid var(--pale); }
+  .frm { flex: 0 1 auto; }
+  .frm .flbl { display: flex; justify-content: space-between; gap: 14px; color: var(--muted); margin: 0 0 4px; }
+  .frm .flbl button:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .frm .flbl .b { color: var(--pale); }
+  .frm .zone { min-width: 120px; }
+  .frames .frm .zone { flex-wrap: nowrap; }
+  .add.fadd { margin-top: 0; align-self: center; }
+  .th .x { position: absolute; right: 2px; top: 2px; width: 16px; height: 16px; line-height: 16px; text-align: center; background: #fff; color: var(--ink); font-size: 12px; opacity: 0; }
+  .th:hover .x { opacity: 1; }
+  .lbl .colsw { color: var(--muted); }
+  .lbl .colsw input { all: unset; width: 3ch; border-bottom: 1px solid var(--pale); text-align: right; font-family: var(--mono); font-weight: 700; font-size: 10.5px; color: var(--ink); }
+  .zone.cols { display: grid; grid-template-columns: repeat(var(--cols, 3), max-content); justify-content: start; }
+  /* the words of a project */
+  .txt { display: grid; grid-template-columns: 12ch 1fr; gap: 8px 14px; align-items: start; max-width: 90ch; margin: 10px 0 4px; padding: 12px 14px; border: 1px dashed var(--pale); }
+  .txt[hidden] { display: none; }
+  .txt .k { color: var(--muted); padding-top: 3px; }
+  .txt input[type="text"], .txt textarea { all: unset; display: block; width: 100%; font-family: var(--display); font-size: 13px; line-height: 1.45; border-bottom: 1px solid var(--pale); padding: 2px 0 4px; white-space: pre-wrap; }
+  .txt textarea { min-height: 3.4em; resize: vertical; }
+  .txt input:focus, .txt textarea:focus { border-bottom-color: var(--ink); }
+  .txt .checks { display: flex; gap: 14px; flex-wrap: wrap; }
+  .txt label { display: inline-flex; gap: 6px; align-items: center; }
+  .txt input[type="checkbox"] { accent-color: var(--ink); margin: 0; }
+  .txt .danger { grid-column: 2; }
+  .newform { display: inline-flex; gap: 10px; align-items: baseline; margin-top: 10px; }
+  .newform input { all: unset; font-family: var(--black); font-size: 18px; letter-spacing: -0.03em; text-transform: uppercase; border-bottom: 1px solid var(--ink); min-width: 14ch; }
+  /* bio */
+  .bio { max-width: 90ch; display: grid; grid-template-columns: 14ch 1fr; gap: 12px 16px; align-items: start; }
+  .bio .k { color: var(--muted); padding-top: 3px; }
+  .bio textarea, .bio input[type="text"] { all: unset; display: block; width: 100%; font-family: var(--display); font-size: 13px; line-height: 1.5; border-bottom: 1px solid var(--pale); padding: 2px 0 4px; white-space: pre-wrap; text-transform: uppercase; }
+  .bio textarea.raw, .bio input.raw { text-transform: none; }
+  .bio textarea { min-height: 6em; resize: vertical; }
+  .bio textarea:focus, .bio input:focus { border-bottom-color: var(--ink); }
+  .bio .note { color: var(--muted); font-size: 12px; margin: 4px 0 0; }
+  .bio .lines { display: grid; gap: 6px; }
+  .bio .lines .ln { display: grid; grid-template-columns: 1fr 1fr auto; gap: 10px; align-items: baseline; }
+  .bio .portrait { display: flex; gap: 14px; align-items: flex-start; }
+  .bio .portrait img { width: 110px; height: auto; background: var(--cell); }
+  .drop { min-height: 72px; border: 1px dashed var(--ink); display: grid; place-items: center; cursor: pointer; color: var(--muted); padding: 10px; text-align: center; }
+  .drop.over { background: #fafafa; }
+  .drop:hover { color: var(--ink); }
+  .restore, .lnk { font-family: var(--mono); font-weight: 700; font-size: 10.5px; color: var(--muted); margin: 0 10px 0 2px; align-self: center; }
+  .restore:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+  .empty { color: var(--pale); align-self: center; padding-left: 6px; }
+  details.else { margin-top: 36px; }
+  details.else summary { cursor: pointer; list-style: none; color: var(--muted); }
+  details.else summary::-webkit-details-marker { display: none; }
+  details.else summary:hover { color: var(--ink); }
+  details.else .zone { margin-top: 8px; border-style: dotted; }
+  details.else .src { width: 100%; margin: 8px 0 2px; color: var(--muted); }
+  details.else .th.gone img, details.else .th.gone video { opacity: .5; }
+  .log { position: fixed; left: var(--gutter); right: var(--gutter); bottom: 0; background: var(--bg); border-top: 1px solid var(--pale); padding: 8px 0 10px; display: flex; gap: 16px; align-items: baseline; z-index: 5; }
+  .log .mono { color: var(--muted); }
+  .log .mono.on { color: var(--ink); }
+  .log .mono.bad { color: #b00; }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>Hub</h1>
+    <p class="how" id="how"></p>
+  </div>
+  <div class="state">
+    <div class="mono" id="conn"></div>
+    <div class="pubrow"><span class="mono" id="state"></span><button id="publish" class="mono" type="button" disabled><span class="b">[</span> PUBLISH <span class="b">]</span></button></div>
+    <a class="mono" id="back" href="index.html">[ HOME ]</a>
+    <a class="mono" id="placeLink" href="#" hidden title="Open the page with the placing tool on: drag any picture, size it by its corner">[ PLACE ON PAGE → ]</a>
+  </div>
+</header>
+<div id="connect" class="panel mono" hidden>
+  <p>THIS BROWSER NEEDS A GITHUB TOKEN TO PUBLISH. MAKE ONE AT <a class="lnk" href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">GITHUB → SETTINGS → DEVELOPER SETTINGS → FINE-GRAINED TOKENS</a>: REPOSITORY ACCESS <em>ONLY SELECT REPOSITORIES</em> → <span id="repoName"></span>; PERMISSIONS → CONTENTS: <em>READ AND WRITE</em>. PASTE IT HERE. IT STAYS IN THIS BROWSER ONLY.</p>
+  <div class="row"><input type="password" id="token" placeholder="github_pat_…" autocomplete="off" spellcheck="false"><button class="mono" id="tokenSave" type="button"><span class="b">[</span> CONNECT <span class="b">]</span></button><span class="mono" id="tokenNote"></span></div>
+</div>
+<nav class="tabs mono" id="tabs"></nav>
+<main id="cats"></main>
+<div class="log"><span class="mono" id="log"></span></div>
+
+<script src="js/data.js"></script>
+<script>document.write('<script src="js/content.js?v=' + Math.floor(Date.now() / 6e4) + '"><\/script>');</script>
+<script src="js/store.js"></script>
+<script>
+(function () {
+  var S = window.SITE, ST = window.SITE_STORE, cats = document.getElementById('cats'), stateEl = document.getElementById('state'), tabsEl = document.getElementById('tabs'), howEl = document.getElementById('how'), back = document.getElementById('back'), logEl = document.getElementById('log');
+  var isV = function (src) { return /\.(mp4|webm|mov)$/i.test(src); };
+  var real = function (m) { return m && m.src && !m.ph; };
+  var flat = function (frames) { return (frames || []).reduce(function (a, f) { return a.concat(f); }, []); };
+  var esc = function (s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;'); };
+  var PILLARS = S.pillars.filter(function (p) { return p.id !== 'photo'; });   /* the pages a project can sit on */
+  function log(t, cls) { logEl.textContent = t || ''; logEl.className = 'mono' + (cls ? ' ' + cls : ''); }
+
+  /* ---- the connection ---- */
+  var connEl = document.getElementById('conn'), connect = document.getElementById('connect'), tokenIn = document.getElementById('token'), tokenNote = document.getElementById('tokenNote');
+  document.getElementById('repoName').textContent = ST.repo.split('/')[1];
+  function drawConn() {
+    if (ST.canWrite()) { connEl.innerHTML = 'CONNECTED · ' + ST.repo.toUpperCase() + ' <button class="mono" id="disc" type="button"><span class="b">[</span> DISCONNECT <span class="b">]</span></button>'; connEl.classList.add('on'); connect.hidden = true; document.getElementById('disc').addEventListener('click', function () { if (confirm('Forget the GitHub token in this browser?')) { ST.setToken(''); drawConn(); drawState(); } }); }
+    else { connEl.innerHTML = 'NOT CONNECTED — CHANGES STAY IN THIS BROWSER <button class="mono" id="showConn" type="button"><span class="b">[</span> CONNECT GITHUB <span class="b">]</span></button>'; connEl.classList.remove('on'); document.getElementById('showConn').addEventListener('click', function () { connect.hidden = !connect.hidden; if (!connect.hidden) tokenIn.focus(); }); }
+  }
+  document.getElementById('tokenSave').addEventListener('click', function () {
+    var t = tokenIn.value.trim(); if (!t) { tokenNote.textContent = 'PASTE THE TOKEN FIRST'; return; }
+    ST.setToken(t); tokenNote.textContent = 'CHECKING…';
+    ST.verify().then(function () { tokenNote.textContent = ''; tokenIn.value = ''; drawConn(); drawState(); log('CONNECTED · THIS BROWSER CAN PUBLISH', 'on'); }, function (e) { ST.setToken(''); tokenNote.textContent = (e && e.message || 'NOT ACCEPTED').toUpperCase(); });
+  });
+  tokenIn.addEventListener('keydown', function (e) { if (e.key === 'Enter') document.getElementById('tokenSave').click(); });
+
+  /* ---- publish ---- */
+  var pubBtn = document.getElementById('publish');
+  function drawState() {
+    var ch = ST.changes(), n = ch.length + ST.staged().length, s = ST.status();
+    stateEl.textContent = s.t || (n ? n + ' TO PUBLISH · ' + ch.join(' · ') : 'EVERYTHING PUBLISHED');
+    stateEl.classList.toggle('on', !!s.on || n > 0);
+    pubBtn.disabled = !ST.canWrite() || !!s.busy || !n; pubBtn.classList.toggle('on', n > 0 && ST.canWrite());
+    pubBtn.innerHTML = '<span class="b">[</span> PUBLISH' + (n ? ' · ' + n : '') + ' <span class="b">]</span>';
+  }
+  pubBtn.addEventListener('click', function () { if (!ST.dirty()) return; ST.publish().then(function () { render(); }, function () {}); });
+  ST.onChange(drawState);
+
+  /* ---- every picture on the site, by src ---- */
+  var all = {}, owner = {}, poster = {};
+  function index() {
+    all = {}; owner = {}; poster = {};
+    S.projects.forEach(function (p) { p.imgs.forEach(function (m) { if (real(m)) { all[m.src] = m; owner[m.src] = owner[m.src] || p.name || p.id; if (m.poster) poster[m.src] = m.poster; } }); });
+    S.photo.forEach(function (c) { c.groups.forEach(function (g) { g.imgs.forEach(function (m) { all[m.src] = m; owner[m.src] = owner[m.src] || ('Photo + Video · ' + c.name); }); }); });
+  }
+  index();
+  var removed = [];   /* pictures removed from the site (sort/removed): off every page, waiting in the drawer until restored or purged */
+  var isGone = function (src) { return removed.indexOf(src) !== -1; };
+  (function () { var rv = ST.get('sort/removed'); if (rv && rv.srcs) removed = rv.srcs.slice(); })();
+
+  /* ---- the sections ---- */
+  var sections = [{ id: 'home', label: 'Home', fixed: true, how: 'The first row is the home page at rest: one picture per project, up to seven, in the order of the places on the page (01 big right-middle, 02 far right, 03 top-left corner, 04 bottom-left, 05 bottom left of center, 06 tiny by the name, 07 bottom center). The rows below are what shows while a section is under the pointer. Drag from the drawer at the bottom; drag out to remove. Then PUBLISH.',
+    base: function () { return [{ id: 'home', name: '', imgs: [], groups: [{ id: 'home', name: 'On the home page', imgs: S.home.slice() }].concat(S.pillars.filter(function (p) { return p.n; }).map(function (p) { return { id: p.id, name: 'Hovering ' + p.n + ' ' + p.name, imgs: (S.homeHover[p.id] || []).slice() }; })) }]; } }].concat(S.pillars.map(function (p) {
+    if (p.id === 'photo') return { id: 'photo', label: (p.n ? p.n + ' ' : '') + p.name, frames: true, how: 'A category is a name on the page; a group is a run of frames under one title; a frame is one click — its pictures show together. Drop pictures or films from your computer onto any frame (or + ADD MEDIA); drag them between frames; + FRAME adds one. Where each picture sits in its frame is set on the page itself (PLACE). × takes a picture off the site. Then PUBLISH.',
+      base: function () { return S.photo.map(function (c) { return { id: c.id, name: c.name, imgs: c.groups.reduce(function (a, g) { return a.concat(g.imgs.map(function (m) { return m.src; })); }, []), groups: S.arrangePhoto(c, null).map(function (g) { return { name: g.name, lc: g.lc, frames: g.frames, imgs: flat(g.frames) }; }) }; }); } };
+    return { id: p.id, label: (p.n ? p.n + ' ' : '') + p.name, how: 'Each group is a project on the ' + p.name + ' page, in the order the names run. Drop pictures or films from your computer onto a project (or + ADD MEDIA); drag to order them; COLUMNS deals them into rows, then drag any picture to the row it should sit in; UP / DOWN order the projects. TEXT opens the words: the line of terms, the copy, the bullets, which pages it sits on. + NEW PROJECT starts one. × takes a picture off the site. PLACE ON PAGE opens the page with the placing tool. Then PUBLISH.',
+      base: function () { var ps = S.projects.filter(function (x) { return (x.pillars || []).indexOf(p.id) !== -1; }); return [{ id: p.id, name: '', imgs: ps.reduce(function (a, x) { return a.concat(x.imgs.filter(real).map(function (m) { return m.src; })); }, []), groups: ps.map(function (x) { return { id: x.id, name: x.name, imgs: x.imgs.filter(real).map(function (m) { return m.src; }) }; }) }]; } };
+  })).concat([{ id: 'bio', label: 'Bio', bio: true, how: 'The words of the bio sheet, the contact lines, the portrait, and the Are.na boards behind INSPIRATIONS and the CAMERA ROLL. Then PUBLISH.' }]);
+  var cur = null, states = {}, loaded = {}, openTxt = {};
+  function fromBase(sec) { return { cats: sec.base().map(function (c) { return { id: c.id, name: c.name, groups: c.groups }; }) }; }
+  function baseImgs(sec, cid) { var c = sec.base().filter(function (c) { return c.id === cid; })[0]; return c ? c.imgs : []; }
+  function projectOf(id) { return S.projects.filter(function (p) { return p.id === id; })[0] || null; }
+  function catOf(id) { return S.photo.filter(function (c) { return c.id === id; })[0] || null; }
+  function src(s) { return ST.urlOf(s) || poster[s] || s; }
+  function isNew(s) { return !!ST.fileOf(s); }
+
+  function thumb(s) { return '<div class="th' + (isNew(s) ? ' new' : '') + '" draggable="true" data-src="' + esc(s) + '">' + (isV(s) ? '<video src="' + esc(ST.urlOf(s) || s) + '" muted playsinline preload="metadata"></video>' : '<img src="' + esc(src(s)) + '" alt="">') + '<button class="x mono" type="button" data-gone="' + esc(s) + '" aria-label="Remove from the site" title="Remove from the site">×</button></div>'; }
+  function addBtn(ci, gi, fi, what) { return '<button class="add mono fadd" data-act="media" data-ci="' + ci + '" data-gi="' + gi + '"' + (fi != null ? ' data-fi="' + fi + '"' : '') + ' title="Pictures: JPEG or PNG. Films: H.264 MP4 up to 60 MB (anything else, send to Claude)"><span class="b">[</span> + ADD MEDIA' + (what ? ' ' + what : '') + ' <span class="b">]</span></button>'; }
+  function txtPanel(p, ci, gi) {
+    if (!p) return '';
+    var on = !!openTxt[p.id];
+    return '<div class="txt" data-pid="' + esc(p.id) + '"' + (on ? '' : ' hidden') + '>' +
+      '<span class="k mono">TERMS</span><input type="text" data-f="meta" value="' + esc(p.meta) + '" placeholder="Creative direction · photography · 2024" title="The bracketed line under the pictures; separate terms with ·">' +
+      '<span class="k mono">COPY</span><textarea data-f="copy" placeholder="Two or three sentences.">' + esc(p.copy) + '</textarea>' +
+      '<span class="k mono">BULLETS</span><textarea data-f="bul" placeholder="One per line">' + esc((p.bul || []).join('\n')) + '</textarea>' +
+      '<span class="k mono">PAGES</span><div class="checks mono">' + PILLARS.map(function (pl) { return '<label><input type="checkbox" data-pillar="' + pl.id + '"' + ((p.pillars || []).indexOf(pl.id) !== -1 ? ' checked' : '') + '> ' + (pl.n ? pl.n + ' ' : '') + pl.name.toUpperCase() + '</label>'; }).join('') + '</div>' +
+      '<span class="k mono">NAME</span><div class="checks mono"><label><input type="checkbox" data-f="lc"' + (p.lc ? ' checked' : '') + '> KEEP ITS LOWERCASE LETTERS</label><label><input type="checkbox" data-f="ph"' + (p.ph ? ' checked' : '') + '> COPY IS A PLACEHOLDER</label></div>' +
+      '<span class="k mono">ID</span><span class="mono">' + esc(p.id) + ' · img/' + esc(p.id) + '/</span>' +
+      '<span class="k"></span><div class="danger"><button class="mono" data-act="delproj" data-pid="' + esc(p.id) + '"><span class="b">[</span> DELETE THIS PROJECT FROM THE SITE <span class="b">]</span></button></div></div>';
+  }
+  function render() {
+    var sec = cur, st = states[sec.id];
+    if (sec.bio) return renderBio();
+    st.cats.forEach(function (c) { c.groups.forEach(function (g) { if (g.frames) g.frames = g.frames.map(function (f) { return f.filter(function (s) { return !isGone(s); }); }); g.imgs = (g.frames ? flat(g.frames) : g.imgs).filter(function (s) { return !isGone(s); }); }); });
+    var inGroups = {}; st.cats.forEach(function (c) { c.groups.forEach(function (g) { g.imgs.forEach(function (s) { inGroups[s] = 1; }); }); });
+    var mine = {}; st.cats.forEach(function (c) { baseImgs(sec, c.id).forEach(function (s) { mine[s] = 1; }); });
+    var html = st.cats.map(function (c, ci) {
+      var pool = baseImgs(sec, c.id).filter(function (s) { return !inGroups[s] && !isGone(s); }), cat = sec.frames ? catOf(c.id) : null;
+      var head = '';
+      if (sec.frames && cat) head = '<div class="cathead"><h2><input type="text" value="' + esc(cat.name) + '" data-cat="' + esc(c.id) + '" data-f="name" placeholder="CATEGORY" title="The name on the Photo + Video page"></h2><label class="meta mono">TERMS <input type="text" value="' + esc(cat.meta || '') + '" data-cat="' + esc(c.id) + '" data-f="meta" placeholder="Photography · shot by me"></label><span class="tools mono"><button data-act="delcat" data-cat="' + esc(c.id) + '"><span class="b">[</span> REMOVE CATEGORY <span class="b">]</span></button></span></div>';
+      else if (c.name) head = '<h2>' + esc(c.name) + '</h2>';
+      return '<section class="cat" data-ci="' + ci + '">' + head +
+        (sec.fixed ? '' : '<div class="pool"><div class="lbl"><span class="mono">POOL · ' + pool.length + ' NOT ON THE PAGE</span></div><div class="zone" data-ci="' + ci + '" data-gi="-1">' + (pool.length ? pool.map(thumb).join('') : '<span class="empty mono">EMPTY</span>') + '</div></div>') +
+        c.groups.map(function (g, gi) {
+          var p = !sec.frames && !sec.fixed ? projectOf(g.id) : null;
+          var head = sec.fixed ? '<div class="lbl"><span class="mono">' + esc(g.name).toUpperCase() + ' · ' + g.imgs.length + ' OF 7</span></div>' :
+            '<div class="lbl"><span class="mono">' + String(gi + 1).padStart(2, '0') + '</span><input type="text" class="name' + ((g.lc || (p && p.lc)) ? ' lc' : '') + '" size="' + Math.max(12, (g.name || '').length + 2) + '" value="' + esc(g.name || '') + '" placeholder="' + (sec.frames ? 'TITLE' : 'PROJECT NAME') + '" data-ci="' + ci + '" data-gi="' + gi + '">' +
+            (sec.frames ? '' : '<label class="mono colsw">COLUMNS <input type="number" min="0" max="8" value="' + (g.cols || 0) + '" data-cols-ci="' + ci + '" data-cols-gi="' + gi + '" title="0 = one row"></label>') +
+            '<span class="tools mono">' + (p ? '<button data-act="txt" data-pid="' + esc(p.id) + '"><span class="b">[</span> TEXT <span class="b">]</span></button>' : '') + '<button data-act="up" data-ci="' + ci + '" data-gi="' + gi + '"><span class="b">[</span> UP <span class="b">]</span></button><button data-act="down" data-ci="' + ci + '" data-gi="' + gi + '"><span class="b">[</span> DOWN <span class="b">]</span></button><button data-act="del" data-ci="' + ci + '" data-gi="' + gi + '"><span class="b">[</span> ' + (sec.frames ? 'REMOVE GROUP' : 'TAKE OFF THIS PAGE') + ' <span class="b">]</span></button></span></div>' + txtPanel(p, ci, gi);
+          if (sec.frames) return '<div class="grp" data-gi="' + gi + '">' + head + '<div class="frames">' + g.frames.map(function (f, fi) {
+            return '<div class="frm"><div class="flbl mono"><span>FRAME ' + String(fi + 1).padStart(2, '0') + ' · ' + f.length + '</span><button data-act="fdel" data-ci="' + ci + '" data-gi="' + gi + '" data-fi="' + fi + '"><span class="b">[</span> REMOVE <span class="b">]</span></button></div><div class="zone" data-ci="' + ci + '" data-gi="' + gi + '" data-fi="' + fi + '">' + (f.length ? f.map(thumb).join('') : '<span class="empty mono">DROP PICTURES HERE</span>') + '</div></div>';
+          }).join('') + '<button class="add mono fadd" data-act="fadd" data-ci="' + ci + '" data-gi="' + gi + '"><span class="b">[</span> + FRAME <span class="b">]</span></button>' + addBtn(ci, gi, null, '') + '</div></div>';
+          var cols = g.cols || 0;
+          if (cols) {
+            if (!g.frames) g.frames = deal(g.imgs, cols);
+            return '<div class="grp" data-gi="' + gi + '">' + head + '<div class="frames">' + g.frames.map(function (f, fi) {
+              return '<div class="frm"><div class="flbl mono"><span>ROW ' + String(fi + 1).padStart(2, '0') + ' · ' + f.length + ' / ' + cols + (f.length > cols ? ' (TIGHT)' : '') + '</span><button data-act="fdel" data-ci="' + ci + '" data-gi="' + gi + '" data-fi="' + fi + '"><span class="b">[</span> REMOVE <span class="b">]</span></button></div><div class="zone" data-ci="' + ci + '" data-gi="' + gi + '" data-fi="' + fi + '">' + (f.length ? f.map(thumb).join('') : '<span class="empty mono">DROP PICTURES HERE</span>') + '</div></div>';
+            }).join('') + '<button class="add mono fadd" data-act="fadd" data-ci="' + ci + '" data-gi="' + gi + '"><span class="b">[</span> + ROW <span class="b">]</span></button>' + addBtn(ci, gi, null, '') + '</div></div>';
+          }
+          return '<div class="grp" data-gi="' + gi + '">' + head + '<div class="zone" data-ci="' + ci + '" data-gi="' + gi + '">' + (g.imgs.length ? g.imgs.map(thumb).join('') : '<span class="empty mono">DROP PICTURES HERE</span>') + '</div>' + addBtn(ci, gi, null, '') + '</div>';
+        }).join('') +
+        (sec.fixed ? '' : (sec.frames ? '<button class="add mono" data-act="add" data-ci="' + ci + '"><span class="b">[</span> + NEW GROUP <span class="b">]</span></button>' : '<span class="newform" data-ci="' + ci + '"><button class="add mono" data-act="newproj" data-ci="' + ci + '"><span class="b">[</span> + NEW PROJECT <span class="b">]</span></button></span>')) + '</section>';
+    }).join('');
+    if (sec.frames) html += '<span class="newform"><button class="add mono" data-act="newcat"><span class="b">[</span> + NEW CATEGORY <span class="b">]</span></button></span>';
+    /* the drawer: every picture from the rest of the site, by where it lives */
+    var rest = {}; Object.keys(all).forEach(function (s) { if (!mine[s] && !inGroups[s] && !isGone(s)) { (rest[owner[s]] = rest[owner[s]] || []).push(s); } });
+    var keys = Object.keys(rest).sort();
+    html += '<details class="else"><summary class="mono">[ + ] PICTURES FROM THE REST OF THE SITE · ' + keys.reduce(function (n, k) { return n + rest[k].length; }, 0) + '</summary><div class="zone" data-ci="-1" data-gi="-1">' +
+      keys.map(function (k) { return '<div class="src mono">' + esc(k).toUpperCase() + '</div>' + rest[k].map(thumb).join(''); }).join('') + '</div></details>';
+    html += '<details class="else"><summary class="mono">[ × ] REMOVED FROM THE SITE · ' + removed.length + '</summary><div class="zone" data-ci="-1" data-gi="-1">' +
+      (removed.length ? removed.map(function (s) { return '<div class="th gone" data-src="' + esc(s) + '">' + (isV(s) ? '<video src="' + esc(ST.urlOf(s) || s) + '" muted playsinline preload="metadata"></video>' : '<img src="' + esc(src(s)) + '" alt="">') + '</div><button class="restore" type="button" data-restore="' + esc(s) + '">[ RESTORE ]</button>'; }).join('') + '<div class="src mono"></div><button class="restore" type="button" data-act="purge">[ PURGE THESE FILES FROM THE SITE FOR GOOD — ON THE NEXT PUBLISH ]</button>' : '<span class="empty mono">NOTHING REMOVED</span>') + '</div></details>';
+    cats.innerHTML = html;
+  }
+
+  /* ---- drag and drop: pictures between groups; files from the computer onto a group ---- */
+  var dragging = null;
+  function hasFiles(e) { return e.dataTransfer && Array.prototype.indexOf.call(e.dataTransfer.types, 'Files') !== -1; }
+  cats.addEventListener('dragstart', function (e) { var th = e.target.closest('.th'); if (!th) return; dragging = th.getAttribute('data-src'); th.classList.add('drag'); e.dataTransfer.effectAllowed = 'move'; e.dataTransfer.setData('text/plain', dragging); });
+  cats.addEventListener('dragend', function () { dragging = null; clearMarks(); });
+  function clearMarks() { Array.prototype.forEach.call(cats.querySelectorAll('.drag, .before, .after, .over, .filedrop'), function (x) { x.classList.remove('drag', 'before', 'after', 'over', 'filedrop'); }); }
+  cats.addEventListener('dragover', function (e) {
+    var zone = e.target.closest('.zone'); if (!zone) return;
+    if (hasFiles(e)) { if (cur.fixed || +zone.getAttribute('data-ci') < 0) return; e.preventDefault(); e.dataTransfer.dropEffect = 'copy'; Array.prototype.forEach.call(cats.querySelectorAll('.filedrop'), function (x) { x.classList.remove('filedrop'); }); zone.classList.add('filedrop'); return; }
+    if (!dragging) return;
+    e.preventDefault(); e.dataTransfer.dropEffect = 'move';
+    Array.prototype.forEach.call(cats.querySelectorAll('.over, .before, .after'), function (x) { x.classList.remove('over', 'before', 'after'); });
+    zone.classList.add('over');
+    var th = e.target.closest('.th'); if (th && th.getAttribute('data-src') !== dragging) { var r = th.getBoundingClientRect(); th.classList.add(e.clientX < r.left + r.width / 2 ? 'before' : 'after'); }
+  });
+  cats.addEventListener('dragleave', function (e) { var zone = e.target.closest('.zone'); if (zone && !zone.contains(e.relatedTarget)) zone.classList.remove('filedrop'); });
+  cats.addEventListener('drop', function (e) {
+    var zone = e.target.closest('.zone'); if (!zone) return;
+    if (hasFiles(e)) {
+      e.preventDefault(); clearMarks(); if (cur.fixed) return;
+      var ci = +zone.getAttribute('data-ci'); if (ci < 0) return;
+      var gi = +zone.getAttribute('data-gi'), fi = zone.hasAttribute('data-fi') ? +zone.getAttribute('data-fi') : -1;
+      addMedia(Array.prototype.slice.call(e.dataTransfer.files), ci, gi, fi); return;
+    }
+    if (!dragging) return;
+    e.preventDefault();
+    var st = states[cur.id], ci2 = +zone.getAttribute('data-ci'), gi2 = +zone.getAttribute('data-gi'), fi2 = zone.hasAttribute('data-fi') ? +zone.getAttribute('data-fi') : -1;
+    st.cats.forEach(function (c) { c.groups.forEach(function (g) { var k = g.imgs.indexOf(dragging); if (k !== -1) g.imgs.splice(k, 1); (g.frames || []).forEach(function (f) { var j = f.indexOf(dragging); if (j !== -1) f.splice(j, 1); }); }); });
+    if (ci2 >= 0 && gi2 >= 0) {
+      var g = st.cats[ci2].groups[gi2], th = e.target.closest('.th'), list = fi2 >= 0 ? g.frames[fi2] : g.imgs, at = list.length;
+      if (th && th.getAttribute('data-src') !== dragging) { var r = th.getBoundingClientRect(), k = list.indexOf(th.getAttribute('data-src')); at = e.clientX < r.left + r.width / 2 ? k : k + 1; }
+      list.splice(at, 0, dragging);
+      if (fi2 >= 0) g.imgs = flat(g.frames);
+      if (cur.fixed) {
+        if (g.id === 'home') g.imgs = g.imgs.filter(function (s) { return s === dragging || owner[s] !== owner[dragging]; });
+        if (g.imgs.length > 7) { g.imgs.splice(g.imgs.indexOf(dragging), 1); log('SEVEN PLACES ON THE PAGE: DRAG ONE OUT FIRST', 'bad'); dragging = null; render(); return; }
+      }
+    }
+    dragging = null; render(); save();
+  });
+  document.addEventListener('dragover', function (e) { if (hasFiles(e)) e.preventDefault(); });
+  document.addEventListener('drop', function (e) { if (hasFiles(e)) e.preventDefault(); });
+
+  /* ---- buttons ---- */
+  cats.addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-act]'); if (!b) return;
+    var act = b.getAttribute('data-act'), st = states[cur.id], ci = b.hasAttribute('data-ci') ? +b.getAttribute('data-ci') : -1, c = ci >= 0 ? st.cats[ci] : null, gi = b.hasAttribute('data-gi') ? +b.getAttribute('data-gi') : -1;
+    if (act === 'media') { pickFiles(ci, gi, b.hasAttribute('data-fi') ? +b.getAttribute('data-fi') : -1); return; }
+    if (act === 'txt') { var pid = b.getAttribute('data-pid'); openTxt[pid] = !openTxt[pid]; var panel = cats.querySelector('.txt[data-pid="' + pid + '"]'); if (panel) panel.hidden = !openTxt[pid]; return; }
+    if (act === 'newproj') { newProjectForm(b.closest('.newform'), ci); return; }
+    if (act === 'newcat') { newCategoryForm(b.closest('.newform')); return; }
+    if (act === 'delproj') { deleteProject(b.getAttribute('data-pid')); return; }
+    if (act === 'delcat') { deleteCategory(b.getAttribute('data-cat')); return; }
+    if (act === 'purge') { purgeRemoved(); return; }
+    if (act === 'add') c.groups.push(cur.frames ? { name: '', imgs: [], frames: [[]] } : { name: '', imgs: [] });
+    if (act === 'del') {
+      var g0 = c.groups[gi];
+      if (!cur.frames && g0 && g0.id) { var p0 = projectOf(g0.id); if (p0) { p0.pillars = (p0.pillars || []).filter(function (x) { return x !== cur.id; }); ST.touch('PAGES · ' + (p0.name || p0.id).toUpperCase()); } }
+      c.groups.splice(gi, 1);
+    }
+    if (act === 'fadd') c.groups[gi].frames.push([]);
+    if (act === 'fdel') { var fi = +b.getAttribute('data-fi'); c.groups[gi].frames.splice(fi, 1); c.groups[gi].imgs = flat(c.groups[gi].frames); }
+    if (act === 'up' && gi > 0) { var t = c.groups[gi - 1]; c.groups[gi - 1] = c.groups[gi]; c.groups[gi] = t; }
+    if (act === 'down' && gi < c.groups.length - 1) { var u = c.groups[gi + 1]; c.groups[gi + 1] = c.groups[gi]; c.groups[gi] = u; }
+    render(); save();
+  });
+  /* names, columns, the words */
+  cats.addEventListener('input', function (e) {
+    var inp = e.target;
+    if (inp.matches('input.name[data-ci]')) { var g = states[cur.id].cats[+inp.getAttribute('data-ci')].groups[+inp.getAttribute('data-gi')]; g.name = inp.value; var p = !cur.frames && g.id ? projectOf(g.id) : null; if (p) { p.name = inp.value; ST.touch('NAME · ' + inp.value.toUpperCase()); } save(); return; }
+    if (inp.matches('[data-cat][data-f]')) { var cat = catOf(inp.getAttribute('data-cat')); if (!cat) return; cat[inp.getAttribute('data-f')] = inp.value; var sc = states.photo.cats.filter(function (x) { return x.id === cat.id; })[0]; if (sc && inp.getAttribute('data-f') === 'name') sc.name = inp.value; ST.touch('CATEGORY · ' + cat.name.toUpperCase()); return; }
+    var panel = inp.closest('.txt'); if (!panel || inp.hasAttribute('data-pillar')) return;
+    var proj = projectOf(panel.getAttribute('data-pid')); if (!proj) return;
+    var f = inp.getAttribute('data-f');
+    if (f === 'bul') proj.bul = inp.value.split('\n').map(function (s) { return s.trim(); }).filter(Boolean);
+    else if (f === 'lc' || f === 'ph') { if (inp.checked) proj[f] = true; else delete proj[f]; if (f === 'lc') { var nm = panel.previousElementSibling && panel.previousElementSibling.querySelector('input.name'); if (nm) nm.classList.toggle('lc', inp.checked); } }
+    else if (f) proj[f] = inp.value;
+    ST.touch('TEXT · ' + (proj.name || proj.id).toUpperCase());
+  });
+  cats.addEventListener('change', function (e) {
+    var inp = e.target;
+    if (inp.matches('input[data-cols-ci]')) { var g = states[cur.id].cats[+inp.getAttribute('data-cols-ci')].groups[+inp.getAttribute('data-cols-gi')]; g.cols = Math.max(0, Math.min(8, parseInt(inp.value, 10) || 0)); if (g.cols) g.frames = deal(g.imgs, g.cols); else delete g.frames; render(); save(); return; }
+    if (inp.matches('input[data-pillar]')) {
+      var panel = inp.closest('.txt'), proj = projectOf(panel.getAttribute('data-pid')), pid = inp.getAttribute('data-pillar'); if (!proj) return;
+      proj.pillars = (proj.pillars || []).filter(function (x) { return x !== pid; }); if (inp.checked) proj.pillars.push(pid);
+      /* the other section's arrangement, if open: the project joins its end or leaves it */
+      Object.keys(states).forEach(function (sid) { if (sid === pid) { var c = states[sid].cats[0]; if (inp.checked && !c.groups.some(function (g) { return g.id === proj.id; })) c.groups.push({ id: proj.id, name: proj.name, imgs: proj.imgs.filter(real).map(function (m) { return m.src; }) }); if (!inp.checked) c.groups = c.groups.filter(function (g) { return g.id !== proj.id; }); ST.set('sort/' + sid, docFor(sid), 'ARRANGED ' + sid.toUpperCase()); } });
+      ST.touch('PAGES · ' + (proj.name || proj.id).toUpperCase());
+      if (pid === cur.id && !inp.checked) { render(); save(); }
+    }
+  });
+  function deal(imgs, cols) { var rows = [], row = []; imgs.forEach(function (s) { if (row.length >= cols) { rows.push(row); row = []; } row.push(s); }); if (row.length) rows.push(row); return rows; }
+
+  /* ---- new projects and categories ---- */
+  function slug(s) { return String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 32); }
+  function uniqueId(base, taken) { var id = base || 'project', n = 2; while (taken(id)) id = base + '-' + (n++); return id; }
+  function newProjectForm(host, ci) {
+    host.innerHTML = '<input type="text" placeholder="PROJECT NAME" id="npName"><button class="add mono" type="button" id="npGo"><span class="b">[</span> CREATE <span class="b">]</span></button><button class="add mono" type="button" id="npNo"><span class="b">[</span> CANCEL <span class="b">]</span></button>';
+    var inp = host.querySelector('#npName'); inp.focus();
+    host.querySelector('#npNo').addEventListener('click', render);
+    function go() {
+      var name = inp.value.trim(); if (!name) { inp.focus(); return; }
+      var id = uniqueId(slug(name), function (x) { return !!projectOf(x) || !!catOf(x); });
+      var p = { id: id, name: name, pillars: [cur.id], meta: '', imgs: [], copy: '', bul: [] };
+      S.projects.push(p); states[cur.id].cats[ci].groups.push({ id: id, name: name, imgs: [] }); openTxt[id] = true;
+      index(); ST.touch('NEW PROJECT · ' + name.toUpperCase()); render(); save();
+      var nm = cats.querySelector('.txt[data-pid="' + id + '"] input[data-f="meta"]'); if (nm) nm.focus();
+    }
+    host.querySelector('#npGo').addEventListener('click', go); inp.addEventListener('keydown', function (e) { if (e.key === 'Enter') go(); if (e.key === 'Escape') render(); });
+  }
+  function newCategoryForm(host) {
+    host.innerHTML = '<input type="text" placeholder="CATEGORY NAME" id="ncName"><button class="add mono" type="button" id="ncGo"><span class="b">[</span> CREATE <span class="b">]</span></button><button class="add mono" type="button" id="ncNo"><span class="b">[</span> CANCEL <span class="b">]</span></button>';
+    var inp = host.querySelector('#ncName'); inp.focus();
+    host.querySelector('#ncNo').addEventListener('click', render);
+    function go() {
+      var name = inp.value.trim(); if (!name) { inp.focus(); return; }
+      var id = uniqueId(slug(name), function (x) { return !!projectOf(x) || !!catOf(x); });
+      S.photo.push({ id: id, name: name, meta: 'Photography · shot by me', groups: [{ name: '', imgs: [] }] });
+      states.photo.cats.push({ id: id, name: name, groups: [{ name: '', imgs: [], frames: [[]] }] });
+      index(); ST.touch('NEW CATEGORY · ' + name.toUpperCase()); render(); save();
+    }
+    host.querySelector('#ncGo').addEventListener('click', go); inp.addEventListener('keydown', function (e) { if (e.key === 'Enter') go(); if (e.key === 'Escape') render(); });
+  }
+  function deleteProject(pid) {
+    var p = projectOf(pid); if (!p) return;
+    if (!confirm('Delete "' + (p.name || pid) + '" from the site? Its pictures go to the removed drawer (restorable until purged).')) return;
+    S.projects = S.projects.filter(function (x) { return x.id !== pid; }); ST.content().projects = S.projects;
+    p.imgs.filter(real).forEach(function (m) { if (!isGone(m.src)) removed.push(m.src); });
+    Object.keys(states).forEach(function (sid) { states[sid].cats.forEach(function (c) { c.groups = c.groups.filter(function (g) { return g.id !== pid; }); }); });
+    delete openTxt[pid]; index(); saveRemoved(); ST.touch('DELETED · ' + (p.name || pid).toUpperCase()); render(); save();
+  }
+  function deleteCategory(cid) {
+    var c = catOf(cid); if (!c) return;
+    if (!confirm('Remove the category "' + c.name + '" from the Photo + Video page? Its pictures go to the removed drawer (restorable until purged).')) return;
+    S.photo = S.photo.filter(function (x) { return x.id !== cid; }); ST.content().photo = S.photo;
+    c.groups.forEach(function (g) { g.imgs.forEach(function (m) { if (!isGone(m.src)) removed.push(m.src); }); });
+    states.photo.cats = states.photo.cats.filter(function (x) { return x.id !== cid; });
+    index(); saveRemoved(); ST.touch('REMOVED CATEGORY · ' + c.name.toUpperCase()); render(); save();
+  }
+
+  /* ---- remove from the site / restore / purge ---- */
+  cats.addEventListener('click', function (e) {
+    var x = e.target.closest('button[data-gone]'), r = e.target.closest('button[data-restore]'); if (!x && !r) return;
+    if (x) {
+      var s = x.getAttribute('data-gone');
+      if (!isGone(s)) removed.push(s);
+      Object.keys(states).forEach(function (id) { states[id].cats.forEach(function (c) { c.groups.forEach(function (g) { var k = g.imgs.indexOf(s); if (k !== -1) g.imgs.splice(k, 1); (g.frames || []).forEach(function (f) { var j = f.indexOf(s); if (j !== -1) f.splice(j, 1); }); }); }); });
+    } else { var bk = r.getAttribute('data-restore'), k2 = removed.indexOf(bk); if (k2 !== -1) removed.splice(k2, 1); }
+    render(); save(); saveRemoved();
+  });
+  function saveRemoved() { ST.set('sort/removed', { srcs: removed, savedAt: new Date().toISOString() }, 'REMOVED LIST'); }
+  function purgeRemoved() {
+    if (!removed.length) return;
+    if (!confirm('Delete these ' + removed.length + ' files from the site for good on the next publish? They cannot be restored after that.')) return;
+    removed.forEach(function (s) {
+      if (ST.fileOf(s)) ST.unstage(s); else ST.purge(s, 'PURGED FILES');
+      S.projects.forEach(function (p) { p.imgs = p.imgs.filter(function (m) { return m.src !== s; }); });
+      S.photo.forEach(function (c) { c.groups.forEach(function (g) { g.imgs = g.imgs.filter(function (m) { return m.src !== s; }); }); });
+      S.home = S.home.filter(function (x) { return x !== s; }); ST.content().home = S.home; Object.keys(S.homeHover).forEach(function (k) { S.homeHover[k] = S.homeHover[k].filter(function (x) { return x !== s; }); });
+    });
+    removed = []; index(); saveRemoved(); render(); save();
+  }
+
+  /* ---- media in: pictures sized down to 2000px in the browser; films checked (H.264 MP4, up to 60 MB); named after the project ---- */
+  var picker = document.createElement('input'); picker.type = 'file'; picker.multiple = true; picker.accept = 'image/*,video/mp4,.mp4,.mov'; picker.hidden = true; document.body.appendChild(picker);
+  var pickTarget = null;
+  function pickFiles(ci, gi, fi) { pickTarget = { ci: ci, gi: gi, fi: fi }; picker.value = ''; picker.click(); }
+  picker.addEventListener('change', function () { if (pickTarget && picker.files.length) addMedia(Array.prototype.slice.call(picker.files), pickTarget.ci, pickTarget.gi, pickTarget.fi); });
+  function shrink(f, max) {
+    return new Promise(function (res, rej) {
+      var png = f.type === 'image/png';
+      var done = function (bmp, w, h) {
+        var k = Math.min(1, (max || 2000) / Math.max(w, h)), c = document.createElement('canvas'); c.width = Math.round(w * k); c.height = Math.round(h * k);
+        c.getContext('2d').drawImage(bmp, 0, 0, c.width, c.height);
+        c.toBlob(function (b) { b ? res({ blob: b, w: c.width, h: c.height, ext: png ? 'png' : 'jpg' }) : rej(new Error('encode')); }, png ? 'image/png' : 'image/jpeg', 0.86);
+      };
+      var viaImg = function () { var url = URL.createObjectURL(f), im = new Image(); im.onload = function () { done(im, im.naturalWidth, im.naturalHeight); URL.revokeObjectURL(url); }; im.onerror = function () { URL.revokeObjectURL(url); rej(new Error('CANNOT READ ' + f.name.toUpperCase() + ' — EXPORT IT AS A JPEG')); }; im.src = url; };
+      if (window.createImageBitmap) createImageBitmap(f, { imageOrientation: 'from-image' }).then(function (bmp) { done(bmp, bmp.width, bmp.height); }, viaImg); else viaImg();
+    });
+  }
+  function fourcc(buf) {   /* the film's codec, read from the file: the sample entry name in its moov box (near the start or the end) */
+    var u = new Uint8Array(buf), codes = ['avc1', 'hvc1', 'hev1', 'av01', 'vp09', 'mp4v'], found = null;
+    function scan(from, to) { for (var i = from; i < to - 4 && !found; i++) { var s = String.fromCharCode(u[i], u[i + 1], u[i + 2], u[i + 3]); if (codes.indexOf(s) !== -1) found = s; } }
+    scan(0, Math.min(u.length, 3e6)); if (!found && u.length > 3e6) scan(Math.max(0, u.length - 3e6), u.length);
+    return found;
+  }
+  function probeVideo(f) {
+    return new Promise(function (res, rej) {
+      if (!(/\.mp4$/i.test(f.name) || f.type === 'video/mp4')) return rej(new Error(f.name.toUpperCase() + ': EXPORT AS AN H.264 MP4 — OR SEND IT TO CLAUDE'));
+      if (f.size > 60e6) return rej(new Error(f.name.toUpperCase() + ' IS OVER 60 MB — EXPORT IT SMALLER, OR SEND IT TO CLAUDE'));
+      f.arrayBuffer().then(function (buf) {
+        var c = fourcc(buf);
+        if (c === 'hvc1' || c === 'hev1') return rej(new Error(f.name.toUpperCase() + ' IS HEVC, WHICH MANY BROWSERS CANNOT PLAY — EXPORT AS H.264, OR SEND IT TO CLAUDE'));
+        var url = URL.createObjectURL(f), v = document.createElement('video'); v.preload = 'metadata'; v.muted = true;
+        v.onloadedmetadata = function () { var w = v.videoWidth, h = v.videoHeight; URL.revokeObjectURL(url); if (!w || !h) rej(new Error(f.name.toUpperCase() + ': THIS BROWSER CANNOT PLAY IT — EXPORT AS H.264 MP4')); else res({ w: w, h: h }); };
+        v.onerror = function () { URL.revokeObjectURL(url); rej(new Error(f.name.toUpperCase() + ': THIS BROWSER CANNOT PLAY IT — EXPORT AS H.264 MP4, OR SEND IT TO CLAUDE')); };
+        v.src = url;
+      }, rej);
+    });
+  }
+  function nextPath(dir, prefix, ext, name) {
+    var taken = {}; Object.keys(all).forEach(function (s) { taken[s] = 1; }); ST.staged().forEach(function (s) { taken[s] = 1; }); removed.forEach(function (s) { taken[s] = 1; });
+    var n = 0; Object.keys(taken).forEach(function (s) { var m = s.indexOf(dir + '/' + prefix + '-') === 0 && s.slice(dir.length + prefix.length + 2).match(/^(\d+)/); if (m) n = Math.max(n, parseInt(m[1], 10)); });
+    var sl = slug(name.replace(/\.[^.]+$/, '')).slice(0, 28) || 'picture', p;
+    do { n++; p = dir + '/' + prefix + '-' + String(n).padStart(2, '0') + '-' + sl + '.' + ext; } while (taken[p]);
+    return p;
+  }
+  function addMedia(files, ci, gi, fi) {
+    var sec = cur, st = states[sec.id], c = st.cats[ci], g = c && c.groups[gi]; if (!g) { log('DROP THEM ONTO A PROJECT' + (sec.frames ? ' FRAME' : '') + ', NOT THE POOL', 'bad'); return; }
+    var proj = !sec.frames ? projectOf(g.id) : null, cat = sec.frames ? catOf(c.id) : null;
+    if (!sec.frames && !proj) { log('THIS GROUP HAS NO PROJECT — NAME IT FIRST', 'bad'); return; }
+    if (sec.frames && !cat) return;
+    var dir = proj ? 'img/' + proj.id : 'img/photo/' + cat.id, prefix = proj ? proj.id : cat.id, label = (proj ? proj.name : cat.name) || prefix;
+    files = files.slice().sort(function (a, b) { return a.name.localeCompare(b.name, undefined, { numeric: true }); });
+    var chain = Promise.resolve(), n = 0, added = 0, bad = [];
+    files.forEach(function (f) {
+      chain = chain.then(function () {
+        n++; log('READING ' + n + ' / ' + files.length + ' · ' + f.name.toUpperCase());
+        var video = /^video\//.test(f.type) || /\.(mp4|mov|m4v|webm)$/i.test(f.name);
+        return (video ? probeVideo(f).then(function (d) { return { blob: f, w: d.w, h: d.h, ext: 'mp4', v: true }; }) : shrink(f)).then(function (r) {
+          var path = nextPath(dir, prefix, r.ext, f.name), m = { src: path };
+          if (r.v) { m.v = true; m.ar = r.w + ' / ' + r.h; }
+          if (sec.frames) m.o = r.w >= r.h ? 'l' : 'p';
+          ST.stage(path, r.blob, 'MEDIA · ' + label.toUpperCase());
+          if (proj) proj.imgs.push(m); else { if (!cat.groups.length) cat.groups.push({ name: '', imgs: [] }); cat.groups[0].imgs.push(m); }
+          if (gi >= 0) { if (fi >= 0 && g.frames) { g.frames[fi].push(path); g.imgs = flat(g.frames); } else if (g.frames && g.frames.length) { g.frames[g.frames.length - 1].push(path); g.imgs = flat(g.frames); } else if (sec.frames) { g.frames = [[path]]; g.imgs = [path]; } else g.imgs.push(path); }
+          added++; index(); render();
+        }, function (e) { bad.push(e && e.message || f.name); });
+      });
+    });
+    chain.then(function () { if (added) save(); log((added ? added + ' ADDED TO ' + label.toUpperCase() + (bad.length ? ' · ' : '') : '') + (bad.length ? 'NOT ADDED — ' + bad.join(' · ') : ''), bad.length ? 'bad' : 'on'); });
+  }
+
+  /* ---- bio ---- */
+  function unkeep(t) { return String(t || '').replace(/<span class="keep">(.*?)<\/span>/g, '{$1}'); }
+  function rekeep(t) { return esc(t).replace(/\{(.*?)\}/g, '<span class="keep">$1</span>'); }
+  function boardSlug(line) { var s = line.trim(); if (!s) return ''; var m = s.match(/are\.na\/[^/\s]+\/([^/?#\s]+)/); return m ? m[1] : s.replace(/^\/+|\/+$/g, ''); }
+  function renderBio() {
+    var a = S.about, cr = a.cameraRoll || (a.cameraRoll = { every: 600, arena: '', imgs: [] });
+    cats.innerHTML = '<section class="cat"><h2>Bio</h2><div class="bio">' +
+      '<span class="k mono">THE WORDS</span><div><textarea class="raw" data-bio="paras" spellcheck="true">' + esc(a.paras.map(unkeep).join('\n\n')) + '</textarea><p class="note">One paragraph per block, a blank line between. The sheet sets everything in capitals; a word in braces keeps its own letters: {enc0re}.</p></div>' +
+      '<span class="k mono">CONTACT</span><div class="lines" id="contact">' + a.contact.map(function (c, i) { return '<div class="ln"><input type="text" class="raw" data-ct="' + i + '" data-f="t" value="' + esc(c.t) + '" placeholder="LINE"><input type="text" class="raw" data-ct="' + i + '" data-f="href" value="' + esc(c.href || '') + '" placeholder="link (mailto:… or https://…), or blank"><button class="mono" data-ctdel="' + i + '"><span class="b">[</span> × <span class="b">]</span></button></div>'; }).join('') + '<div><button class="add mono" id="ctAdd"><span class="b">[</span> + LINE <span class="b">]</span></button></div></div>' +
+      '<span class="k mono">PORTRAIT</span><div class="portrait">' + (a.portrait ? '<img src="' + esc(ST.urlOf(a.portrait) || a.portrait) + '" alt="">' : '') + '<div class="drop zone" id="portraitDrop" tabindex="0"><span class="mono">DROP A NEW PORTRAIT HERE — OR CLICK TO CHOOSE</span></div></div>' +
+      '<span class="k mono">INSPIRATIONS</span><div><textarea class="raw" data-bio="arena" spellcheck="false">' + esc((S.arena || []).join('\n')) + '</textarea><p class="note">One Are.na board per line — the board\'s address or just its slug (the last part of the address), top to bottom as the rows run. Public or closed boards only.</p></div>' +
+      '<span class="k mono">CAMERA ROLL</span><div class="lines"><div class="ln"><input type="text" class="raw" data-bio="camArena" value="' + esc(cr.arena || '') + '" placeholder="Are.na board address or slug"><label class="mono">ONE EVERY <input type="text" class="raw" data-bio="camEvery" value="' + esc(cr.every || 600) + '" style="width:5ch;display:inline"> MS</label><span></span></div><p class="note">The pictures on this board, newest first, one at a time.</p></div>' +
+      '</div></section>';
+    var drop = document.getElementById('portraitDrop'), pin = document.createElement('input'); pin.type = 'file'; pin.accept = 'image/*'; pin.hidden = true; drop.appendChild(pin);
+    drop.addEventListener('click', function () { pin.click(); });
+    drop.addEventListener('dragover', function (e) { e.preventDefault(); drop.classList.add('over'); }); drop.addEventListener('dragleave', function () { drop.classList.remove('over'); });
+    drop.addEventListener('drop', function (e) { e.preventDefault(); drop.classList.remove('over'); if (e.dataTransfer.files.length) setPortrait(e.dataTransfer.files[0]); });
+    pin.addEventListener('change', function () { if (pin.files.length) setPortrait(pin.files[0]); });
+    document.getElementById('ctAdd').addEventListener('click', function () { S.about.contact.push({ t: '' }); ST.touch('BIO · CONTACT'); renderBio(); });
+  }
+  function setPortrait(f) {
+    log('READING ' + f.name.toUpperCase());
+    shrink(f, 1200).then(function (r) {
+      var path = 'img/about/portrait-' + Date.now().toString(36) + '.' + r.ext;
+      var old = S.about.portrait; if (old && !ST.fileOf(old)) ST.purge(old); else if (old) ST.unstage(old);
+      ST.stage(path, r.blob, 'BIO · PORTRAIT'); S.about.portrait = path; log('PORTRAIT REPLACED', 'on'); renderBio();
+    }, function (e) { log((e && e.message || 'CANNOT READ IT').toUpperCase(), 'bad'); });
+  }
+  cats.addEventListener('input', function (e) {
+    var inp = e.target, a = S.about;
+    if (inp.matches('[data-bio]')) {
+      var k = inp.getAttribute('data-bio');
+      if (k === 'paras') a.paras = inp.value.split(/\n\s*\n/).map(function (p) { return rekeep(p.trim().replace(/\s*\n\s*/g, ' ')); }).filter(Boolean);
+      if (k === 'arena') { S.arena = inp.value.split('\n').map(boardSlug).filter(Boolean); ST.content().arena = S.arena; }
+      if (k === 'camArena') a.cameraRoll.arena = boardSlug(inp.value);
+      if (k === 'camEvery') a.cameraRoll.every = Math.max(100, parseInt(inp.value, 10) || 600);
+      ST.touch(k === 'arena' ? 'INSPIRATIONS BOARDS' : k === 'paras' ? 'BIO · WORDS' : 'BIO · CAMERA ROLL'); return;
+    }
+    if (inp.matches('[data-ct]')) { var c = a.contact[+inp.getAttribute('data-ct')]; if (!c) return; var f = inp.getAttribute('data-f'); if (f === 'href') { if (inp.value.trim()) c.href = inp.value.trim(); else delete c.href; } else c.t = inp.value; ST.touch('BIO · CONTACT'); }
+  });
+  cats.addEventListener('click', function (e) { var b = e.target.closest('button[data-ctdel]'); if (!b) return; S.about.contact.splice(+b.getAttribute('data-ctdel'), 1); ST.touch('BIO · CONTACT'); renderBio(); });
+
+  /* ---- save: the open section's arrangement as its document (sort/<section>), in the store ---- */
+  function docFor(id) {
+    var sec = sections.filter(function (s) { return s.id === id; })[0], st = states[id];
+    var doc = { cats: st.cats, savedAt: new Date().toISOString() };
+    if (!sec.fixed) doc.known = st.cats.reduce(function (a, c) { return a.concat(baseImgs(sec, c.id)); }, []);   /* every picture the hub knew: a picture added later joins the end of its group */
+    return doc;
+  }
+  function save() { if (cur.bio) return; ST.set('sort/' + cur.id, docFor(cur.id)); }
+  /* open a section: the site's own data, then the saved document over it (pictures that no longer exist dropped; projects added since joined on) */
+  function load(sec) {
+    if (loaded[sec.id] || sec.bio) return; loaded[sec.id] = true;
+    var saved = ST.get('sort/' + sec.id); if (!saved || !saved.cats) return;
+    var base = sec.base();
+    if (sec.frames) { states[sec.id] = { cats: S.photo.map(function (c) { var sc = saved.cats.filter(function (x) { return x.id === c.id; })[0]; return { id: c.id, name: c.name, groups: S.arrangePhoto(c, sc, saved.known, function (s) { return !!all[s]; }).map(function (g) { return { name: g.name, lc: g.lc, frames: g.frames, imgs: flat(g.frames) }; }) }; }), savedAt: saved.savedAt }; return; }
+    states[sec.id] = { cats: base.map(function (c) {
+      var sc = saved.cats.filter(function (x) { return x.id === c.id; })[0]; if (!sc) return { id: c.id, name: c.name, groups: c.groups };
+      var groups = sc.groups.map(function (g) { if (!sec.fixed && (!g.id || !c.groups.some(function (b) { return b.id === g.id; }))) return null; var o = { name: g.name || '', imgs: g.imgs.filter(function (s) { return all[s]; }) }; if (g.id) o.id = g.id; if (g.cols) { o.cols = g.cols; if (g.frames) o.frames = g.frames.map(function (f) { return f.filter(function (s) { return all[s]; }); }); } return o; }).filter(Boolean);
+      if (!sec.fixed) c.groups.forEach(function (b) { if (!groups.some(function (g) { return g.id === b.id; })) groups.push(b); });   /* projects that joined this page since */
+      return { id: c.id, name: c.name, groups: groups };
+    }), savedAt: saved.savedAt };
+  }
+  function open(id) {
+    cur = sections.filter(function (s) { return s.id === id; })[0] || sections[0];
+    if (!cur.bio) { if (!states[cur.id]) states[cur.id] = fromBase(cur); load(cur); }
+    Array.prototype.forEach.call(tabsEl.children, function (a) { a.classList.toggle('on', a.getAttribute('data-id') === cur.id); });
+    var pg = S.pillars.filter(function (p) { return p.id === cur.id; })[0];
+    howEl.textContent = cur.how; back.href = pg ? pg.file : (cur.bio ? 'index.html#about' : 'index.html'); back.innerHTML = '[ ' + (cur.bio ? 'BIO SHEET' : cur.label.toUpperCase() + ' PAGE') + ' ]';
+    var placeLink = document.getElementById('placeLink'); placeLink.hidden = !pg; if (pg) placeLink.href = pg.file + '#place';
+    render(); log('');
+  }
+  tabsEl.innerHTML = sections.map(function (s) { return '<a href="#' + s.id + '" data-id="' + s.id + '"><span class="b">[</span> ' + s.label.toUpperCase() + ' <span class="b">]</span></a>'; }).join('');
+  window.addEventListener('hashchange', function () { open(location.hash.slice(1)); });
+  drawConn(); drawState();
+  open(location.hash.slice(1));
+  ST.ready.then(function () { render(); drawState(); if (ST.changes().length) log('UNPUBLISHED CHANGES FROM LAST TIME ARE BACK — PUBLISH WHEN READY', 'on'); });
+  if (!ST.canWrite()) { connect.hidden = false; }
+})();
+</script>
+</body>
+</html>

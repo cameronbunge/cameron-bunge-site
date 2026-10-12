@@ -150,7 +150,7 @@
   if (location.hash === '#inspirations') wallStart();
 
   /* the camera roll's pictures: the sort tool's Camera Roll tab keeps them in the database (sort/camera) and the asset store; read here */
-  window.claude && claude.use('db').then(function (db) {
+  window.SITE_DB && SITE_DB.then(function (db) {
     if (!db) return;
     return db.doc('sort/camera').get().then(function (snap) {
       var v = snap.exists ? snap.data() : null; if (!v || !v.imgs || !v.imgs.length || camFromBoard) return;

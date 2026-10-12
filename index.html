@@ -120,7 +120,6 @@
   }
   @media (prefers-reduced-motion: reduce) { .pic .tag { transition: none; } }
 </style>
-<style>html.live .switch { display: none !important; }</style>
 </head>
 <body data-hover="dim" data-paper="vellum" data-struct="b">
 <div class="screen">
@@ -150,12 +149,12 @@
 <div class="switch" role="group" aria-label="Review controls">
   <span class="tool" id="place">DRAG A PICTURE TO PLACE IT · ITS CORNER TO SIZE IT</span>
   <button id="placeReset" type="button">RESET</button>
-  <a class="tool" href="media.html#home">MEDIA HUB →</a>
+  <a class="tool" href="hub.html#home">MEDIA HUB →</a>
 </div>
 
 <script src="js/data.js"></script>
-<script src="js/state.js"></script>
-<script src="js/live.js"></script>
+<script>document.write('<script src="js/content.js?v=' + Math.floor(Date.now() / 6e4) + '"><\/script>');</script>
+<script src="js/store.js"></script>
 <script>
 (function () {
   var S = window.SITE, screen = document.querySelector('.screen'), ready = false;
@@ -304,14 +303,14 @@
   }
   function remember(el) { var k = key(el), v = layout[k] || {}; ['x', 'y', 'w'].forEach(function (p) { var s = el.style.getPropertyValue('--' + p); if (s) v[p] = s; }); layout[k] = v; }
   function save() {
-    if (!db) { note('NOT SAVED: OPEN FROM YOUR OWN ACCOUNT'); return; }
+    if (!db) { note('NOT SAVED: CONNECT GITHUB IN THE HUB'); return; }
     note('…'); if (saveTimer) clearTimeout(saveTimer);
-    saveTimer = setTimeout(function () { db.doc('layout/home').set({ pics: layout, savedAt: new Date().toISOString() }).then(function () { note('PLACED · SAVED', true); }, function () { note('NOT SAVED'); }); }, 500);
+    saveTimer = setTimeout(function () { db.doc('layout/home').set({ pics: layout, savedAt: new Date().toISOString() }).then(function () { note('PLACED · PUBLISH TO MAKE IT LIVE', true); }, function () { note('NOT SAVED'); }); }, 500);
   }
   function placeable(el) {
     var sx, sy, ox, oy, ow, moved = false, active = false, sizing = false;
     el.addEventListener('pointerdown', function (e) {
-      if (!desktop() || e.button !== 0 || window.SITE_LIVE) return;
+      if (!desktop() || e.button !== 0 || !(window.SITE_STORE && SITE_STORE.canWrite())) return;   /* placing: the writer only (a GitHub token in this browser) */
       var r = el.getBoundingClientRect(), f = field.getBoundingClientRect();
       active = true; moved = false; sizing = !!e.target.closest('.grip');
       sx = e.clientX; sy = e.clientY; ox = r.left - f.left; oy = r.top - f.top; ow = r.width;
@@ -343,9 +342,9 @@
   renderList(); renderField(HOME);
   window.addEventListener('load', function () { Object.keys(hover).forEach(function (k) { (hover[k] || []).forEach(function (src) { var im = new Image(); im.src = src; }); }); });
   document.getElementById('placeReset').addEventListener('click', function () { layout = {}; applyLayout(); if (db) db.doc('layout/home').set({ pics: {}, savedAt: new Date().toISOString() }).then(function () { note('RESET TO THE STYLESHEET', true); }); });
-  window.claude && claude.use('db').then(function (d) {
+  window.SITE_DB && SITE_DB.then(function (d) {
     db = d; if (!db) { note('PLACING NOT SAVED HERE (READ-ONLY)'); return; }
-    /* the chosen pictures (sort tool, HOME tab), then their places */
+    /* the chosen pictures (hub, HOME tab), then their places — from the store (js/content.js) */
     return Promise.all([db.doc('sort/home').get(), db.doc('sort/removed').get()]).then(function (r) {
       var snap = r[0], rv = r[1].exists ? r[1].data() : null, gone = {}; (rv && rv.srcs || []).forEach(function (s) { gone[s] = 1; });   /* removed in the media hub */
       var keep = function (list) { return list.filter(function (s) { return !gone[s]; }); };
@@ -356,7 +355,7 @@
       });
       if (!gs.length && Object.keys(gone).length) renderField(keep(HOME));
       return db.doc('layout/home').get();
-    }).then(function (snap) { var v = snap.exists ? snap.data() : null; if (v && v.pics) { layout = v.pics; applyLayout(); note(Object.keys(layout).length ? 'PLACED · SAVED ' + new Date(v.savedAt).toLocaleString() : 'DRAG A PICTURE TO PLACE IT · ITS CORNER TO SIZE IT', true); } });
+    }).then(function (snap) { var v = snap.exists ? snap.data() : null; if (v && v.pics) { layout = v.pics; applyLayout(); note(Object.keys(layout).length ? 'PLACED ' + new Date(v.savedAt).toLocaleString() : 'DRAG A PICTURE TO PLACE IT · ITS CORNER TO SIZE IT', true); } });
   }).catch(function () { note('PLACING NOT SAVED HERE'); });
 })();
 </script>

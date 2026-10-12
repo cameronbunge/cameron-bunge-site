@@ -9,7 +9,6 @@
 <link rel="stylesheet" href="css/site.css">
 <link rel="stylesheet" href="css/about.css">
 <link rel="stylesheet" href="css/paper.css">
-<style>html.live .switch { display: none !important; }</style>
 </head>
 <body data-pillar="product" class="pillar" data-struct="b" data-hover="dim" data-align="right" data-sheetw="100" data-paper="vellum" data-copy="light-left">
 
@@ -32,12 +31,12 @@
 <div class="paper" aria-hidden="true"></div>
 
 <div class="switch" role="group" aria-label="Review controls">
-  <a class="tool" href="media.html#product">MEDIA HUB →</a>
+  <a class="tool" href="hub.html#product">MEDIA HUB →</a>
 </div>
 
 <script src="js/data.js"></script>
-<script src="js/state.js"></script>
-<script src="js/live.js"></script>
+<script>document.write('<script src="js/content.js?v=' + Math.floor(Date.now() / 6e4) + '"><\/script>');</script>
+<script src="js/store.js"></script>
 <script src="js/pillar.js"></script>
 <script src="js/about.js"></script>
 </body>

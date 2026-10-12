@@ -28,7 +28,6 @@
   .inspo .mark { padding-bottom: 14px; }
   @media (max-width: 900px) { .wall { columns: 3 110px; } }
 </style>
-<style>html.live .switch { display: none !important; }</style>
 </head>
 <body class="inspo" data-paper="vellum">
 
@@ -45,8 +44,8 @@
 <div class="paper" aria-hidden="true"></div>
 
 <script src="js/data.js"></script>
-<script src="js/state.js"></script>
-<script src="js/live.js"></script>
+<script>document.write('<script src="js/content.js?v=' + Math.floor(Date.now() / 6e4) + '"><\/script>');</script>
+<script src="js/store.js"></script>
 <script src="js/about.js"></script>
 <script>
 (function () {

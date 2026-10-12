@@ -176,9 +176,9 @@
     Array.prototype.forEach.call(set.querySelectorAll('.c'), function (c) { var v = {}; ['x', 'y', 'w'].forEach(function (k) { var sv = c.style.getPropertyValue('--' + k); if (sv) v[k] = sv; }); lay[c.getAttribute('data-src')] = v; });
   }
   function savePlaced() {
-    if (!placeDb) { note('NOT SAVED: OPEN FROM YOUR OWN ACCOUNT'); return; }
+    if (!placeDb) { note('NOT SAVED: CONNECT GITHUB IN THE HUB'); return; }
     note('…'); if (placeTimer) clearTimeout(placeTimer);
-    placeTimer = setTimeout(function () { placeDb.doc('layout/' + pillar.id).set({ sets: playout, savedAt: new Date().toISOString() }).then(function () { note('PLACED · SAVED', true); }, function () { note('NOT SAVED'); }); }, 500);
+    placeTimer = setTimeout(function () { placeDb.doc('layout/' + pillar.id).set({ sets: playout, savedAt: new Date().toISOString() }).then(function () { note('PLACED · PUBLISH TO MAKE IT LIVE', true); }, function () { note('NOT SAVED'); }); }, 500);
   }
   function placeable(c, set) {
     var sx, sy, ox, oy, ow, moved = false, active = false, sizing = false, wasPlaced = false;
@@ -205,7 +205,7 @@
     c.addEventListener('click', function (e) { if (placingOn()) { e.preventDefault(); e.stopPropagation(); } }, true);
   }
   function setPlacing(on) {
-    if (window.SITE_LIVE) on = false;   /* no placing on the live site */
+    if (!(window.SITE_STORE && SITE_STORE.canWrite())) on = false;   /* placing: the writer only (a GitHub token in this browser, from the hub) */
     body.classList.toggle('placing', !!on);
     if (placeBtn) placeBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
     note(on ? 'DRAG A PICTURE TO PLACE IT · ITS CORNER TO SIZE IT' : '', !!on);
@@ -335,7 +335,7 @@
     entries.forEach(function (e) { if (!cat.groups.some(function (g) { return g.id === e.id; })) out.push(e); });
     entries = out; render(); alignTop();
   }
-  if (!isPhoto && window.claude) claude.use('db').then(function (db) {
+  if (!isPhoto && window.SITE_DB) SITE_DB.then(function (db) {
     if (!db) return;
     placeDb = db;
     return Promise.all([db.doc('sort/' + pillar.id).get(), db.doc('sort/removed').get(), db.doc('layout/' + pillar.id).get()]).then(function (r) {
