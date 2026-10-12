@@ -100,22 +100,22 @@
   .screen { height: auto; min-height: 0; display: flex; flex-direction: column; gap: 0; padding: 14px var(--gutter) 8px; }
   .screen > .top { order: 0; justify-content: flex-start; pointer-events: auto; }
   .screen > .top .mark { padding: 0; }
-  .screen > .center { order: 1; position: static; transform: none; padding: 26px 0 22px; pointer-events: auto; }
-  .center ol { font-size: 11.5vw; gap: 0.02em; }
+  .screen > .center { order: 1; position: static; transform: none; padding: 16px 0 14px; pointer-events: auto; }
+  .center ol { font-size: 7vw; gap: 0.06em; }   /* 40% down from the first cut (10/12): the first screen holds the name, the four, the pictures and the start of the lines */
   .center ol a { color: var(--ink); -webkit-text-fill-color: var(--ink); background: none; white-space: normal; }
   .screen > .field { order: 2; position: static; inset: auto; display: flex; flex-direction: row; flex-wrap: nowrap; align-items: flex-start; gap: 10px;
     margin: 0 calc(-1 * var(--gutter)); padding: 0 var(--gutter); overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scroll-padding: 0 var(--gutter); -webkit-overflow-scrolling: touch; scrollbar-width: none; overscroll-behavior-x: contain; pointer-events: auto; z-index: auto; }
   .screen > .field::-webkit-scrollbar { display: none; }
   .pic, .p1, .p2, .p3, .p4, .p5, .p6, .p7 { position: static !important; flex: 0 0 auto; width: auto !important; height: auto; grid-row: auto; overflow: visible; background: none; cursor: default; touch-action: pan-x pan-y; scroll-snap-align: start; }
-  .pic img { height: auto; width: auto; max-height: min(52vh, 440px); max-width: calc(100vw - 2 * var(--gutter)); object-fit: contain; object-position: left top; }
+  .pic img { height: auto; width: auto; max-height: 36vh; max-height: min(36svh, 320px); max-width: calc(100vw - 2 * var(--gutter)); object-fit: contain; object-position: left top; }
   .pic .tag { display: none; }
-  .screen > .bioRow { order: 3; display: block; margin-top: 26px; pointer-events: auto; }
+  .screen > .bioRow { order: 3; display: block; margin-top: 18px; pointer-events: auto; }
   .bioCol { max-width: 40ch; }
   .bio { text-align: left; text-wrap: pretty; }
   .bio + .bio { margin-top: 1.2em; }
   body[data-paper="vellum"] .field { pointer-events: auto; }
   /* the doors (INSPIRATIONS / CAMERA ROLL) under the lines, as two brackets side by side */
-  .doors { position: static; transform: none; display: flex; gap: 14px; margin: 22px 0 0; padding: 0 var(--gutter) 28px; font-size: 12px; }
+  .doors { position: static; transform: none; display: flex; gap: 14px; margin: 18px 0 0; padding: 0 var(--gutter) 28px; font-size: 12px; }
   /* with the sheet open the doors hold its top edge, centred, over the words' top padding */
   body.about-open .doors, body.about-open.cam-open .doors, body.about-open.wall-open .doors { position: fixed; left: 50%; top: 14px; bottom: auto; transform: translateX(-50%); margin: 0; padding: 0; z-index: 7; }
 
