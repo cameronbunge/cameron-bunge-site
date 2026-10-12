@@ -106,13 +106,21 @@
   .center ol li { text-align: right; }
   .center ol a { color: var(--ink); -webkit-text-fill-color: var(--ink); background: none; white-space: normal; flex-direction: row-reverse; }
   .center ol .n { margin-right: 0; margin-left: 0.22em; }
-  .screen > .field { order: 2; position: static; inset: auto; display: flex; flex-direction: row; flex-wrap: nowrap; align-items: flex-start; gap: 10px;
-    margin: 0 calc(-1 * var(--gutter)); padding: 0 var(--gutter); overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scroll-padding: 0 var(--gutter); -webkit-overflow-scrolling: touch; scrollbar-width: none; overscroll-behavior-x: contain; pointer-events: auto; z-index: auto; }
-  .screen > .field::-webkit-scrollbar { display: none; }
-  .pic, .p1, .p2, .p3, .p4, .p5, .p6, .p7 { position: static !important; flex: 0 0 auto; width: auto !important; height: auto; grid-row: auto; overflow: visible; background: none; cursor: default; touch-action: pan-x pan-y; scroll-snap-align: start; }
-  .pic img { height: auto; width: auto; max-height: 36vh; max-height: min(36svh, 320px); max-width: calc(100vw - 2 * var(--gutter)); object-fit: contain; object-position: left top; }
+  /* the pictures: the desktop field in miniature — seven small pictures scattered through the band between the four and the lines,
+     a couple of them nudging up beside the words and down towards the paragraph (10/12). Places in % of the band / vw; the desktop
+     places (and anything placed by hand there) do not apply. */
+  .screen > .field { order: 2; position: relative; inset: auto; display: block; height: 46vh; height: 46svh; margin: 6px 0 0; overflow: visible; pointer-events: auto; z-index: 1; }
+  .pic, .p1, .p2, .p3, .p4, .p5, .p6, .p7 { position: absolute !important; left: var(--mx) !important; top: var(--my) !important; width: var(--mw) !important; height: auto !important; grid-row: auto; overflow: visible; background: none; cursor: default; touch-action: auto; transform: none !important; }
+  .pic img { display: block; width: 100% !important; height: auto !important; max-height: none; max-width: none; object-fit: contain; }
+  .p1 { --mx: 54%; --my: 6%;  --mw: 30vw; }   /* the big one, upper right */
+  .p2 { --mx: 76%; --my: 66%; --mw: 22vw; }   /* right, low */
+  .p3 { --mx: 0%;  --my: -22%; --mw: 16vw; }   /* top-left, up beside the words */
+  .p4 { --mx: 3%;  --my: 50%; --mw: 20vw; }   /* left, low */
+  .p5 { --mx: 31%; --my: 80%; --mw: 17vw; }   /* low, left of centre: down towards the lines */
+  .p6 { --mx: 41%; --my: 1%;  --mw: 11vw; }   /* tiny, top centre */
+  .p7 { --mx: 24%; --my: 34%; --mw: 24vw; }   /* centre */
   .pic .tag { display: none; }
-  .screen > .bioRow { order: 3; display: block; margin-top: 14vh; margin-top: 14svh; pointer-events: auto; }   /* a block of white under the pictures before the lines (10/12) */
+  .screen > .bioRow { order: 3; display: block; margin-top: 8vh; margin-top: 8svh; pointer-events: auto; }   /* the band above holds the white; a little more before the lines (10/12) */
   .bioCol { max-width: 40ch; }
   .bio { text-align: left; text-wrap: pretty; }
   .bio + .bio { margin-top: 1.2em; }
