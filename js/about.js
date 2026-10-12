@@ -56,8 +56,15 @@
   /* ---- INSPIRATIONS: the wall ---- */
   var boards = S.arena || [], wallEl = document.createElement('div'), wallLoaded = false, seen = {};
   wallEl.className = 'about-wall'; wallEl.hidden = true; wallEl.setAttribute('aria-label', 'Inspirations');
-  wallEl.innerHTML = boards.map(function (slug) { return '<div class="row" data-slug="' + slug + '"><div class="cells"></div></div>'; }).join('') || '<p class="about-camnote"><span class="b">[</span> NO BOARDS YET <span class="b">]</span></p>';
+  wallEl.innerHTML = boards.map(function (slug) { return '<div class="row" data-slug="' + slug + '"><span class="lbl"></span><div class="cells"></div></div>'; }).join('') || '<p class="about-camnote"><span class="b">[</span> NO BOARDS YET <span class="b">]</span></p>';
   ov.appendChild(wallEl);
+  /* the board's name in the corner of its row — Are.na's title once it answers; the slug, de-hyphenated and without its id tail, until then */
+  function label(slug, title) {
+    var row = wallEl.querySelector('.row[data-slug="' + slug + '"]'), el = row && row.querySelector('.lbl'); if (!el) return;
+    var t = title ? String(title).trim() : slug.replace(/-[a-z0-9]{10,}$/, '').replace(/-/g, ' ');
+    el.textContent = t; if (row && title) row.setAttribute('data-title', t);
+  }
+  boards.forEach(function (slug) { label(slug, null); });
   function cell(block, slug) {
     var im = block.image; if (!im) return;
     var src = (im.display && im.display.url) || (im.large && im.large.url) || (im.original && im.original.url); if (!src || seen[src]) return;
@@ -71,9 +78,10 @@
     return fetch('https://api.are.na/v2/channels/' + encodeURIComponent(slug) + '?per=100&page=' + page + '&sort=position&direction=desc')
       .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
       .then(function (j) {
-        var row = wallEl.querySelector('.row[data-slug="' + slug + '"]'); if (row && j.title) row.setAttribute('data-title', String(j.title).trim());
+        if (j.title) label(slug, j.title);
         (j.contents || []).forEach(function (b) { cell(b, slug); });
-        if ((j.contents || []).length === 100 && page < 3) return wallFetch(slug, page + 1);
+        /* every page of the board, so the row holds everything saved on it, not only the newest hundred (10/12) */
+        if ((j.contents || []).length === 100 && page < 20) return wallFetch(slug, page + 1);
       })
       .catch(function () { var row = wallEl.querySelector('.row[data-slug="' + slug + '"]'); if (row && !row.querySelector('a')) row.classList.add('off'); });
   }
@@ -96,6 +104,30 @@
     var row = e.target.closest('.cells'); if (!row) return;
     if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) { row.scrollLeft += e.deltaY; e.preventDefault(); }
   }, { passive: false });
+  /* and a row pans under a held mouse — click and drag to scroll (10/12); a real drag swallows the click so no block opens by accident */
+  (function () {
+    var held = null, x0 = 0, s0 = 0, moved = false;
+    wallEl.addEventListener('pointerdown', function (e) {
+      var row = e.target.closest('.cells'); if (!row || e.button !== 0) return;
+      held = row; x0 = e.clientX; s0 = row.scrollLeft; moved = false;
+    });
+    wallEl.addEventListener('pointermove', function (e) {
+      if (!held) return;
+      var dx = e.clientX - x0;
+      /* the pointer is captured only once it is a drag, so a plain click still lands on the block and opens it */
+      if (!moved && Math.abs(dx) > 4) { moved = true; held.classList.add('held'); try { held.setPointerCapture(e.pointerId); } catch (x) {} }
+      if (moved) { held.scrollLeft = s0 - dx; e.preventDefault(); }
+    });
+    function drop(e) {
+      if (!held) return;
+      var row = held; held = null;
+      try { row.releasePointerCapture(e.pointerId); } catch (x) {}
+      if (moved) setTimeout(function () { row.classList.remove('held'); }, 0);
+    }
+    wallEl.addEventListener('pointerup', drop); wallEl.addEventListener('pointercancel', drop);
+    wallEl.addEventListener('click', function (e) { if (moved && e.target.closest('.cells')) { e.preventDefault(); e.stopPropagation(); moved = false; } }, true);
+    wallEl.addEventListener('dragstart', function (e) { if (e.target.closest('.cells')) e.preventDefault(); });
+  })();
 
   /* ---- the doors — INSPIRATIONS and CAMERA ROLL (locked 10/11): on home they hold the bottom-left corner, stacked; on the bio sheet they sit in
      the middle of the page, and step up to the top while a door is open. Nowhere else. ---- */
