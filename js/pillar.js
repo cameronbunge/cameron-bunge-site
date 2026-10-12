@@ -77,6 +77,11 @@
   }
   function fitSheet() {
     var set = document.querySelector('.set.on'), nat = set && set.querySelector('.nat'), txt = document.getElementById('txts'); if (!set || !txt || !pane) return;
+    if (!window.matchMedia('(min-width: 901px)').matches) {   /* the phone lays itself out (css/phone.css): nothing measured, nothing set */
+      pane.style.width = ''; pane.style.right = ''; pane.style.removeProperty('--pane-top');
+      Array.prototype.forEach.call(set.querySelectorAll('.c'), function (c) { c.style.width = ''; c.style.height = ''; });
+      return;
+    }
     if (set.classList.contains('mishka')) {
       /* Mishka's trio fills the band: the pane spans the page, the films are as tall as the band less the terms */
       var pt2 = page.getBoundingClientRect().top, bt2 = line.getBoundingClientRect().bottom + 28;
@@ -232,7 +237,7 @@
   var setsEl = document.getElementById('sets');
   if (setsEl) {
     setsEl.addEventListener('click', function (e) {
-      var m = e.target.closest('.c img, .c video'); if (!m || body.classList.contains('zoomed') || placingOn()) return;
+      var m = e.target.closest('.c img, .c video'); if (!m || body.classList.contains('zoomed') || placingOn() || !window.matchMedia('(min-width: 901px)').matches) return;   /* no zoom on the phone: the strip swipes */
       e.preventDefault(); e.stopPropagation(); zoomIn(m);
     });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') zoomOut(); });

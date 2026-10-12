@@ -1,0 +1,134 @@
+/* THE PHONE (10/12). Everything under 900px wide. Loaded last, so it has the final word over the desktop composition.
+   The desktop pages are a fixed screen with things placed on it; the phone is one column that scrolls: the name, the names of the
+   projects, the pictures as a strip you swipe through — one picture at a time, as the Photo + Video page already works — the terms, the
+   copy, then the big title, then the nav. The vellum stays as colour only: no grain, no blur, which read as a heavy layer at phone
+   density. The placing tools, the review strip and the zoom are desktop things and do not apply. */
+@media (max-width: 900px) {
+  :root { --gutter: 16px; }
+
+  /* ---- vellum: colour only ---- */
+  body[data-paper^="vellum"] .paper { display: none !important; }
+  body[data-paper^="vellum"] .ttl, body[data-paper^="vellum"] .line li, body[data-paper^="vellum"] .mark h1,
+  body[data-paper^="vellum"] .where-l, body[data-paper^="vellum"] .where-r, body[data-paper^="vellum"] .fr .big,
+  body[data-paper^="vellum"] .center ol li, body[data-paper^="vellum"] .mark .under, body[data-paper^="vellum"] .pillars a,
+  body[data-paper^="vellum"] #txts .txt, body[data-paper^="vellum"] .arrows button, body[data-paper^="vellum"] .bioRow .bio,
+  body[data-paper^="vellum"] .fr .date, body[data-paper^="vellum"] .about-col, body[data-paper^="vellum"] .about-contact,
+  body[data-paper^="vellum"] .about-close { filter: none !important; -webkit-text-stroke: 0 !important; }
+  body[data-paper="vellum-deep"] .pic img, body[data-paper="vellum-deep"] .nat .c img, body[data-paper="vellum-deep"] .nat .c video, body[data-paper="vellum-deep"] .fr.imgs .c img { filter: none !important; }
+  /* the pale of the names a touch darker on a phone, where the paper's grain is not there to carry it */
+  body[data-paper^="vellum"] { --pale: #b9bbbe; }
+
+  /* ---- no desktop tools ---- */
+  .switch, .zoom, .nat .c .grip, .fr.imgs .c .grip, .pic .grip { display: none !important; }
+  body.zoomed .pane, body.zoomed #txts, body.zoomed .ttl { visibility: visible; }
+  body.zoomed .line li:not(.on) { display: list-item; }
+  .nat .c img, .nat .c video { cursor: default; }
+
+  /* ---- the chrome: name and city top-left, static ---- */
+  .mark { position: static; text-align: left; padding: 14px var(--gutter) 0; background: transparent; }
+  .mark h1 { font-size: 26px; }
+  .mark .under { margin-top: 6px; }
+
+  /* ---- section pages: one column ---- */
+  body.pillar { overflow: auto; }
+  body.pillar .page { height: auto; display: flex; flex-direction: column; padding: 18px var(--gutter) 12px; }
+  body.pillar .line { order: 1; width: auto; margin: 0; gap: 0.12em; }
+  body.pillar .line li { width: auto; }
+  body.pillar .line a { font-size: 22px; white-space: normal; line-height: 1.05; }
+  body.pillar .pane { order: 2; position: static !important; transform: none; width: auto !important; right: auto !important; margin-top: 22px; text-align: left; }
+  body.pillar .ttl { order: 3; position: static; width: auto; margin: 34px 0 0; white-space: normal; font-size: 15vw; line-height: 0.88; }
+  body.pillar .ttl .n { margin-right: 0.14em; }
+
+  /* the pictures: a strip, one picture per swipe, bleeding to the edges of the screen; the project's row, grid or placed arrangement all
+     fold into it (rows unwrap, fixed positions and script-set sizes are set aside) */
+  body.pillar .set .nat, body.pillar .set .nat.grid, body.pillar .set.placed .nat {
+    display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important; align-items: flex-start; gap: 10px;
+    width: auto !important; height: auto !important; margin: 0 calc(-1 * var(--gutter)); padding: 0 var(--gutter);
+    overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scroll-padding: 0 var(--gutter); -webkit-overflow-scrolling: touch; scrollbar-width: none; overscroll-behavior-x: contain; }
+  body.pillar .set .nat::-webkit-scrollbar { display: none; }
+  body.pillar .set .nat .row { display: contents; }
+  body.pillar .set .nat .c, body.pillar .set.placed .c, body.pillar .nat.grid .c {
+    position: static !important; flex: 0 0 auto !important; width: auto !important; height: auto !important;
+    transform: none !important; scroll-snap-align: start; background: none; z-index: auto; }
+  /* each picture as big as the screen allows — a portrait as tall as the band, a landscape as wide as the screen — at its own proportion */
+  body.pillar .set .nat .c img, body.pillar .set .nat .c video, body.pillar .set.placed .c img, body.pillar .set.placed .c video, body.pillar .nat.grid .c img, body.pillar .nat.grid .c video {
+    display: block; height: auto !important; width: auto !important; max-width: calc(100vw - 2 * var(--gutter)) !important; max-height: min(56vh, 460px) !important; object-fit: contain; object-position: left top; }
+  body.pillar .set .nat .c video { max-height: min(56vh, 460px) !important; }
+  /* Mishka's trio: the logo over the film, stacked */
+  body.pillar .set.mishka .trio { height: auto; display: grid; gap: 10px; }
+  body.pillar .set.mishka .side { position: static; width: 100%; max-width: none; height: 46vh; object-fit: contain; object-position: left; }
+  body.pillar .set.mishka .side:last-child { display: none; }
+  body.pillar .set.mishka .spin { position: static; width: 100%; height: 40vh; }
+  body.pillar .set.soon .soonline { text-align: left; }
+  /* the terms: in one wrapped line under the pictures */
+  body.pillar .meta { display: flex; flex-flow: row wrap; justify-content: flex-start; gap: 6px 12px; margin: 14px 0 0; font-size: 11px; }
+  body.pillar .meta > span { white-space: nowrap; }
+  /* the copy: under the terms, in the city line's face */
+  body.pillar #txts, body.pillar[data-copy$="left"] #txts { position: static; width: auto; max-width: 40ch; margin: 14px 0 0; text-align: left; }
+  body.pillar[data-copy="none"] #txts { display: block; }
+  body.pillar .txt { text-align: left; }
+  body.pillar .copy { margin: 0; font-family: var(--display); font-stretch: 100%; font-weight: 400; font-size: 13px; line-height: 1.5; letter-spacing: 0.01em; text-transform: uppercase; max-width: none; }
+  /* the nav: under the title, wrapped */
+  .pillars { position: static; width: auto; margin: 14px 0 0; padding: 0 var(--gutter) 28px; display: flex; flex-wrap: wrap; justify-content: flex-start; gap: 6px 12px; font-size: 10.5px; }
+
+  /* ---- Photo + Video: the frame as a column, swiped sideways ---- */
+  body.seq { overflow: auto; --band-top: 0px; --band-bottom: 0px; }
+  body.seq .mark { padding-bottom: 0; }
+  .where-l { position: static; transform: none; display: grid; gap: 2px; padding: 20px var(--gutter) 0; font-size: 22px; pointer-events: auto; }
+  .stage { position: static; cursor: default; padding: 16px 0 0; }
+  .fr { position: static; opacity: 1; display: block; padding: 0 var(--gutter); }
+  .fr.imgs .grp, .fr.imgs.placed .grp, .fr.imgs.auto .grp { position: static; display: grid; gap: 12px; width: 100%; }
+  .fr.imgs .c, .fr.imgs.placed .c, .fr.imgs.auto .c { position: relative; left: auto; top: auto; width: 100%; max-width: 100%; transform: none !important; background: none; touch-action: pan-x pan-y; }
+  .fr.imgs .c img, .fr.imgs .c video, .fr.imgs.g2 .c img, .fr.imgs.g3 .c img, .fr.imgs.g2 .c video, .fr.imgs.g3 .c video,
+  .fr.imgs.placed .c img, .fr.imgs.placed .c video, .fr.imgs.auto .c img, .fr.imgs.auto .c video { display: block; width: 100%; height: auto; max-width: none; max-height: 72vh; object-fit: contain; object-position: left top; }
+  .fr.imgs .c iframe { width: 100%; }
+  .fr.imgs .c .date { display: none; }
+  .fr.imgs .c .blocked { position: static; transform: none; text-align: left; padding: 10px 0; }
+  .where-r { position: static; transform: none; padding: 12px var(--gutter) 0; text-align: left; font-size: 12px; pointer-events: auto; }
+  body.seq .ttl { position: static; width: auto; margin: 26px 0 0; padding: 0 var(--gutter); white-space: normal; font-size: 15vw; line-height: 0.88; }
+  .arrows { position: static; padding: 14px var(--gutter) 0; font-size: 12px; gap: 16px; }
+  .arrows button { padding: 4px 0; }
+  body.seq .pillars { margin-top: 10px; }
+  /* the words are plain ink on the phone (no painting through the pictures) */
+  body.seq .ttl, .where-l .cat, .where-l .grpname, .where-r, body.seq .mark h1, body.seq .mark .under { color: var(--ink); -webkit-text-fill-color: var(--ink); background: none; }
+  .where-l .grpname.ph { color: var(--pale); -webkit-text-fill-color: var(--pale); }
+  .where-r .of { color: var(--muted); -webkit-text-fill-color: var(--muted); }
+
+  /* ---- home: the name, the four offerings, the pictures as a strip, the lines, the doors ---- */
+  html, body { height: auto; }
+  body:not(.pillar):not(.seq) { overflow: auto; }
+  .screen { height: auto; min-height: 0; display: flex; flex-direction: column; gap: 0; padding: 14px var(--gutter) 8px; }
+  .screen > .top { order: 0; justify-content: flex-start; pointer-events: auto; }
+  .screen > .top .mark { padding: 0; }
+  .screen > .center { order: 1; position: static; transform: none; padding: 26px 0 22px; pointer-events: auto; }
+  .center ol { font-size: 11.5vw; gap: 0.02em; }
+  .center ol a { color: var(--ink); -webkit-text-fill-color: var(--ink); background: none; white-space: normal; }
+  .screen > .field { order: 2; position: static; inset: auto; display: flex; flex-direction: row; flex-wrap: nowrap; align-items: flex-start; gap: 10px;
+    margin: 0 calc(-1 * var(--gutter)); padding: 0 var(--gutter); overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scroll-padding: 0 var(--gutter); -webkit-overflow-scrolling: touch; scrollbar-width: none; overscroll-behavior-x: contain; pointer-events: auto; z-index: auto; }
+  .screen > .field::-webkit-scrollbar { display: none; }
+  .pic, .p1, .p2, .p3, .p4, .p5, .p6, .p7 { position: static !important; flex: 0 0 auto; width: auto !important; height: auto; grid-row: auto; overflow: visible; background: none; cursor: default; touch-action: pan-x pan-y; scroll-snap-align: start; }
+  .pic img { height: auto; width: auto; max-height: min(52vh, 440px); max-width: calc(100vw - 2 * var(--gutter)); object-fit: contain; object-position: left top; }
+  .pic .tag { display: none; }
+  .screen > .bioRow { order: 3; display: block; margin-top: 26px; pointer-events: auto; }
+  .bioCol { max-width: 40ch; }
+  .bio { text-align: left; text-wrap: pretty; }
+  .bio + .bio { margin-top: 1.2em; }
+  body[data-paper="vellum"] .field { pointer-events: auto; }
+  /* the doors (INSPIRATIONS / CAMERA ROLL) under the lines, as two brackets side by side */
+  .doors { position: static; transform: none; display: flex; gap: 14px; margin: 22px 0 0; padding: 0 var(--gutter) 28px; font-size: 12px; }
+  /* with the sheet open the doors hold its top edge, centred, over the words' top padding */
+  body.about-open .doors, body.about-open.cam-open .doors, body.about-open.wall-open .doors { position: fixed; left: 50%; top: 14px; bottom: auto; transform: translateX(-50%); margin: 0; padding: 0; z-index: 7; }
+
+  /* ---- the bio sheet ---- */
+  .about { padding: 14px var(--gutter) 24px; overflow: auto; }
+  .about-col { max-width: none; padding-top: 70px; }
+  .about-portrait { position: static; width: 46vw; margin-top: 22px; }
+  .about-contact { position: static; margin-top: 22px; }
+  .about-close { position: static; display: block; margin-top: 26px; }
+  .about-cam { position: fixed; }
+  .about-cam img { max-width: 92vw; max-height: 72vh; }
+  .about-wall { position: static !important; left: auto !important; top: auto !important; display: grid; grid-template-columns: none; grid-template-rows: none; gap: 16px; margin-top: 18px; overflow: visible; }
+  .about-wall .row .lbl { position: static; display: block; padding: 0 0 6px; }
+  .about-wall .cells { height: auto; flex-wrap: wrap; overflow: visible; cursor: auto; gap: 2px; }
+  .about-wall .cells a { height: auto; width: calc((100% - 4px) / 3); }
+}
