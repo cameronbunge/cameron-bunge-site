@@ -1,0 +1,234 @@
+/* Shared styles for the section pages (Brand, Direction, Product, Archive, Photo + Video). Home keeps its own. */
+:root {
+  --bg: #FFFFFF;
+  --ink: #111111;
+  --muted: #8A8A8A;
+  --pale: #C9C9C9;
+  --cell: #F0F0F0;
+  --display: "Archivo", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --black: "Archivo Black", "Arial Black", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --mono: "Space Mono", "Courier New", monospace;
+  --gutter: clamp(16px, 1.8vw, 32px);
+  --tcap: min(7.4vw, 13vh);
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--display); font-stretch: 100%; font-size: 13px; line-height: 1.4; -webkit-font-smoothing: antialiased; overflow: hidden; }
+a { color: inherit; text-decoration: none; }
+a:focus-visible, button:focus-visible { outline: 1px solid var(--ink); outline-offset: 3px; }
+button { all: unset; cursor: pointer; }
+
+/* chrome */
+.mark { position: fixed; top: 0; right: 0; padding: 14px var(--gutter) 10px 14px; background: var(--bg); text-align: right; z-index: 6; }
+.mark h1 { margin: 0; font-family: var(--black); font-weight: 400; font-size: clamp(22px, 2.6vw, 40px); letter-spacing: -0.045em; line-height: 0.9; text-transform: uppercase; }
+/* the section nav: spread across the width of the title above it, first bracket under its first letter, last bracket under its last (width set from script) */
+.pillars { position: fixed; left: var(--gutter); bottom: 16px; z-index: 6; display: flex; justify-content: space-between; gap: 10px; width: var(--navw, auto); font-family: var(--mono); font-weight: 700; font-size: 11px; }
+.pillars a { background: var(--bg); padding: 2px 0; white-space: nowrap; }
+.pillars a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.pillars .b { color: var(--muted); }
+
+.page { position: relative; height: 100vh; padding: 14px var(--gutter) 16px; }
+.ttl { display: block; width: max-content; margin: 0; font-family: var(--black); font-weight: 400; font-size: var(--tcap); line-height: 0.88; letter-spacing: -0.05em; text-transform: uppercase; white-space: nowrap; }
+.ttl .n { margin-right: 0.18em; }
+
+/* the line of names */
+.line { list-style: none; margin: 3vh 0 0; padding: 0; width: 50vw; display: grid; gap: 0.1em; }
+.line a { display: inline-flex; align-items: baseline; font-family: var(--black); font-weight: 400; font-size: clamp(14px, 2.03vw, 29.4px); line-height: 1.08; letter-spacing: -0.04em; text-transform: uppercase; white-space: nowrap; }   /* 30% down, 10/11 */
+.line a .name { position: relative; display: inline-block; }
+
+/* ---- hover treatments for the names, two kept (keys 1-2). The hovered project is also the one in the panel, so the treatment stays on it. ---- */
+/* FILL SWEEP: a black bar sweeps in behind the name and the letters go white */
+body[data-hover="sweep"] .line a .name { padding: 0 0.12em; margin: 0 -0.12em; background: linear-gradient(var(--ink), var(--ink)) no-repeat 0 0 / 0% 100%; transition: background-size .3s ease, color .2s ease; }
+body[data-hover="sweep"] .line li.on a .name { background-size: 100% 100%; color: var(--bg); }
+/* DIM OTHERS: every name but the one whose pictures are up fades to pale — and stays so when the pointer leaves, since the pictures stay (10/11) */
+body[data-hover="dim"] .line a .name { transition: color .25s ease; }
+body[data-hover="dim"] .line li:not(.on) a .name { color: var(--pale); }
+body[data-hover="dim"] .line li:not(.on) a .name:hover { color: var(--ink); }
+.line li { width: max-content; }   /* the row is only as wide as its word: nothing beside it answers the pointer */
+/* ZOOM: a click on a picture isolates it — blown up in the middle of the page, the only thing on it; a click anywhere, or Esc, puts the
+   page back */
+.nat .c img, .nat .c video { cursor: zoom-in; }
+.zoom { position: fixed; z-index: 4; display: flex; align-items: center; justify-content: center; cursor: zoom-out; }
+.zoom[hidden] { display: none; }
+.zoom img, .zoom video { display: block; max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; }
+.zoom video { cursor: pointer; }
+body.zoomed .pane, body.zoomed #txts, body.zoomed .ttl { visibility: hidden; }
+body.zoomed .line li:not(.on) { display: none; }
+
+/* the panel: the entry's pictures in one row at their own proportions, under the names (top set from script). The row's width is the
+   SHEET slider (a share of the page), its alignment the ALIGN option: held to the right edge, or centred. The pane is sized to the row. */
+.pane { position: absolute; right: var(--gutter); top: var(--pane-top, max(20vh, 170px)); width: 66vw; text-align: right; }
+body[data-align="center"] .pane { right: 50%; transform: translateX(50%); }
+body[data-align="center"] .meta { justify-content: center; }
+.set { display: none; }
+.set.on { display: block; }
+/* Mishka: the film twice, left and right, the logo turning in 3D between them */
+.set.mishka .trio { position: relative; height: var(--sh, 50vh); }
+.set.mishka .side { position: absolute; top: 0; height: 100%; width: auto; max-width: 22%; object-fit: contain; }   /* the film at each edge */
+.set.mishka .side:first-child { left: 0; }
+.set.mishka .side:last-child { right: 0; }
+.set.mishka .spin { position: absolute; left: 25%; top: 0; height: 100%; width: 50%; display: flex; align-items: center; justify-content: center; }   /* dead centre, whatever the films do */
+.set.mishka .spin canvas { display: block; width: 100%; height: 100%; }
+.set.mishka .spin img { display: block; width: min(45%, calc(var(--sh, 50vh) * 1.1)); height: auto; animation: turn 9s linear infinite; transform-style: preserve-3d; backface-visibility: visible; }   /* the flat fallback, only when the 3D model can't show */
+.set.mishka .spin img[hidden] { display: none; }
+.set.mishka .spin canvas[hidden] { display: none; }
+@keyframes turn { from { transform: rotateX(6deg) rotateY(0deg); } to { transform: rotateX(6deg) rotateY(360deg); } }
+@media (prefers-reduced-motion: reduce) { .set.mishka .spin img { animation: none; } }
+.set.soon .soonline { margin: 0; text-align: center; font-family: var(--mono); font-weight: 700; font-size: 13px; letter-spacing: 0.02em; color: var(--ink); }
+.set.soon .soonline .b { color: var(--ink); }
+/* the terms: directly under the pictures, in the brackets of the section nav, a size up */
+.meta { margin: 14px 0 0; display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 12px; font-family: var(--mono); font-weight: 700; font-size: 13px; color: var(--ink); }
+.meta .b { color: var(--ink); }
+/* the copy — under review (keys 1–5): FLYER (caps, condensed bold, large) or LIGHT (the face of the city line under the name);
+   RIGHT (right-aligned, floating above the bottom corner) or ABOVE TITLE (left, sitting on the title); or none */
+#txts { position: fixed; right: var(--gutter); bottom: 13vh; z-index: 3; width: 44ch; max-width: calc(100vw - 2 * var(--gutter)); text-align: right; }
+.txt { display: none; text-align: right; }
+.txt.on { display: block; }
+body[data-copy$="left"] #txts { right: auto; left: var(--gutter); bottom: calc(40px + var(--tcap) * 0.88 + 10px); width: var(--navw, 44ch); text-align: left; }   /* closer to the title (10/11) */
+body[data-copy$="left"] .txt { text-align: left; }
+body[data-copy$="left"] .copy, body[data-copy$="left"] .bul { margin-left: 0; }
+body[data-copy="none"] #txts { display: none; }
+body[data-copy^="light"] .copy { font-family: var(--display); font-stretch: 100%; font-weight: 400; font-size: 13px; line-height: 1.5; letter-spacing: 0.01em; text-transform: uppercase; max-width: none; }
+.keep { text-transform: none; }   /* a name that keeps its own case (enc0re) */
+/* the copy: caps in a condensed bold grotesk, set tight, as on a club flyer */
+.copy { margin: 0 0 0 auto; font-family: var(--display); font-stretch: 72%; font-weight: 700; font-size: 19px; line-height: 1.08; letter-spacing: 0; text-transform: uppercase; max-width: 38ch; }
+.bul { margin: 0 0 0 auto; padding: 0; list-style: none; font-family: var(--display); font-stretch: 72%; font-weight: 700; font-size: 17px; line-height: 1.15; text-transform: uppercase; max-width: 36ch; }
+.bul li { padding-right: 1.1em; position: relative; }
+.bul li::after { content: "—"; position: absolute; right: 0; color: var(--muted); }
+.bul { display: none; }   /* bullets dropped 10/11; the copy carries it */
+.ph { color: var(--muted); }
+.copy.ph, .bul.ph { color: var(--ink); }   /* draft copy reads in ink like the city line, not gray (10/11) */
+
+/* the row: every picture at its own proportion, one height (set from script so the row is the width asked for) */
+.nat { display: flex; flex-direction: row-reverse; flex-wrap: nowrap; justify-content: flex-start; align-items: flex-start; gap: 8px; --sh: 22vh; }   /* items come reversed from the script; reversed twice, they read left to right */
+.nat .c { height: var(--sh); flex: 0 0 auto; background: var(--cell); }
+.nat .c:has(video) { background: none; }   /* no box around a film (10/11) */
+.nat .c img, .nat .c video { display: block; height: 100%; width: auto; }
+.nat .c { position: relative; }
+/* PLACED: a project arranged by hand (placing tool): each picture fixed to the screen where it was put, at the width it was given */
+.set.placed .nat { display: block; height: 0; overflow: visible; width: 100%; }
+.set.placed .row { display: contents; }
+.set.placed .c { position: fixed; left: var(--x, 0); top: var(--y, 0); width: var(--w, 20vw); height: auto; transform: none; z-index: 2; }
+.set.placed .c img, .set.placed .c video { width: 100%; height: auto; max-width: none; max-height: none; }
+/* the placing tool: corner grips while PLACE is on */
+.nat .c .grip { display: none; position: absolute; right: 0; bottom: 0; width: 16px; height: 16px; cursor: nwse-resize; opacity: 0; background: linear-gradient(135deg, transparent 50%, #fff 50%); transition: opacity .2s ease; z-index: 3; }
+body.placing .nat .c { cursor: grab; touch-action: none; }
+body.placing .nat .c .grip { display: block; }
+body.placing .nat .c:hover .grip, body.placing .nat .c.held .grip { opacity: .9; }
+body.placing .nat .c.held { cursor: grabbing; z-index: 4; }
+body.placing .nat .c img, body.placing .nat .c video { cursor: inherit; pointer-events: none; }
+/* the grid: when a project has a column count (sort tool), its pictures run in rows of that many, each at its own proportion and the width
+   of its column; a video spans two columns; the cells sit a little up or down so the grid does not read as a perfect grid (10/11) */
+.nat.grid { display: flex; flex-direction: column; flex-wrap: nowrap; gap: 10px; width: 100%; }
+.nat.grid .row { display: flex; gap: 6px; align-items: flex-start; }
+.nat.grid .c { flex: 0 0 auto; height: auto; transform: translateY(var(--oy, 0)); }   /* width and height set from script: justified rows */
+.nat.grid .c img, .nat.grid .c video { width: 100%; height: 100%; object-fit: contain; }
+
+/* ---- page composition: Title Low, locked 10/11/2026 ---- */
+/* 4 LOW: names at the top, the title huge at the bottom-left, the copy bottom-right, the sheet on the right between the names and the copy */
+.pillar .ttl { position: absolute; left: var(--gutter); bottom: 40px; margin: 0; }
+.pillar .line { margin-top: 0; }
+
+/* photo + video: a locked frame. The category name holds the top-left corner with the title of the current group under it (the face of
+   the city line, at the category's size); the page title the bottom-left (as on the section pages); the position in the run the right edge.
+   One frame at a time in the band between; cuts between them. */
+body.seq { overflow: hidden; --band-top: 110px; --band-bottom: calc(40px + var(--tcap) * 0.88 + 24px); }
+.where-l { position: fixed; left: var(--gutter); top: 14px; z-index: 6; pointer-events: none; display: grid; gap: 2px; font-size: clamp(14px, 2.03vw, 29.4px); line-height: 1.08; color: var(--ink); }
+.where-l .cat { font-family: var(--black); font-weight: 400; letter-spacing: -0.04em; text-transform: uppercase; }
+.where-l .grpname { font-family: var(--display); font-stretch: 100%; font-weight: 400; font-size: 75%; letter-spacing: 0.01em; text-transform: uppercase; }   /* the group's title: the Los Angeles face, a quarter smaller than the category (10/11) */
+.where-l .grpname.keep { text-transform: none; }
+.where-l .grpname.ph { color: var(--pale); }   /* a group with no title yet */
+/* the position in the run: the face and size of the city line under the name (10/11) */
+.where-r { position: fixed; right: var(--gutter); top: calc(var(--band-top) + (100vh - var(--band-top) - var(--band-bottom)) / 2); transform: translateY(-50%); z-index: 6; pointer-events: none; font-family: var(--display); font-stretch: 100%; font-weight: 400; font-size: 13px; line-height: 1.5; letter-spacing: 0.01em; text-transform: uppercase; color: var(--ink); text-align: right; font-variant-numeric: tabular-nums; }
+.where-r .of { color: var(--muted); }
+body.seq .ttl { position: fixed; left: var(--gutter); bottom: 40px; margin: 0; z-index: 6; pointer-events: none; }
+.arrows { position: fixed; right: var(--gutter); bottom: 16px; z-index: 6; display: flex; gap: 10px; font-family: var(--mono); font-weight: 700; font-size: 11px; }
+.arrows button { cursor: pointer; }
+.arrows button:hover { text-decoration: underline; text-underline-offset: 3px; }
+.arrows .b { color: var(--muted); }
+.stage { position: fixed; inset: 0; cursor: pointer; }
+.fr { position: absolute; left: 0; right: 0; top: var(--band-top); bottom: var(--band-bottom); display: grid; place-items: center; opacity: 0; }
+.fr.in { opacity: 1; transition: opacity .08s linear; }
+/* a frame's own composition: one picture as tall as the band; two or three side by side, stepped */
+.fr.imgs .grp { display: flex; align-items: center; justify-content: center; gap: 3vw; --h: calc(100vh - var(--band-top) - var(--band-bottom) - 36px); }
+.fr.imgs .c { position: relative; background: var(--cell); touch-action: none; }
+.fr.imgs .c:has(video), .fr.imgs .c:has(iframe) { background: none; }
+.fr.imgs .c img { display: block; width: auto; height: auto; max-height: var(--h); max-width: 64vw; }
+.fr.imgs .c video { display: block; height: var(--h); width: auto; max-width: 64vw; cursor: pointer; }   /* as tall as the band; click for sound */
+.fr.imgs .c iframe { display: block; border: 0; width: min(72vw, calc(var(--h) * 16 / 9)); aspect-ratio: 16 / 9; height: auto; background: #000; }   /* a video frame, 16:9, as tall as the band allows */
+.fr.imgs.g2 .c img { max-height: calc(var(--h) * 0.8); max-width: 40vw; }
+.fr.imgs.g2 .c1 { transform: translateY(-4vh); }
+.fr.imgs.g2 .c2 { transform: translateY(4vh); }
+.fr.imgs.g3 .c img { max-height: calc(var(--h) * 0.62); max-width: 28vw; }
+.fr.imgs.g3 .c1 { transform: translateY(5vh); }
+.fr.imgs.g3 .c2 img { max-height: calc(var(--h) * 0.82); }
+.fr.imgs.g3 .c3 { transform: translateY(-5vh); }
+.fr.imgs.g4 .c img, .fr.imgs.g5 .c img, .fr.imgs.g6 .c img { max-height: calc(var(--h) * 0.5); max-width: 20vw; }
+.fr.imgs .c .blocked { position: absolute; left: 0; right: 0; top: 50%; transform: translateY(-50%); margin: 0; text-align: center; font-family: var(--mono); font-weight: 700; font-size: 11px; color: var(--pale); pointer-events: none; }
+.fr.imgs .c .blocked .b { color: var(--pale); }
+.fr.imgs .c .date { position: absolute; right: 0; top: 100%; margin-top: 6px; font-family: var(--mono); font-weight: 700; font-size: 10.5px; letter-spacing: 0.02em; color: var(--muted); white-space: nowrap; text-transform: uppercase; }
+.fr.imgs .c .date.keep { text-transform: none; }
+/* PLACED: once a picture in a frame has been dragged or sized, every picture of that frame sits where it was put — left/top as a share of
+   the band, width as a share of the screen — and the picture fills its box */
+.fr.imgs .c .grip { position: absolute; right: 0; bottom: 0; width: 16px; height: 16px; cursor: nwse-resize; opacity: 0; background: linear-gradient(135deg, transparent 50%, #fff 50%); transition: opacity .2s ease; z-index: 2; }
+.fr.imgs .c:hover .grip, .fr.imgs .c.held .grip { opacity: .9; }
+.fr.imgs .c.held { cursor: grabbing; z-index: 3; }
+@media (min-width: 901px) {
+  .fr.imgs.placed .grp, .fr.imgs.auto .grp { position: absolute; inset: 0; display: block; }
+  .fr.imgs.placed .c, .fr.imgs.auto .c { position: absolute; left: var(--x, 0); top: var(--y, 0); width: var(--w, 30vw); transform: none; }
+  .fr.imgs.placed .c img, .fr.imgs.placed .c video, .fr.imgs.auto .c img, .fr.imgs.auto .c video { width: 100%; height: auto; max-width: none; max-height: none; }
+  .fr.imgs.placed .c iframe, .fr.imgs.auto .c iframe { width: 100%; }
+  .fr.imgs.placed .c .date, .fr.imgs.auto .c .date { right: auto; left: 0; }
+  /* the words over a picture: black type, white where it crosses a picture (painted from script, as on home) */
+  body.seq .ttl, .where-l .cat, .where-l .grpname, .where-r, body.seq .mark h1, body.seq .mark .under { color: transparent; -webkit-text-fill-color: transparent; -webkit-background-clip: text; background-clip: text; background-color: var(--ink); background-repeat: no-repeat; }
+  .where-l .grpname.ph { background-color: var(--pale); }
+  .where-r .of { color: inherit; }
+  body.seq .mark { background: transparent; }   /* a picture may run under the name */
+  body.seq[data-paper^="vellum"] .ttl, body.seq[data-paper^="vellum"] .where-l, body.seq[data-paper^="vellum"] .where-r, body.seq[data-paper^="vellum"] .mark h1 { -webkit-text-stroke: 0; }
+}
+
+/* review control — not part of the design. One row, bottom-right, folded to [ REVIEW ] until opened (the keys work either way) */
+body.seq .switch { right: auto; left: 50%; bottom: auto; top: 12px; transform: translateX(-50%); justify-content: center; }
+.switch { position: fixed; right: var(--gutter); bottom: 10px; z-index: 50; display: flex; flex-wrap: nowrap; justify-content: flex-end; gap: 2px; font-family: var(--mono); font-weight: 700; font-size: 10px; letter-spacing: 0.02em; }
+.switch.min > :not(.toggle) { display: none; }
+.switch .toggle { padding: 4px 7px; color: var(--muted); border: 1px solid transparent; }
+.switch label.tool { display: inline-flex; align-items: center; gap: 6px; }
+.switch input[type="range"] { width: 110px; accent-color: var(--ink); margin: 0; }
+.switch .toggle:hover { color: var(--ink); }
+.switch button { padding: 4px 7px; background: var(--bg); color: var(--muted); border: 1px solid var(--pale); }
+.switch button[aria-pressed="true"] { color: var(--bg); background: var(--ink); border-color: var(--ink); }
+.switch .sep { width: 10px; }
+.switch .tool { display: inline-block; padding: 4px 7px; color: var(--muted); border: 1px dashed var(--pale); text-decoration: none; }
+.switch .tool:hover { color: var(--ink); border-color: var(--ink); }
+
+@media (max-width: 900px) {
+  body { overflow: auto; }
+  .mark { position: static; text-align: left; padding: 14px var(--gutter) 0; }
+  .pillars { position: static; padding: 0 var(--gutter); margin-top: 24px; flex-wrap: wrap; }
+  .switch { position: static; transform: none; flex-wrap: wrap; padding: 12px var(--gutter); }
+  .page { height: auto; }
+  .ttl { font-size: 13vw; }
+  .line { width: auto; }
+  .line a { white-space: normal; }
+  .pane { position: static; display: block; width: auto; margin-top: 20px; text-align: left; }
+  #txts { position: static; width: auto; max-width: none; text-align: left; margin-top: 16px; }
+  .meta { justify-content: flex-start; }
+  .pillars { width: auto; justify-content: flex-start; }
+  .nat { flex-wrap: wrap; --sh: 22vw !important; }
+  body[data-align="center"] .pane { right: auto; transform: none; }
+  .txt { text-align: left; }
+  .copy, .bul { margin-left: 0; }
+  .nat { flex-direction: row; flex-wrap: wrap; justify-content: flex-start; --sh: 22vw; }
+  .nat .c { transform: none !important; }
+  body.seq { overflow: auto; }
+  body.seq .ttl { position: static; padding: 0 var(--gutter); }
+  .stage { position: static; cursor: default; }
+  .fr { position: static; opacity: 1; padding: 24px var(--gutter); }
+  .fr.imgs .grp { flex-direction: column; gap: 16px; }
+  .fr.imgs .c { transform: none !important; }
+  .fr.imgs .c img, .fr.imgs.g2 .c img, .fr.imgs.g3 .c img { max-width: 100%; max-height: none; }
+  .fr.imgs .c .grip { display: none; }
+  .where-l, .where-r, .arrows { position: static; transform: none; padding: 0 var(--gutter); }
+  body.seq { --band-top: 0px; --band-bottom: 0px; }
+}

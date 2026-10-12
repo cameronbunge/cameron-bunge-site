@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cameron Bunge</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wdth,wght@62..125,100..900&family=Space+Mono:wght@400;700&display=swap">
+<link rel="stylesheet" href="css/about.css">
+<link rel="stylesheet" href="css/paper.css">
+<style>
+  /* HOME — locked 10/10/2026. One screen, no scroll. Name heavy top-right (contact lives in About). The four offerings huge, four lines,
+     on the true vertical center; their fill is a background clipped to the letterforms, black with white rectangles that follow the images,
+     so the type turns white wherever it crosses a photograph. Seven images at natural proportions scattered across the white space,
+     placed by hand and locked there. Bio bottom-right, right-aligned. */
+  :root {
+    --bg: #FFFFFF;
+    --ink: #111111;
+    --muted: #8A8A8A;
+    --pale: #C9C9C9;
+    --cell: #F0F0F0;
+    --display: "Archivo", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --black: "Archivo Black", "Arial Black", "Helvetica Neue", Helvetica, Arial, sans-serif;   /* stand-in for the Neue Haas Grotesk Black of the 032c logotype */
+    --mono: "Space Mono", "Courier New", monospace;
+    --gutter: clamp(16px, 1.8vw, 32px);
+    --cap: min(5.55vw, 9.75vh);   /* size of the offerings before fitting to width (three quarters of the first cut, 10/11) */
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--display); font-stretch: 100%; font-size: 13px; line-height: 1.4; -webkit-font-smoothing: antialiased; overflow: hidden; }
+  a { color: inherit; text-decoration: none; }
+  a:focus-visible { outline: 1px solid var(--ink); outline-offset: 3px; }
+  .mono { font-family: var(--mono); font-weight: 700; }
+
+  .screen { position: relative; height: 100%; padding-inline: var(--gutter); padding-block: 14px 16px; display: grid; grid-template-rows: auto minmax(0, 1fr) auto; gap: 12px; }
+  .screen > .top { position: relative; z-index: 6; pointer-events: none; }
+  .screen > .center, .screen > .bioRow { position: relative; z-index: 2; pointer-events: none; }
+  .screen a { pointer-events: auto; }
+
+  .top { grid-row: 1; display: flex; justify-content: flex-end; }
+  .mark { text-align: right; }
+  .mark h1 { margin: 0; font-family: var(--black); font-weight: 400; font-size: clamp(22px, 2.6vw, 40px); letter-spacing: -0.045em; line-height: 0.9; text-transform: uppercase; }
+
+  /* the offerings: huge, above the images, painted black with white where an image sits beneath */
+  .screen > .center { position: absolute; left: var(--gutter); top: 50%; transform: translateY(-50%); z-index: 4; }
+  .center ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; font-family: var(--black); font-weight: 400; font-size: var(--fs, var(--cap)); line-height: 0.9; letter-spacing: -0.05em; text-transform: uppercase; }
+  /* each line carries its own fill (black, with white rectangles painted from script where a picture sits beneath), so a line can fade on its own */
+  .center ol a { display: inline-flex; align-items: baseline; white-space: nowrap; color: transparent; -webkit-text-fill-color: transparent; -webkit-background-clip: text; background-clip: text; background-color: var(--ink); background-repeat: no-repeat; }
+  .center ol .n { margin-right: 0.18em; font-variant-numeric: tabular-nums; transition: opacity .18s ease; }
+
+  .bioRow { grid-row: 3; display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 6px; }
+  .bioCol { grid-column: 8 / 11; }
+  .bio + .bio { margin-top: 1.5em; }
+  .bio { margin: 0; font-size: 13px; line-height: 1.5; font-weight: 400; letter-spacing: 0.01em; text-transform: uppercase; text-align: right; text-wrap: balance; }   /* the face of the city line and the section copy */
+  /* INSPIRATIONS and CAMERA ROLL: the small brackets of the About sheet, in the same place here (about.js draws them; about.css places them) */
+
+  /* hover modes for the list: PLAIN (nothing moves) and DIM OTHERS (the other three lines go pale while one is under the pointer, as the names
+     do on a section page; the hovered line itself does not change, and under vellum it stays behind the paper) */
+  .center ol li { transition: opacity .22s ease; }
+  body[data-hover="dim"] .center ol.hot li:not(.hot) { opacity: .22; }
+
+  /* review control — not part of the design */
+  .switch { position: fixed; left: 50%; top: 12px; transform: translateX(-50%); z-index: 50; display: flex; flex-wrap: nowrap; justify-content: center; gap: 2px; font-family: var(--mono); font-weight: 700; font-size: 10px; letter-spacing: 0.02em; }   /* top centre, as on the Photo + Video page, leaving the corners to the design */
+  .switch button { all: unset; cursor: pointer; padding: 4px 7px; background: var(--bg); color: var(--muted); border: 1px solid var(--pale); }
+  .switch button[aria-pressed="true"] { color: var(--bg); background: var(--ink); border-color: var(--ink); }
+  .switch .sep { width: 10px; }
+  .switch .tool { padding: 4px 7px; color: var(--muted); border: 1px dashed var(--pale); }
+  .switch .tool.on { color: var(--ink); }
+  .switch.min > :not(.toggle) { display: none; }
+  .switch .toggle { padding: 4px 7px; color: var(--muted); border: 1px solid transparent; }
+  .switch .toggle:hover { color: var(--ink); }
+  .switch .b { color: var(--pale); }
+  @media (max-width: 900px) { .switch { position: static; transform: none; flex-wrap: wrap; padding: 12px 0; } }
+
+  /* the field: images placed by hand across the whole screen */
+  .field { position: absolute; inset: 0; z-index: 1; transition: opacity .14s ease; }
+  .field.swap { opacity: 0; }
+  .pic { position: absolute; left: var(--x); top: var(--y); width: var(--w); display: block; overflow: hidden; background: var(--cell);
+         user-select: none; -webkit-user-drag: none; cursor: grab; touch-action: none; }   /* grab: the placing tool below */
+  .pic.held { cursor: grabbing; }
+  .pic img { display: block; width: 100%; height: 100%; object-fit: cover; pointer-events: none; -webkit-user-drag: none; }
+  /* the label: white type straight on the picture (a faint shadow so it holds on a bright frame); the picture itself does not change */
+  .pic .tag { position: absolute; left: 8px; bottom: 7px; max-width: calc(100% - 16px); color: #fff; text-shadow: 0 0 6px rgba(0, 0, 0, .35); font-size: 10px; font-weight: 700; text-transform: uppercase; display: flex; gap: 5px; align-items: baseline; opacity: 0; transform: translateY(8px); transition: opacity .25s ease, transform .25s ease; }
+  .pic .tag .n { color: rgba(255, 255, 255, .7); }
+  .pic img { transition: filter .25s ease; }
+  .pic .tag b { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .keep { text-transform: none; }
+  .pic:hover .tag, .pic:focus-visible .tag { opacity: 1; transform: translateY(0); }
+  /* the placing tool's corner grip: drag it to size the picture (review only) */
+  .pic .grip { position: absolute; right: 0; bottom: 0; width: 16px; height: 16px; cursor: nwse-resize; opacity: 0; background: linear-gradient(135deg, transparent 50%, #fff 50%); transition: opacity .2s ease; }
+  .pic:hover .grip, .pic.held .grip { opacity: .9; }
+
+  /* places: seven, --x/--y in % of the screen, --w capped by both width and height so the composition holds on wide and tall screens.
+     Which picture takes which place is chosen in the sort tool (HOME tab); a picture keeps its own proportions. */
+  .p1 { --x: 58%;  --y: 20%; --w: min(19vw, 30.7vh); }   /* big, right-middle */
+  .p2 { --x: 80%;  --y: 47%; --w: min(16vw, 24vh);   }   /* far right, lower */
+  .p3 { --x: 2.2%; --y: 2%;  --w: min(9vw, 13.6vh);  }   /* small, top-left corner */
+  .p4 { --x: 5%;   --y: 70%; --w: min(11vw, 16.7vh); }   /* bottom-left */
+  .p5 { --x: 26%;  --y: 80%; --w: min(10vw, 15vh);   }   /* small, bottom, left of center */
+  .p6 { --x: 66%;  --y: 3%;  --w: min(6vw, 9.3vh);   }   /* tiny, top, left of the name */
+  .p7 { --x: 45%;  --y: 71%; --w: min(17vw, 25vh);   }   /* bottom center */
+
+  @media (max-width: 900px) {
+    html, body { height: auto; }
+    body { overflow: auto; }
+    .screen { height: auto; min-height: 100%; gap: 40px; }
+    .screen > .top, .screen > .center, .screen > .bioRow { pointer-events: auto; }
+    .top { justify-content: flex-start; }
+    .mark { text-align: left; }
+    .screen > .center { position: static; transform: none; padding-block: 24px; }
+    .center ol { font-size: 12vw; }
+    .center ol a { color: var(--ink); -webkit-text-fill-color: var(--ink); background: none; }
+    .bioRow { grid-template-columns: 1fr; }
+    .bio { grid-column: auto; max-width: 36ch; text-align: left; }
+    .field { position: static; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; align-items: start; }
+    .pic { position: static; width: auto; }
+    .pic .tag { opacity: 1; transform: none; }
+    .p1, .p4, .p6 { grid-row: span 2; }
+  }
+  @media (prefers-reduced-motion: reduce) { .pic .tag { transition: none; } }
+</style>
+<style>html.live .switch { display: none !important; }</style>
+</head>
+<body data-hover="dim" data-paper="vellum" data-struct="b">
+<div class="screen">
+  <header class="top">
+    <div class="mark">
+      <a href="#about" data-about><h1>Cameron<br>Bunge</h1></a>
+      <div class="under"><span class="city">Los Angeles</span></div>
+    </div>
+  </header>
+
+  <main class="center">
+    <ol id="list"></ol>
+  </main>
+
+  <div class="bioRow">
+    <div class="bioCol">
+      <p class="bio">Cameron works at the intersection of creative, content and strategy — building brands across the music, fashion and media industries.</p>
+      <p class="bio">His work spans creative direction, photography, video, editorial, social media, brand development, product development and partnerships.</p>
+    </div>
+  </div>
+
+  <nav class="field" id="field" aria-label="Selected work"></nav>
+</div>
+
+<div class="paper" aria-hidden="true"></div>
+
+<div class="switch" role="group" aria-label="Review controls">
+  <span class="tool" id="place">DRAG A PICTURE TO PLACE IT · ITS CORNER TO SIZE IT</span>
+  <button id="placeReset" type="button">RESET</button>
+  <a class="tool" href="media.html#home">MEDIA HUB →</a>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/state.js"></script>
+<script src="js/live.js"></script>
+<script>
+(function () {
+  var S = window.SITE, screen = document.querySelector('.screen'), ready = false;
+  var ol = document.getElementById('list'), lines = [], items = [];
+  var field = document.getElementById('field'), pics = [];
+  /* the structure under review (I / K): which sections the home list shows, and which section each picture's label names */
+  function struct() { return S.structures.b; }   /* locked 10/11 */
+  function sectionOf(workingId) { return struct().pillars.filter(function (p) { return p.from.indexOf(workingId) !== -1; })[0]; }
+  function renderList() {
+    ol.innerHTML = struct().pillars.filter(function (p) { return p.n; }).map(function (p) {
+      return '<li data-id="' + p.id + '"><a href="' + p.file + '"><span class="n">' + p.n + '</span><span class="w">' + p.name + '</span></a></li>';
+    }).join('');
+    lines = Array.prototype.slice.call(ol.querySelectorAll('li > a')); items = Array.prototype.slice.call(ol.children);
+    items.forEach(function (li) { li.addEventListener('pointerenter', function () { spread(li); }); });
+    fit();
+  }
+  /* the pictures: one per project, in the seven places. SITE.home is the default; the sort tool (HOME tab) saves another to the database. */
+  var HOME = S.home;
+  /* where a picture lives on the site: its page, section number and name, for the link and the label */
+  function whereIs(src) {
+    var hit = null;
+    S.projects.some(function (p) { if (p.imgs.some(function (m) { return m.src === src; })) { var pl = sectionOf(p.pillars[0]) || S.pillars[0]; hit = { href: pl.file + '#' + p.id, n: pl.n, name: p.name, lc: p.lc }; return true; } });
+    if (!hit) S.photo.some(function (c) { if (c.groups.some(function (g) { return g.imgs.some(function (m) { return m.src === src; }); })) { var ph = sectionOf('photo'); hit = { href: ph.file + '#' + c.id, n: ph.n, name: c.name, lc: c.lc }; return true; } });
+    return hit || { href: 'index.html', n: '', name: '' };
+  }
+  var current = HOME;
+  function renderField(list, transient) {
+    if (!transient) current = list;
+    field.innerHTML = list.slice(0, 7).map(function (src, i) {
+      var w = whereIs(src);
+      return '<a class="pic p' + (i + 1) + '" href="' + w.href + '"><img src="' + src + '" alt="' + w.name + '" draggable="false"><span class="tag">' + (w.n ? '<span class="n">' + w.n + '</span>' : '') + '<b' + (w.lc ? ' class="keep"' : '') + '>' + w.name + '</b></span><span class="grip" aria-hidden="true"></span></a>';
+    }).join('');
+    pics = Array.prototype.slice.call(field.querySelectorAll('.pic'));
+    pics.forEach(function (el) {
+      var img = el.querySelector('img');
+      function ratio() { if (img.naturalWidth) { el.style.aspectRatio = img.naturalWidth + ' / ' + img.naturalHeight; paint(); } }
+      img.addEventListener('load', ratio); ratio();
+      placeable(el);
+    });
+    applyLayout();
+  }
+  var desktop = function () { return window.matchMedia('(min-width: 901px)').matches; };
+
+  /* fit: start at the cap, shrink only if the widest line would pass the right gutter */
+  function fit() {
+    if (!desktop()) { screen.style.removeProperty('--fs'); return; }
+    screen.style.setProperty('--fs', 'var(--cap)');
+    var cap = parseFloat(getComputedStyle(ol).fontSize);
+    var gutter = parseFloat(getComputedStyle(screen).paddingLeft);
+    var avail = window.innerWidth - gutter * 2, widest = 0;
+    Array.prototype.forEach.call(ol.children, function (li) { widest = Math.max(widest, li.getBoundingClientRect().right - gutter); });
+    if (widest > avail) screen.style.setProperty('--fs', (cap * avail / widest).toFixed(2) + 'px');
+    if (typeof paint === 'function') paint();
+  }
+  window.addEventListener('resize', fit);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+  fit();
+
+  /* paint: white rectangles in the text fill wherever an image sits under the list */
+  function paintOne(el, none) {
+    if (none) { el.style.backgroundImage = 'none'; return; }
+    var o = el.getBoundingClientRect(), img = [], size = [], pos = [];
+    pics.forEach(function (p) {
+      var r = p.getBoundingClientRect();
+      if (r.right < o.left || r.left > o.right || r.bottom < o.top || r.top > o.bottom) return;
+      img.push('linear-gradient(#fff,#fff)');
+      size.push(r.width.toFixed(1) + 'px ' + r.height.toFixed(1) + 'px');
+      pos.push((r.left - o.left).toFixed(1) + 'px ' + (r.top - o.top).toFixed(1) + 'px');
+    });
+    el.style.backgroundImage = img.length ? img.join(',') : 'none';
+    el.style.backgroundSize = size.join(',');
+    el.style.backgroundPosition = pos.join(',');
+  }
+  function paint() {
+    /* with the pictures printed on top of the words (plain VELLUM) nothing turns white */
+    var top = (document.body.getAttribute('data-paper') || 'clean') === 'vellum' || !desktop();
+    lines.forEach(function (a) { paintOne(a, top); });
+  }
+
+  /* hover: the line under the pointer holds, the other lines go pale (see the CSS), and the pictures swap for that section's highlights
+     (SITE.homeHover, or the sort tool's lists); they come back when the pointer leaves the list */
+  var hover = S.homeHover || {}, showing = 'home', swapTimer = null;
+  function swapTo(list, key) {
+    if (showing === key) return; showing = key;
+    if (swapTimer) clearTimeout(swapTimer);
+    field.classList.add('swap');
+    swapTimer = setTimeout(function () { renderField(list, true); field.classList.remove('swap'); swapTimer = null; }, 140);
+  }
+  function spread(li) {
+    if (!desktop() || (document.body.getAttribute('data-hover') || 'plain') !== 'dim') return;
+    ol.classList.add('hot'); items.forEach(function (x) { x.classList.toggle('hot', x === li); });
+    var id = li.getAttribute('data-id'), list = hover[id];
+    if (list && list.length) swapTo(list, id);
+  }
+  function gather() { ol.classList.remove('hot'); items.forEach(function (x) { x.classList.remove('hot'); }); if (showing !== 'home') swapTo(current, 'home'); }
+  ol.addEventListener('pointerleave', gather);
+
+  /* review switcher: each button sets one attribute on <body>; number keys press the matching button. Folded to [ REVIEW ] until opened. */
+  var strip = document.querySelector('.switch');
+  var tog = document.createElement('button'); tog.type = 'button'; tog.className = 'toggle'; tog.innerHTML = '<span class="b">[</span> REVIEW <span class="b">]</span>';
+  strip.insertBefore(tog, strip.firstChild);
+  var openSaved = null; try { openSaved = localStorage.getItem('cb2-strip'); } catch (e) {}
+  strip.classList.toggle('min', openSaved !== 'open');
+  tog.addEventListener('click', function () { strip.classList.toggle('min'); try { localStorage.setItem('cb2-strip', strip.classList.contains('min') ? 'min' : 'open'); } catch (e) {} });
+  var buttons = Array.prototype.slice.call(document.querySelectorAll('.switch button[data-group]'));
+  function setGroup(group, value) {
+    document.body.setAttribute('data-' + group, value);
+    buttons.forEach(function (b) { if (b.getAttribute('data-group') === group) b.setAttribute('aria-pressed', b.getAttribute('data-value') === value ? 'true' : 'false'); });
+    try { localStorage.setItem(group === 'struct' ? 'cb-struct' : 'cb-home-' + group, value); } catch (e) {}
+    if (group === 'hover') gather();
+    if (group === 'paper') paint();
+    if (group === 'struct' && ready) { renderList(); renderField(current); }
+  }
+  buttons.forEach(function (b) { b.addEventListener('click', function () { setGroup(b.getAttribute('data-group'), b.getAttribute('data-value')); }); });
+  document.addEventListener('keydown', function (e) {
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    var k = e.key.toUpperCase();
+    buttons.forEach(function (b) { if (b.getAttribute('data-key') === k) setGroup(b.getAttribute('data-group'), b.getAttribute('data-value')); });
+  });
+  [].forEach(function (group) {   /* every option on home is locked (10/11); the body attributes carry them. The INSPIRATIONS / CAMERA ROLL placement is about.js's (keys 1–2). */
+    var saved = null; try { saved = localStorage.getItem(group === 'struct' ? 'cb-struct' : 'cb-home-' + group); } catch (e) {}
+    var ok = buttons.filter(function (b) { return b.getAttribute('data-group') === group; });
+    var preset = document.body.getAttribute('data-' + group);
+    var hit = ok.filter(function (b) { return b.getAttribute('data-value') === saved; })[0] || ok.filter(function (b) { return b.getAttribute('data-value') === preset; })[0] || ok[0];
+    setGroup(group, hit.getAttribute('data-value'));
+  });
+
+  /* the pictures are locked in place (10/11): no drift. They can still be dragged, and sized by their corner — that is the placing tool: each
+     drop saves the picture's position (as % of the screen) and width (as vw) to the artifact's database, where the layout is read from on the
+     next open, and from where Claude writes it into the stylesheet. */
+  paint();
+  var resizing = null;
+  window.addEventListener('resize', function () { paint(); if (resizing) clearTimeout(resizing); resizing = setTimeout(paint, 120); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(paint);
+  window.addEventListener('load', paint);
+
+  var placeEl = document.getElementById('place'), db = null, saveTimer = null, layout = {};
+  function note(t, on) { placeEl.textContent = t; placeEl.classList.toggle('on', !!on); }
+  function key(el) { return (el.className.match(/\bp\d+\b/) || [''])[0]; }
+  function applyLayout() {
+    pics.forEach(function (el) {
+      var k = key(el), v = layout[k] || {};
+      ['x', 'y', 'w'].forEach(function (p) { if (v[p]) el.style.setProperty('--' + p, v[p]); else el.style.removeProperty('--' + p); });
+    });
+    paint();
+  }
+  function remember(el) { var k = key(el), v = layout[k] || {}; ['x', 'y', 'w'].forEach(function (p) { var s = el.style.getPropertyValue('--' + p); if (s) v[p] = s; }); layout[k] = v; }
+  function save() {
+    if (!db) { note('NOT SAVED: OPEN FROM YOUR OWN ACCOUNT'); return; }
+    note('…'); if (saveTimer) clearTimeout(saveTimer);
+    saveTimer = setTimeout(function () { db.doc('layout/home').set({ pics: layout, savedAt: new Date().toISOString() }).then(function () { note('PLACED · SAVED', true); }, function () { note('NOT SAVED'); }); }, 500);
+  }
+  function placeable(el) {
+    var sx, sy, ox, oy, ow, moved = false, active = false, sizing = false;
+    el.addEventListener('pointerdown', function (e) {
+      if (!desktop() || e.button !== 0 || window.SITE_LIVE) return;
+      var r = el.getBoundingClientRect(), f = field.getBoundingClientRect();
+      active = true; moved = false; sizing = !!e.target.closest('.grip');
+      sx = e.clientX; sy = e.clientY; ox = r.left - f.left; oy = r.top - f.top; ow = r.width;
+      el.setPointerCapture(e.pointerId); el.classList.add('held');
+    });
+    el.addEventListener('pointermove', function (e) {
+      if (!active) return;
+      var dx = e.clientX - sx, dy = e.clientY - sy, f = field.getBoundingClientRect();
+      if (Math.abs(dx) + Math.abs(dy) > 4) moved = true;
+      if (sizing) {
+        /* the corner grip: the width follows the pointer, the height follows the picture's own proportions; kept as a share of the screen width */
+        var w = Math.max(40, ow + dx);
+        el.style.setProperty('--w', (w / window.innerWidth * 100).toFixed(2) + 'vw');
+      } else {
+        el.style.setProperty('--x', ((ox + dx) / f.width * 100).toFixed(2) + '%');
+        el.style.setProperty('--y', ((oy + dy) / f.height * 100).toFixed(2) + '%');
+      }
+      paint();
+    });
+    function drop(e) {
+      if (!active) return; active = false; el.classList.remove('held');
+      try { el.releasePointerCapture(e.pointerId); } catch (err) {}
+      if (moved) { remember(el); save(); }
+    }
+    el.addEventListener('pointerup', drop); el.addEventListener('pointercancel', drop);
+    el.addEventListener('click', function (e) { if (moved) { e.preventDefault(); moved = false; } });
+  }
+  ready = true;
+  renderList(); renderField(HOME);
+  window.addEventListener('load', function () { Object.keys(hover).forEach(function (k) { (hover[k] || []).forEach(function (src) { var im = new Image(); im.src = src; }); }); });
+  document.getElementById('placeReset').addEventListener('click', function () { layout = {}; applyLayout(); if (db) db.doc('layout/home').set({ pics: {}, savedAt: new Date().toISOString() }).then(function () { note('RESET TO THE STYLESHEET', true); }); });
+  window.claude && claude.use('db').then(function (d) {
+    db = d; if (!db) { note('PLACING NOT SAVED HERE (READ-ONLY)'); return; }
+    /* the chosen pictures (sort tool, HOME tab), then their places */
+    return Promise.all([db.doc('sort/home').get(), db.doc('sort/removed').get()]).then(function (r) {
+      var snap = r[0], rv = r[1].exists ? r[1].data() : null, gone = {}; (rv && rv.srcs || []).forEach(function (s) { gone[s] = 1; });   /* removed in the media hub */
+      var keep = function (list) { return list.filter(function (s) { return !gone[s]; }); };
+      var v = snap.exists ? snap.data() : null, gs = v && v.cats && v.cats[0] && v.cats[0].groups || [];
+      gs.forEach(function (g, i) {
+        var id = g.id || (i === 0 ? 'home' : null); if (!id || !g.imgs) return;
+        if (id === 'home') { if (g.imgs.length) renderField(keep(g.imgs)); } else hover[id] = keep(g.imgs);
+      });
+      if (!gs.length && Object.keys(gone).length) renderField(keep(HOME));
+      return db.doc('layout/home').get();
+    }).then(function (snap) { var v = snap.exists ? snap.data() : null; if (v && v.pics) { layout = v.pics; applyLayout(); note(Object.keys(layout).length ? 'PLACED · SAVED ' + new Date(v.savedAt).toLocaleString() : 'DRAG A PICTURE TO PLACE IT · ITS CORNER TO SIZE IT', true); } });
+  }).catch(function () { note('PLACING NOT SAVED HERE'); });
+})();
+</script>
+
+<script src="js/about.js"></script>
+</body>
+</html>

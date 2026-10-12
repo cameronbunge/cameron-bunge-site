@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inspirations — Cameron Bunge</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wdth,wght@62..125,100..900&family=Space+Mono:wght@400;700&display=swap">
+<link rel="stylesheet" href="css/site.css">
+<link rel="stylesheet" href="css/about.css">
+<link rel="stylesheet" href="css/paper.css">
+<style>
+  /* INSPIRATIONS — a wall of pictures pulled live from Cameron's Are.na boards (SITE.arena lists them), edge to edge, the name on top. */
+  body.inspo { overflow: auto; }
+  .wall { columns: 7 160px; column-gap: 4px; padding: 0 4px 60px; margin-top: 0; }
+  .wall a { display: block; break-inside: avoid; margin: 0 0 4px; background: var(--cell); }
+  .wall img { display: block; width: 100%; height: auto; }
+  .wall a:hover img { opacity: .92; }
+  .note { position: fixed; right: var(--gutter); bottom: 16px; z-index: 6; font-family: var(--mono); font-weight: 700; font-size: 11px; color: var(--muted); max-width: 60ch; text-align: right; }
+  .note .b { color: var(--muted); }
+  /* the boards, as brackets top-left: ALL, then one per board; the wall shows the one chosen */
+  .boards { position: fixed; left: var(--gutter); top: 14px; z-index: 6; display: flex; flex-wrap: wrap; gap: 10px; max-width: 60vw; font-family: var(--mono); font-weight: 700; font-size: 11px; }
+  .boards button { padding: 2px 0; background: var(--bg); }
+  .boards button .b { color: var(--muted); }
+  .boards button:hover, .boards button[aria-pressed="true"] { text-decoration: underline; text-underline-offset: 3px; }
+  .wall { padding-top: 56px; }
+  .wall a.off { display: none; }
+  .inspo .mark { padding-bottom: 14px; }
+  @media (max-width: 900px) { .wall { columns: 3 110px; } }
+</style>
+<style>html.live .switch { display: none !important; }</style>
+</head>
+<body class="inspo" data-paper="vellum">
+
+<header class="mark">
+  <a href="#about" data-about><h1>Cameron<br>Bunge</h1></a>
+  <div class="under"><span class="city">Los Angeles</span></div>
+</header>
+
+<nav class="boards" id="boards" aria-label="Boards"></nav>
+<main class="wall" id="wall" aria-label="Inspirations"></main>
+
+<nav class="pillars" id="pillars" aria-label="Sections"></nav>
+<p class="note" id="note"></p>
+<div class="paper" aria-hidden="true"></div>
+
+<script src="js/data.js"></script>
+<script src="js/state.js"></script>
+<script src="js/live.js"></script>
+<script src="js/about.js"></script>
+<script>
+(function () {
+  var S = window.SITE, wall = document.getElementById('wall'), note = document.getElementById('note');
+  var structure = S.structures.b;
+  document.getElementById('pillars').innerHTML = [{ n: '', name: 'Home', file: 'index.html' }].concat(structure.pillars).map(function (p) {
+    return '<a href="' + p.file + '"><span class="b">[</span> ' + (p.n ? p.n + ' ' : '') + p.name.toUpperCase() + ' <span class="b">]</span></a>';
+  }).join('');
+  function say(t) { note.innerHTML = '<span class="b">[</span> ' + t + ' <span class="b">]</span>'; }
+
+  var boards = S.arena || [];
+  if (!boards.length) { say('NO BOARD YET: ADD AN ARE.NA CHANNEL TO SITE.arena'); return; }
+
+  /* Are.na: every image block of every board, newest first, fetched page by page; a row of brackets picks one board or all */
+  var seen = {}, count = 0, boardsEl = document.getElementById('boards'), titles = {}, chosen = 'all';
+  function pick(slug) {
+    chosen = slug;
+    Array.prototype.forEach.call(boardsEl.children, function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-slug') === slug ? 'true' : 'false'); });
+    Array.prototype.forEach.call(wall.children, function (a) { a.classList.toggle('off', slug !== 'all' && a.getAttribute('data-board') !== slug); });
+  }
+  function drawBoards() {
+    boardsEl.innerHTML = [{ slug: 'all', title: 'All' }].concat(boards.map(function (s) { return { slug: s, title: titles[s] || s }; })).map(function (b) {
+      return '<button type="button" data-slug="' + b.slug + '"><span class="b">[</span> ' + b.title.toUpperCase() + ' <span class="b">]</span></button>';
+    }).join('');
+    Array.prototype.forEach.call(boardsEl.children, function (b) { b.addEventListener('click', function () { pick(b.getAttribute('data-slug')); }); });
+    pick(chosen);
+  }
+  function add(block, slug) {
+    var im = block.image; if (!im) return;
+    var src = (im.large && im.large.url) || (im.display && im.display.url) || (im.original && im.original.url); if (!src || seen[src]) return;
+    seen[src] = 1; count++;
+    var a = document.createElement('a'); a.href = block.source && block.source.url ? block.source.url : ('https://www.are.na/block/' + block.id); a.target = '_blank'; a.rel = 'noopener'; a.setAttribute('data-board', slug);
+    if (chosen !== 'all' && chosen !== slug) a.className = 'off';
+    var img = document.createElement('img'); img.src = (im.display && im.display.url) || src; img.loading = 'lazy'; img.alt = block.title || '';
+    if (im.original && im.original.width && im.original.height) img.style.aspectRatio = im.original.width + ' / ' + im.original.height;
+    a.appendChild(img); wall.appendChild(a);
+  }
+  function load(slug, page) {
+    page = page || 1;
+    return fetch('https://api.are.na/v2/channels/' + encodeURIComponent(slug) + '?per=100&page=' + page + '&sort=position&direction=desc')
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function (j) {
+        if (j.title && !titles[slug]) { titles[slug] = String(j.title).trim() || slug; drawBoards(); }
+        (j.contents || []).forEach(function (b) { add(b, slug); });
+        say(count + ' PICTURES');
+        if ((j.contents || []).length === 100) return load(slug, page + 1);
+      });
+  }
+  say('LOADING'); drawBoards();
+  var chain = Promise.resolve();
+  boards.forEach(function (slug) { chain = chain.then(function () { return load(slug); }).catch(function (e) { say('COULD NOT LOAD ' + slug.toUpperCase() + ' (' + e.message + ') — THE BOARD MAY BE PRIVATE'); }); });
+})();
+</script>
+</body>
+</html>

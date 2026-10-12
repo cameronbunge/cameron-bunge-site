@@ -1,0 +1,63 @@
+/* About: a white sheet over the page, opened by clicking the name (which stays put and closes it again). One narrow column of caps,
+   top-left; contact bottom-left; the section nav and review controls step aside while it is open. */
+.about { position: fixed; inset: 0; z-index: 5; background: var(--bg, #fff); color: var(--ink, #111); padding: 14px var(--gutter, 24px) 16px; overflow: auto; }
+.about[hidden] { display: none; }
+.about-col { max-width: 46ch; font-family: var(--display, "Archivo", Helvetica, Arial, sans-serif); font-weight: 400; font-size: 13px; line-height: 1.5; letter-spacing: 0.01em; text-transform: uppercase; padding-top: 2px; }
+.about-col p { margin: 0 0 1.5em; }
+.about .keep { text-transform: none; }
+.about-portrait { position: fixed; right: var(--gutter, 24px); bottom: 140px; width: 165px; height: auto; background: var(--cell, #f0f0f0); z-index: 6; }   /* the ID photo, bottom-right, an inch above CLOSE (10/11) */
+body.cam-open .about-portrait, body.wall-open .about-portrait { display: none; }
+/* the doors: INSPIRATIONS and CAMERA ROLL, a fifth up from the brackets elsewhere (13px). Locked 10/11: on home they hold the bottom-left
+   corner, stacked; on the bio sheet (any page) they sit in the middle. The other pages do not show them. */
+.doors { position: fixed; z-index: 7; font-family: var(--mono, "Space Mono", monospace); font-weight: 700; font-size: 13px; letter-spacing: 0.02em; white-space: nowrap; }
+.doors .b { color: var(--muted, #8a8a8a); }
+/* no underline on hover (10/11); the open door's brackets go black instead */
+.doors a.on .b { color: var(--ink, #111); }
+.doors { left: var(--gutter, 24px); bottom: 16px; display: grid; gap: 7px; }   /* home: the gap of the name and the city (10/11) */
+body.about-open .doors { left: 50%; top: 50%; bottom: auto; transform: translate(-50%, -50%); display: flex; gap: 18px; }   /* the bio sheet */
+/* a door open: the brackets step up to the top of the sheet, the open one underlined, and the words step aside */
+body.about-open.cam-open .doors, body.about-open.wall-open .doors { top: 14px; transform: translateX(-50%); }
+body.cam-open .about-col { visibility: hidden; }
+.about-cam { position: fixed; inset: 0; z-index: 6; display: grid; place-items: center; pointer-events: none; }
+.about-cam[hidden] { display: none; }
+.about-cam img { display: block; max-height: 70vh; max-width: 60vw; width: auto; height: auto; background: var(--cell, #f0f0f0); }
+.about-cam img:not([src]) { display: none; }
+.about-camnote { margin: 0; font-family: var(--mono, "Space Mono", monospace); font-weight: 700; font-size: 11px; color: var(--pale, #c9c9c9); }
+.about-camnote .b { color: var(--pale, #c9c9c9); }
+.about-camnote[hidden] { display: none; }
+/* INSPIRATIONS: the wall — everything to the right of the words, from under the name to above the CLOSE line. One row per Are.na board,
+   square cells edge to edge with a hairline of white between (the blocking grid), newest first; a row scrolls sideways under the wheel.
+   left/top are measured from the page (about.js). */
+.about-wall { position: fixed; left: 440px; right: var(--gutter, 24px); top: 118px; bottom: 44px; z-index: 6; display: grid; grid-template-rows: repeat(5, minmax(0, 1fr)); gap: 2px; }
+.about-wall[hidden] { display: none; }
+.about-wall .row { min-height: 0; }
+.about-wall .row.off { display: none; }
+.about-wall .cells { display: flex; gap: 2px; height: 100%; overflow-x: auto; overflow-y: hidden; scrollbar-width: none; }
+.about-wall .cells::-webkit-scrollbar { display: none; }
+.about-wall .cells a { flex: 0 0 auto; height: 100%; aspect-ratio: 1; background: var(--cell, #f0f0f0); display: block; }
+.about-wall .cells img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.about-wall .cells a:hover img { opacity: .92; }
+body.pillar:not(.about-open) .doors, body.seq:not(.about-open) .doors, body.inspo .doors { display: none; }
+.about-contact { position: fixed; left: var(--gutter, 24px); bottom: 16px; font-family: var(--display, "Archivo", Helvetica, Arial, sans-serif); font-weight: 400; font-size: 13px; line-height: 1.5; letter-spacing: 0.01em; text-transform: uppercase; }
+.about-contact a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.about-close { position: fixed; right: var(--gutter, 24px); bottom: 16px; font-family: var(--mono, "Space Mono", monospace); font-weight: 700; font-size: 11px; cursor: pointer; background: none; border: 0; color: inherit; padding: 0; }
+.about-close .b { color: var(--muted, #8a8a8a); }
+.about-close:hover { text-decoration: underline; text-underline-offset: 3px; }
+body.about-open .pillars, body.about-open .switch,
+body.about-open .where-l, body.about-open .where-r, body.about-open .arrows, body.seq.about-open .ttl { display: none; }
+body.about-open { overflow: hidden; }
+.mark [data-about] { cursor: pointer; }
+
+/* under the name: the city, set in the same face as the About contact (locked 10/11). Email and Instagram live in the About sheet only. */
+.mark .under { margin-top: 8px; font-family: var(--display, "Archivo", Helvetica, Arial, sans-serif); font-weight: 400; font-size: 13px; line-height: 1.5; letter-spacing: 0.01em; text-transform: uppercase; }
+/* the city stays under the name while the sheet is open (10/11) */
+@media (max-width: 900px) {
+  .about { padding-top: 110px; }
+  .doors, body.about-open .doors { position: static; transform: none; display: grid; gap: 3px; margin-top: 24px; padding: 0 var(--gutter, 24px); }
+  .about-contact { position: static; margin-top: 16px; }
+  .about-close { position: static; display: block; margin-top: 24px; }
+  .about-portrait { position: static; margin-top: 24px; }
+  .about-wall { position: static !important; display: grid; grid-template-rows: none; gap: 2px; margin-top: 24px; }
+  .about-wall .cells { height: auto; flex-wrap: wrap; overflow: visible; }
+  .about-wall .cells a { height: auto; width: calc((100% - 4px) / 3); }
+}

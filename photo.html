@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>03 Photo + Video — Cameron Bunge</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wdth,wght@62..125,100..900&family=Space+Mono:wght@400;700&display=swap">
+<link rel="stylesheet" href="css/site.css">
+<link rel="stylesheet" href="css/about.css">
+<link rel="stylesheet" href="css/paper.css">
+<style>html.live .switch { display: none !important; }</style>
+</head>
+<body data-pillar="photo" class="seq" data-paper="vellum" data-struct="b">
+
+<header class="mark">
+  <a href="#about" data-about><h1>Cameron<br>Bunge</h1></a>
+  <div class="under"><span class="city">Los Angeles</span></div>
+</header>
+
+<div class="where-l" id="whereL" aria-live="polite"></div>
+<div class="where-r" id="whereR"></div>
+
+<main class="stage" id="stage" aria-label="Photo + Video"></main>
+
+<h2 class="ttl"><span class="n">03</span><span class="w">Photo + Video</span></h2>
+
+<div class="arrows">
+  <button type="button" id="prev" aria-label="Previous"><span class="b">[</span> ← <span class="b">]</span></button>
+  <button type="button" id="next" aria-label="Next"><span class="b">[</span> → <span class="b">]</span></button>
+</div>
+
+<nav class="pillars" id="pillars" aria-label="Other sections"></nav>
+
+<div class="paper" aria-hidden="true"></div>
+
+<div class="switch" role="group" aria-label="Review controls">
+  <label class="tool">WILD <input type="range" id="wild" min="0" max="100" value="0"> <span id="wildVal">0</span></label>
+  <button id="placeShuffle" type="button">RESHUFFLE</button>
+  <span class="sep"></span>
+  <span class="tool" id="place">DRAG A PICTURE TO PLACE IT · ITS CORNER TO SIZE IT</span>
+  <button id="placeKeep" type="button">KEEP FRAME</button>
+  <button id="placeReset" type="button">RESET FRAME</button>
+  <span class="sep"></span>
+  <a class="tool" href="media.html#photo">MEDIA HUB →</a>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/state.js"></script>
+<script src="js/live.js"></script>
+<script src="js/pillar.js"></script>
+<script src="js/about.js"></script>
+<script src="js/seq.js"></script>
+</body>
+</html>

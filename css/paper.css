@@ -1,0 +1,31 @@
+/* VELLUM — review options (X CLEAN, V VELLUM, D VELLUM DEEP). The page as a glassine envelope with its paper tooth over everything.
+   VELLUM: the words are inside the envelope — dark gray, soft-edged, a little bleed — and the pictures are printed on the outside, crisp, on top.
+   VELLUM DEEP: the pictures are inside too, soft and lower in contrast, under the words as on the clean page; a picture clears fully under the pointer.
+   The words never clear. */
+.paper { display: none; }
+body[data-paper^="vellum"] { --ink: #333538; --muted: #8e9094; --pale: #cfd0d2; --cell: #eeeeef; --fwd: #111; }   /* halved 10/11: everything half as far behind the paper */
+body[data-paper^="vellum"] .paper { display: block; position: fixed; inset: 0; z-index: 60; pointer-events: none; background: url(../img/paper.jpg) 0 0 / 1400px 1400px; mix-blend-mode: multiply; opacity: .38; }
+
+/* inside the envelope */
+body[data-paper^="vellum"] .ttl, body[data-paper^="vellum"] .line li, body[data-paper^="vellum"] .mark h1,
+body[data-paper^="vellum"] .where-l, body[data-paper^="vellum"] .where-r, body[data-paper^="vellum"] .fr .big,
+body[data-paper^="vellum"] .center ol li { filter: blur(.35px); -webkit-text-stroke: .1px var(--ink); transition: filter .22s ease, color .22s ease; }
+body[data-paper^="vellum"] .mark .under, body[data-paper^="vellum"] .pillars a, body[data-paper^="vellum"] #txts .txt, body[data-paper^="vellum"] .arrows button,
+body[data-paper^="vellum"] .bioRow .bio, body[data-paper^="vellum"] .fr .date,
+body[data-paper^="vellum"] .about-col, body[data-paper^="vellum"] .about-contact, body[data-paper^="vellum"] .about-close { filter: blur(.2px); transition: filter .22s ease, color .22s ease; }
+
+/* nothing printed comes forward: the words stay behind the paper whatever the pointer does (locked 10/11). Only a picture clears, in DEEP. */
+
+/* VELLUM: pictures printed on the outside, over the words */
+body[data-paper="vellum"] .field { z-index: 5; pointer-events: none; }   /* the field is on top now; only the pictures themselves take the pointer */
+body[data-paper="vellum"] .field .pic { pointer-events: auto; }
+body[data-paper="vellum"].about-open .field { visibility: hidden; }
+
+/* VELLUM DEEP: pictures inside too — soft, a little lighter and flatter — and each one clears completely under the pointer */
+body[data-paper="vellum-deep"] .pic img, body[data-paper="vellum-deep"] .nat .c img, body[data-paper="vellum-deep"] .nat .c video,
+body[data-paper="vellum-deep"] .fr.imgs .c img { filter: blur(.3px) contrast(.92) brightness(1.03); transition: filter .22s ease; }
+body[data-paper="vellum-deep"] .nat .c:hover img, body[data-paper="vellum-deep"] .nat .c:hover video, body[data-paper="vellum-deep"] .fr.imgs .c:hover img,
+body[data-paper="vellum-deep"] .pic:hover img { filter: none; }
+
+/* the review strip stays crisp */
+body[data-paper^="vellum"] .switch { filter: none; }
