@@ -122,7 +122,7 @@
   .pic .tag { display: none; }
   .screen > .bioRow { order: 3; display: block; margin-top: 8vh; margin-top: 8svh; pointer-events: auto; }   /* the band above holds the white; a little more before the lines (10/12) */
   .bioCol { max-width: 40ch; }
-  .bio { text-align: left; text-wrap: pretty; }
+  .bio { text-align: left; text-wrap: pretty; font-size: 9.1px; line-height: 1.55; }   /* the lines 30% down on the phone (10/13) */
   .bio + .bio { margin-top: 1.2em; }
   body[data-paper="vellum"] .field { pointer-events: auto; }
   /* the doors (INSPIRATIONS / CAMERA ROLL) under the lines, as two brackets side by side */
