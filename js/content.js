@@ -1,7 +1,7 @@
 /* THE SITE'S CONTENT — written by the hub (hub.html). Edit there, not here: the next PUBLISH overwrites this file. */
 window.SITE_CONTENT = {
  "v": 1,
- "savedAt": "2026-10-29T08:26:10.000Z",
+ "savedAt": "2026-10-29T08:29:49.000Z",
  "about": {
   "paras": [
    "CAMERON BUNGE WORKS AT THE INTERSECTION OF CREATIVE, CONTENT AND STRATEGY — BUILDING BRANDS ACROSS THE MUSIC, FASHION AND MEDIA INDUSTRIES.",
@@ -1799,7 +1799,7 @@ window.SITE_CONTENT = {
      },
      "img/atliens/atliens-04-letterman.jpg": {
       "x": "14.00%",
-      "y": "49.00%",
+      "y": "47.50%",
       "w": "13.00vw"
      },
      "img/atliens/atliens-01-hoodie.jpg": {
@@ -1831,18 +1831,18 @@ window.SITE_CONTENT = {
      },
      "img/csm-03.jpg": {
       "x": "10.00%",
-      "y": "51.50%",
-      "w": "10.00vw"
+      "y": "50.50%",
+      "w": "9.50vw"
      },
      "img/csm/csm-08-walkman-clip.mp4": {
       "x": "27.00%",
-      "y": "53.00%",
-      "w": "7.50vw"
+      "y": "52.00%",
+      "w": "7.00vw"
      },
      "img/csm-02.jpg": {
       "x": "36.00%",
       "y": "14.00%",
-      "w": "20.00vw"
+      "w": "17.00vw"
      },
      "img/csm-05.jpg": {
       "x": "60.00%",
@@ -1860,13 +1860,13 @@ window.SITE_CONTENT = {
       "w": "12.00vw"
      },
      "img/csm-04.jpg": {
-      "x": "50.00%",
-      "y": "80.00%",
-      "w": "13.50vw"
+      "x": "36.00%",
+      "y": "61.00%",
+      "w": "11.00vw"
      }
     }
    },
-   "savedAt": "2026-10-29T08:26:10.000Z"
+   "savedAt": "2026-10-29T08:29:49.000Z"
   }
  }
 };
