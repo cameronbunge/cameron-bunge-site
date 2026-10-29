@@ -101,12 +101,15 @@
       return;
     }
     if (set.classList.contains('placed')) {
-      /* placed by hand: the pictures sit where they were put (fixed to the screen); only the terms line keeps to the band's bottom edge */
-      var pt3 = page.getBoundingClientRect().top, bt3 = line.getBoundingClientRect().bottom + 28;
-      var bb3 = Math.min((body.getAttribute('data-copy') || '') === 'none' ? Infinity : txt.getBoundingClientRect().top, ttl.getBoundingClientRect().top) - 24;
+      /* placed by hand: the pictures sit where they were put, the arrangement scaled as one to the stage (see layoutPlaced); only the
+         terms line keeps to the band's bottom edge */
+      var pt3 = page.getBoundingClientRect().top, bt3 = line.getBoundingClientRect().bottom + 28, none3 = (body.getAttribute('data-copy') || '') === 'none';
+      var bb3 = Math.min(none3 ? Infinity : txt.getBoundingClientRect().top, ttl.getBoundingClientRect().top) - 24;
       var meta3 = set.querySelector('.meta'), mh3 = meta3 ? meta3.getBoundingClientRect().height : 0;
       pane.style.width = edges().width.toFixed(1) + 'px';
-      pane.style.setProperty('--pane-top', Math.max(bt3 - pt3, bb3 - mh3 - 14 - pt3).toFixed(1) + 'px');
+      /* the terms line steps down level with the top of the copy (it sits to the right of it), so the stage runs down to the copy */
+      pane.style.setProperty('--pane-top', Math.max(bt3 - pt3, (none3 ? bb3 - mh3 - 14 : txt.getBoundingClientRect().top - 14) - pt3).toFixed(1) + 'px');
+      layoutPlaced(set);
       return;
     }
     var cells = Array.prototype.slice.call(nat.children), gap = 8, sum = 0;
@@ -149,36 +152,79 @@
 
   var rows = [], sets = [], txts = [], currentId = null;
   /* PLACING (the PLACE toggle in the review strip, or the media hub's PLACE ON PAGE, or #place): every picture of the project on screen can
-     be dragged anywhere and sized by its corner. The first touch fixes the project's pictures where they stand (to the screen: left/top as a
-     share of it, width in vw); from then on that project shows its placed arrangement to everyone, placing mode or not. Saved per section
-     to the database (layout/<section>), per project, per picture. RESET PROJECT lets the project fall back to its row or grid. */
-  var playout = {}, placeDb = null, placeTimer = null, placeNote = null;
+     be dragged anywhere and sized by its corner. The first touch fixes the project's pictures where they stand; from then on that project
+     shows its placed arrangement to everyone, placing mode or not. Saved per section to the database (layout/<section>), per project, per
+     picture: left, top and width as hundredths of the STAGE's width — the stage being the page between the gutters, from under the name
+     top-right to above the copy (less the terms line). The arrangement is drawn as one piece: scaled with the stage so the pictures keep
+     their distances from each other on any screen, shrunk as a group when the stage is too short for it, and moved down (and shrunk) if it
+     would run into the line of names. RESET PROJECT lets the project fall back to its row or grid. Entries from before 10/29 (left/top as a
+     share of the screen, width in vw) are read as they were and converted on the first draw. */
+  var playout = {}, placeDb = null, placeTimer = null, placeNote = null, stageOf = {};
   function note(t, on) { if (!placeNote) return; placeNote.textContent = t; placeNote.classList.toggle('on', !!on); }
   function placingOn() { return body.classList.contains('placing'); }
+  function stageRect(set) {   /* gutter to gutter (the names' left edge to the name top-right's right edge), from under that name to above the copy */
+    var mr = document.querySelector('.mark').getBoundingClientRect(), lr = line.getBoundingClientRect(), txt = document.getElementById('txts');
+    var none = (body.getAttribute('data-copy') || '') === 'none', meta = set.querySelector('.meta'), mh = meta ? meta.getBoundingClientRect().height + 14 : 0;
+    var top = mr.bottom + 16;
+    var bottom = none ? ttl.getBoundingClientRect().top - 24 - mh : Math.min(txt.getBoundingClientRect().top, ttl.getBoundingClientRect().top) - 20;
+    var keepR = 0; Array.prototype.forEach.call(line.querySelectorAll('a'), function (a) { keepR = Math.max(keepR, a.getBoundingClientRect().right); });
+    return { left: lr.left, top: top, width: window.innerWidth - 2 * lr.left, height: Math.max(60, bottom - top), keep: { right: keepR + 24, bottom: lr.bottom + 24 } };
+  }
+  function unitsOf(v, st) {   /* an entry in stage units, converting one saved before 10/29 (shares of the screen) on the fly */
+    if (typeof v.x === 'number') return v;
+    var s = st.width / 100;
+    return { x: (parseFloat(v.x) / 100 * window.innerWidth - st.left) / s, y: (parseFloat(v.y) / 100 * window.innerHeight - st.top) / s, w: parseFloat(v.w) * window.innerWidth / 100 / s };
+  }
+  function layoutPlaced(set) {
+    var id = set.getAttribute('data-id'), lay = id && playout[id]; if (!lay) return;
+    var st = stageRect(set), cs = Array.prototype.slice.call(set.querySelectorAll('.c')), items = [], k = 0;
+    cs.forEach(function (c) {
+      var src = c.getAttribute('data-src'), v = lay[src];
+      if (v) { v = unitsOf(v, st); lay[src] = v; }
+      else v = { x: 2 + 14 * (k++), y: 0, w: 12 };   /* a picture added since the project was placed: parked top-left at a modest size, to be dragged into place */
+      items.push({ c: c, u: v, h: v.w / ratioOf(c) });
+    });
+    var minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+    items.forEach(function (it) { minX = Math.min(minX, it.u.x); minY = Math.min(minY, it.u.y); maxX = Math.max(maxX, it.u.x + it.u.w); maxY = Math.max(maxY, it.u.y + it.h); });
+    var cw = Math.max(1, maxX - minX), ch = Math.max(1, maxY - minY);
+    var s = st.width / 100; if (ch * s > st.height) s = st.height / ch;
+    var ox, oy, top = null;
+    for (var t = 0; t < 4; t++) {
+      ox = st.left + (st.width - cw * s) / 2 - minX * s;
+      if (top === null) top = st.top + Math.max(0, (st.height - ch * s) / 2);
+      oy = top - minY * s;
+      var dy = 0;   /* anything that would sit over the names pushes the whole arrangement down, and shrinks it if it then runs out of room */
+      items.forEach(function (it) { var l = ox + it.u.x * s, tp = oy + it.u.y * s; if (l < st.keep.right && tp < st.keep.bottom) dy = Math.max(dy, st.keep.bottom - tp); });
+      if (dy < 0.5) break;
+      top += dy;
+      if (top + ch * s > st.top + st.height) s = Math.max(0.05, (st.top + st.height - top) / ch);
+    }
+    items.forEach(function (it) {
+      it.c.style.setProperty('--x', (ox + it.u.x * s).toFixed(1) + 'px'); it.c.style.setProperty('--y', (oy + it.u.y * s).toFixed(1) + 'px'); it.c.style.setProperty('--w', (it.u.w * s).toFixed(1) + 'px');
+      it.c.style.width = ''; it.c.style.height = '';
+    });
+    stageOf[id] = { ox: ox, oy: oy, s: s };
+  }
   function applyPlaced(set) {
     var id = set.getAttribute('data-id'), lay = id && playout[id]; if (!set.querySelector('.nat') || set.classList.contains('mishka')) return;
-    var cs = Array.prototype.slice.call(set.querySelectorAll('.c')), any = false;
-    cs.forEach(function (c) { var v = lay && lay[c.getAttribute('data-src')]; ['x', 'y', 'w'].forEach(function (k) { if (v && v[k]) { c.style.setProperty('--' + k, v[k]); any = true; } else c.style.removeProperty('--' + k); }); });
-    set.classList.toggle('placed', any);
-    if (any) {
-      cs.forEach(function (c) { c.style.width = ''; c.style.height = ''; });
-      /* a picture added since the project was placed: parked bottom-left of the band at a modest size, to be dragged into place */
-      var k = 0; cs.forEach(function (c) { if (c.style.getPropertyValue('--x')) return; var ed = edges(); c.style.setProperty('--x', ((ed.inset + k * 40) / window.innerWidth * 100).toFixed(2) + '%'); c.style.setProperty('--y', ((ttl.getBoundingClientRect().top - 24 - 160) / window.innerHeight * 100).toFixed(2) + '%'); c.style.setProperty('--w', '12vw'); k++; });
-    }
+    var any = !!(lay && Object.keys(lay).length);
+    Array.prototype.forEach.call(set.querySelectorAll('.c'), function (c) { ['x', 'y', 'w'].forEach(function (k) { c.style.removeProperty('--' + k); }); if (any) { c.style.width = ''; c.style.height = ''; } });
+    set.classList.toggle('placed', any);   /* the positions themselves are drawn by fitSheet → layoutPlaced */
   }
-  function freeze(set) {
+  function freeze(set) {   /* the pictures as they stand, in stage units */
+    var id = set.getAttribute('data-id'), st = stageRect(set), s = st.width / 100, lay = playout[id] = {};
     Array.prototype.forEach.call(set.querySelectorAll('.c'), function (c) {
       var m = c.querySelector('img, video'), r = (m || c).getBoundingClientRect();
-      c.style.setProperty('--x', (r.left / window.innerWidth * 100).toFixed(2) + '%');
-      c.style.setProperty('--y', (r.top / window.innerHeight * 100).toFixed(2) + '%');
-      c.style.setProperty('--w', (r.width / window.innerWidth * 100).toFixed(2) + 'vw');
-      c.style.width = ''; c.style.height = '';
+      lay[c.getAttribute('data-src')] = { x: (r.left - st.left) / s, y: (r.top - st.top) / s, w: r.width / s };
     });
-    set.classList.add('placed');
+    set.classList.add('placed'); layoutPlaced(set);
   }
   function rememberSet(set) {
-    var id = set.getAttribute('data-id'); if (!id) return; var lay = playout[id] = playout[id] || {};
-    Array.prototype.forEach.call(set.querySelectorAll('.c'), function (c) { var v = {}; ['x', 'y', 'w'].forEach(function (k) { var sv = c.style.getPropertyValue('--' + k); if (sv) v[k] = sv; }); lay[c.getAttribute('data-src')] = v; });
+    var id = set.getAttribute('data-id'), sg = id && stageOf[id]; if (!id || !sg) return; var lay = playout[id] = playout[id] || {};
+    Array.prototype.forEach.call(set.querySelectorAll('.c'), function (c) {
+      var r = c.getBoundingClientRect();
+      lay[c.getAttribute('data-src')] = { x: (r.left - sg.ox) / sg.s, y: (r.top - sg.oy) / sg.s, w: r.width / sg.s };
+    });
   }
   function savePlaced() {
     if (!placeDb) { note('NOT SAVED: CONNECT GITHUB IN THE HUB'); return; }
@@ -198,13 +244,13 @@
     c.addEventListener('pointermove', function (e) {
       if (!active) return;
       var dx = e.clientX - sx, dy = e.clientY - sy; if (Math.abs(dx) + Math.abs(dy) > 4) moved = true;
-      if (sizing) c.style.setProperty('--w', (Math.max(40, ow + dx) / window.innerWidth * 100).toFixed(2) + 'vw');
-      else { c.style.setProperty('--x', ((ox + dx) / window.innerWidth * 100).toFixed(2) + '%'); c.style.setProperty('--y', ((oy + dy) / window.innerHeight * 100).toFixed(2) + '%'); }
+      if (sizing) c.style.setProperty('--w', Math.max(40, ow + dx).toFixed(1) + 'px');
+      else { c.style.setProperty('--x', (ox + dx).toFixed(1) + 'px'); c.style.setProperty('--y', (oy + dy).toFixed(1) + 'px'); }
     });
     function drop(e) {
       if (!active) return; active = false; c.classList.remove('held'); try { c.releasePointerCapture(e.pointerId); } catch (err) {}
       if (moved) { rememberSet(set); savePlaced(); fitSheet(); }
-      else if (!wasPlaced) { set.classList.remove('placed'); applyPlaced(set); fitSheet(); }
+      else if (!wasPlaced) { delete playout[set.getAttribute('data-id')]; applyPlaced(set); fitSheet(); }
     }
     c.addEventListener('pointerup', drop); c.addEventListener('pointercancel', drop);
     c.addEventListener('click', function (e) { if (placingOn()) { e.preventDefault(); e.stopPropagation(); } }, true);

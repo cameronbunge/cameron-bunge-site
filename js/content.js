@@ -1,7 +1,7 @@
 /* THE SITE'S CONTENT — written by the hub (hub.html). Edit there, not here: the next PUBLISH overwrites this file. */
 window.SITE_CONTENT = {
  "v": 1,
- "savedAt": "2026-10-29T08:29:49.000Z",
+ "savedAt": "2026-10-29T08:40:41.000Z",
  "about": {
   "paras": [
    "CAMERON BUNGE WORKS AT THE INTERSECTION OF CREATIVE, CONTENT AND STRATEGY — BUILDING BRANDS ACROSS THE MUSIC, FASHION AND MEDIA INDUSTRIES.",
@@ -1793,80 +1793,80 @@ window.SITE_CONTENT = {
    "sets": {
     "atliens": {
      "img/atliens/atliens-cd-creative-direction.jpg": {
-      "x": "4.00%",
-      "y": "22.00%",
-      "w": "27.00vw"
+      "x": 2.28,
+      "y": 4.54,
+      "w": 28.01
      },
      "img/atliens/atliens-04-letterman.jpg": {
-      "x": "14.00%",
-      "y": "47.50%",
-      "w": "13.00vw"
+      "x": 12.65,
+      "y": 21.07,
+      "w": 13.49
      },
      "img/atliens/atliens-01-hoodie.jpg": {
-      "x": "34.00%",
-      "y": "15.00%",
-      "w": "22.00vw"
+      "x": 33.4,
+      "y": 0.0,
+      "w": 22.82
      },
      "img/atliens/atliens-02-jersey.jpg": {
-      "x": "59.00%",
-      "y": "36.00%",
-      "w": "16.00vw"
+      "x": 59.34,
+      "y": 13.62,
+      "w": 16.6
      },
      "img/atliens/atliens-03-jersey-back.jpg": {
-      "x": "77.00%",
-      "y": "13.00%",
-      "w": "18.00vw"
+      "x": 78.01,
+      "y": -1.3,
+      "w": 18.67
      },
      "img/atliens/atliens-cd-styling.jpg": {
-      "x": "78.00%",
-      "y": "55.00%",
-      "w": "16.00vw"
+      "x": 79.05,
+      "y": 25.94,
+      "w": 16.6
      }
     },
     "chainsaw-man": {
      "img/csm-01.jpg": {
-      "x": "4.00%",
-      "y": "21.50%",
-      "w": "24.00vw"
+      "x": 2.28,
+      "y": 4.21,
+      "w": 24.9
      },
      "img/csm-03.jpg": {
-      "x": "10.00%",
-      "y": "50.50%",
-      "w": "9.50vw"
+      "x": 8.5,
+      "y": 23.02,
+      "w": 9.86
      },
      "img/csm/csm-08-walkman-clip.mp4": {
-      "x": "27.00%",
-      "y": "52.00%",
-      "w": "7.00vw"
+      "x": 26.14,
+      "y": 23.99,
+      "w": 7.26
      },
      "img/csm-02.jpg": {
-      "x": "36.00%",
-      "y": "14.00%",
-      "w": "17.00vw"
+      "x": 35.48,
+      "y": -0.65,
+      "w": 17.64
      },
      "img/csm-05.jpg": {
-      "x": "60.00%",
-      "y": "15.00%",
-      "w": "24.00vw"
+      "x": 60.37,
+      "y": 0.0,
+      "w": 24.9
      },
      "img/csm-06.jpg": {
-      "x": "58.00%",
-      "y": "49.00%",
-      "w": "20.00vw"
+      "x": 58.3,
+      "y": 22.05,
+      "w": 20.75
      },
      "img/csm-07.jpg": {
-      "x": "85.00%",
-      "y": "40.00%",
-      "w": "12.00vw"
+      "x": 86.31,
+      "y": 16.21,
+      "w": 12.45
      },
      "img/csm-04.jpg": {
-      "x": "36.00%",
-      "y": "61.00%",
-      "w": "11.00vw"
+      "x": 35.48,
+      "y": 29.83,
+      "w": 11.41
      }
     }
    },
-   "savedAt": "2026-10-29T08:29:49.000Z"
+   "savedAt": "2026-10-29T08:40:41.000Z"
   }
  }
 };
