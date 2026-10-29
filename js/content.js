@@ -1,7 +1,7 @@
 /* THE SITE'S CONTENT — written by the hub (hub.html). Edit there, not here: the next PUBLISH overwrites this file. */
 window.SITE_CONTENT = {
  "v": 1,
- "savedAt": "2026-10-29T08:40:41.000Z",
+ "savedAt": "2026-10-29T09:14:01.000Z",
  "about": {
   "paras": [
    "CAMERON BUNGE WORKS AT THE INTERSECTION OF CREATIVE, CONTENT AND STRATEGY — BUILDING BRANDS ACROSS THE MUSIC, FASHION AND MEDIA INDUSTRIES.",
@@ -1864,9 +1864,85 @@ window.SITE_CONTENT = {
       "y": 29.83,
       "w": 11.41
      }
+    },
+    "enc0re-artistlog": {
+     "img/enc0re/enc0re-artistlog-01-ayegy-cover.jpg": {
+      "x": 34,
+      "y": 0,
+      "w": 18
+     },
+     "img/enc0re/enc0re-artistlog-03-ayegy-show.jpg": {
+      "x": 2.5,
+      "y": 5,
+      "w": 15
+     },
+     "img/enc0re/enc0re-artistlog-04-shaking-cover.jpg": {
+      "x": 55,
+      "y": 9,
+      "w": 13
+     },
+     "img/enc0re/enc0re-artistlog-02-ayegy-inspiration.jpg": {
+      "x": 20,
+      "y": 20,
+      "w": 11
+     },
+     "img/enc0re/enc0re-artistlog-05-sncl-cover.jpg": {
+      "x": 73,
+      "y": 0,
+      "w": 15
+     },
+     "img/enc0re/enc0re-artistlog-06-sncl-philosophy.jpg": {
+      "x": 86,
+      "y": 21,
+      "w": 12
+     },
+     "img/enc0re/enc0re-artistlog-07-clip.mp4": {
+      "x": 60,
+      "y": 26,
+      "w": 7
+     }
+    },
+    "iages": {
+     "img/iages/iages-02-wanted.jpg": {
+      "x": 4,
+      "y": 7,
+      "w": 30
+     },
+     "img/iages/iages-05-live-set.mp4": {
+      "x": 38,
+      "y": 0,
+      "w": 38
+     },
+     "img/iages/iages-03-banner-close.jpg": {
+      "x": 70,
+      "y": 24,
+      "w": 26
+     }
+    },
+    "transcendental": {
+     "img/archive/transcendental/transcendental-02-life-album-art.jpg": {
+      "x": 36,
+      "y": 0,
+      "w": 24
+     },
+     "img/archive/transcendental/transcendental-01-video.mp4": {
+      "x": 6,
+      "y": 14,
+      "w": 15
+     },
+     "img/archive/transcendental/transcendental-04-transmission-001.jpg": {
+      "x": 66,
+      "y": 8,
+      "w": 15
+     },
+     "img/archive/transcendental/transcendental-05-soft-launch.mp4": {
+      "x": 86,
+      "y": 20,
+      "w": 11
+     }
     }
    },
-   "savedAt": "2026-10-29T08:40:41.000Z"
+   "savedAt": "2026-10-29T09:14:01.000Z"
   }
  }
 };

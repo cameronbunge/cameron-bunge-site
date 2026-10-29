@@ -106,9 +106,12 @@
       var pt3 = page.getBoundingClientRect().top, bt3 = line.getBoundingClientRect().bottom + 28, none3 = (body.getAttribute('data-copy') || '') === 'none';
       var bb3 = Math.min(none3 ? Infinity : txt.getBoundingClientRect().top, ttl.getBoundingClientRect().top) - 24;
       var meta3 = set.querySelector('.meta'), mh3 = meta3 ? meta3.getBoundingClientRect().height : 0;
-      pane.style.width = edges().width.toFixed(1) + 'px';
-      /* the terms line steps down level with the top of the copy (it sits to the right of it), so the stage runs down to the copy */
-      pane.style.setProperty('--pane-top', Math.max(bt3 - pt3, (none3 ? bb3 - mh3 - 14 : txt.getBoundingClientRect().top - 14) - pt3).toFixed(1) + 'px');
+      edges();
+      /* the terms stack in the bottom right corner of the page, one under another, their right edge on the gutter and their last line
+         level with the nav; the stage then runs down to the copy */
+      var lr3 = line.getBoundingClientRect(), navB3 = nav.getBoundingClientRect().bottom;
+      pane.style.right = lr3.left.toFixed(1) + 'px'; pane.style.width = (window.innerWidth - 2 * lr3.left).toFixed(1) + 'px';
+      pane.style.setProperty('--pane-top', Math.max(bt3 - pt3, navB3 - mh3 - 14 - pt3).toFixed(1) + 'px');
       layoutPlaced(set);
       return;
     }
@@ -166,7 +169,8 @@
     var mr = document.querySelector('.mark').getBoundingClientRect(), lr = line.getBoundingClientRect(), txt = document.getElementById('txts');
     var none = (body.getAttribute('data-copy') || '') === 'none', meta = set.querySelector('.meta'), mh = meta ? meta.getBoundingClientRect().height + 14 : 0;
     var top = mr.bottom + 16;
-    var bottom = none ? ttl.getBoundingClientRect().top - 24 - mh : Math.min(txt.getBoundingClientRect().top, ttl.getBoundingClientRect().top) - 20;
+    var metaTop = meta ? meta.getBoundingClientRect().top : Infinity;
+    var bottom = Math.min(none ? Infinity : txt.getBoundingClientRect().top, ttl.getBoundingClientRect().top, metaTop) - 20;
     var keepR = 0; Array.prototype.forEach.call(line.querySelectorAll('a'), function (a) { keepR = Math.max(keepR, a.getBoundingClientRect().right); });
     return { left: lr.left, top: top, width: window.innerWidth - 2 * lr.left, height: Math.max(60, bottom - top), keep: { right: keepR + 24, bottom: lr.bottom + 24 } };
   }

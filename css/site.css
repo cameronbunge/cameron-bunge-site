@@ -111,6 +111,7 @@ body[data-copy^="light"] .copy { font-family: var(--display); font-stretch: 100%
 .set.placed .row { display: contents; }
 .set.placed .c { position: fixed; left: var(--x, 0); top: var(--y, 0); width: var(--w, 20vw); height: auto; transform: none; z-index: 2; }
 .set.placed .c img, .set.placed .c video { width: 100%; height: auto; max-width: none; max-height: none; }
+@media (min-width: 901px) { .set.placed .meta { flex-direction: column; align-items: flex-end; gap: 16px; } }   /* the terms stacked bottom right (10/29) */
 /* the placing tool: corner grips while PLACE is on */
 .nat .c .grip { display: none; position: absolute; right: 0; bottom: 0; width: 16px; height: 16px; cursor: nwse-resize; opacity: 0; background: linear-gradient(135deg, transparent 50%, #fff 50%); transition: opacity .2s ease; z-index: 3; }
 body.placing .nat .c { cursor: grab; touch-action: none; }
