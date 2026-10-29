@@ -1,7 +1,7 @@
 /* THE SITE'S CONTENT — written by the hub (hub.html). Edit there, not here: the next PUBLISH overwrites this file. */
 window.SITE_CONTENT = {
  "v": 1,
- "savedAt": "2026-10-29T08:19:18.000Z",
+ "savedAt": "2026-10-29T08:26:10.000Z",
  "about": {
   "paras": [
    "CAMERON BUNGE WORKS AT THE INTERSECTION OF CREATIVE, CONTENT AND STRATEGY — BUILDING BRANDS ACROSS THE MUSIC, FASHION AND MEDIA INDUSTRIES.",
@@ -1788,6 +1788,85 @@ window.SITE_CONTENT = {
      "wild": 0
     }
    }
+  },
+  "layout/campaign": {
+   "sets": {
+    "atliens": {
+     "img/atliens/atliens-cd-creative-direction.jpg": {
+      "x": "4.00%",
+      "y": "22.00%",
+      "w": "27.00vw"
+     },
+     "img/atliens/atliens-04-letterman.jpg": {
+      "x": "14.00%",
+      "y": "49.00%",
+      "w": "13.00vw"
+     },
+     "img/atliens/atliens-01-hoodie.jpg": {
+      "x": "34.00%",
+      "y": "15.00%",
+      "w": "22.00vw"
+     },
+     "img/atliens/atliens-02-jersey.jpg": {
+      "x": "59.00%",
+      "y": "36.00%",
+      "w": "16.00vw"
+     },
+     "img/atliens/atliens-03-jersey-back.jpg": {
+      "x": "77.00%",
+      "y": "13.00%",
+      "w": "18.00vw"
+     },
+     "img/atliens/atliens-cd-styling.jpg": {
+      "x": "78.00%",
+      "y": "55.00%",
+      "w": "16.00vw"
+     }
+    },
+    "chainsaw-man": {
+     "img/csm-01.jpg": {
+      "x": "4.00%",
+      "y": "21.50%",
+      "w": "24.00vw"
+     },
+     "img/csm-03.jpg": {
+      "x": "10.00%",
+      "y": "51.50%",
+      "w": "10.00vw"
+     },
+     "img/csm/csm-08-walkman-clip.mp4": {
+      "x": "27.00%",
+      "y": "53.00%",
+      "w": "7.50vw"
+     },
+     "img/csm-02.jpg": {
+      "x": "36.00%",
+      "y": "14.00%",
+      "w": "20.00vw"
+     },
+     "img/csm-05.jpg": {
+      "x": "60.00%",
+      "y": "15.00%",
+      "w": "24.00vw"
+     },
+     "img/csm-06.jpg": {
+      "x": "58.00%",
+      "y": "49.00%",
+      "w": "20.00vw"
+     },
+     "img/csm-07.jpg": {
+      "x": "85.00%",
+      "y": "40.00%",
+      "w": "12.00vw"
+     },
+     "img/csm-04.jpg": {
+      "x": "50.00%",
+      "y": "80.00%",
+      "w": "13.50vw"
+     }
+    }
+   },
+   "savedAt": "2026-10-29T08:26:10.000Z"
   }
  }
 };
