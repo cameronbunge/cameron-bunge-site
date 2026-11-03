@@ -301,7 +301,7 @@ window.SITE_CONTENT = {
    "pillars": [
     "campaign"
    ],
-   "meta": "Creative producer · pre-production · with Cultivar",
+   "meta": "Creative production · Creative direction",
    "imgs": [
     {
      "src": "img/atliens/atliens-01-hoodie.jpg"
@@ -322,11 +322,11 @@ window.SITE_CONTENT = {
      "src": "img/atliens/atliens-cd-styling.jpg"
     }
    ],
-   "copy": "Photoshoot for the OutKast ATLiens 30th Anniversary × Atlanta Falcons collection. Creative producer: the pre-production book that concepted the shoot, the crew, the models and the day itself.",
+   "copy": "Creative direction and production for the OutKast ATLiens 30th Anniversary × Atlanta Falcons campaign.",
    "bul": [
-    "Shoot concept and pre-production book",
-    "Crew, casting and production",
-    "The images"
+    "Creative direction",
+    "Production: pre-production book, crew, casting and the shoot day",
+    "The campaign images"
    ]
   },
   {

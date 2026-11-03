@@ -104,10 +104,10 @@ window.SITE = {
       copy: 'The Tamashika plush keychain for EDGLRD: product development from the character to the boxed piece.',
       bul: ['Product development', 'Packaging', 'Production'] },
 
-    { id: 'atliens', name: 'OutKast × Atlanta Falcons', pillars: ['campaign'], meta: 'Creative producer · pre-production · with Cultivar',
+    { id: 'atliens', name: 'OutKast × Atlanta Falcons', pillars: ['campaign'], meta: 'Creative production · Creative direction',
       imgs: [{ src: 'img/atliens/atliens-cd-creative-direction.jpg' }, { src: 'img/atliens/atliens-cd-styling.jpg' }],   /* pages of the pre-pro book (10/11) */
-      copy: 'Photoshoot for the OutKast ATLiens 30th Anniversary × Atlanta Falcons collection. Creative producer: the pre-production book that concepted the shoot, the crew, the models and the day itself.',
-      bul: ['Shoot concept and pre-production book', 'Crew, casting and production', 'The images'] },
+      copy: 'Creative direction and production for the OutKast ATLiens 30th Anniversary × Atlanta Falcons campaign.',
+      bul: ['Creative direction', 'Production: pre-production book, crew, casting and the shoot day', 'The campaign images'] },
 
     { id: 'chainsaw-man', name: 'Chainsaw Man', pillars: ['campaign'], meta: 'Creative producer · agency lead · with Ceremony of Roses',
       imgs: [{ src: 'img/csm-02.jpg' }, { src: 'img/csm-01.jpg' }, { src: 'img/csm-06.jpg' }, { src: 'img/csm-03.jpg' }, { src: 'img/csm-05.jpg' }, { src: 'img/csm-07.jpg' }, { src: 'img/csm-04.jpg' }, { src: 'img/csm/csm-08-walkman-clip.mp4', v: true, ar: '640 / 1138' }],
