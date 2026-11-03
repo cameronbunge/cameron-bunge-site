@@ -74,10 +74,10 @@ window.SITE = {
       copy: 'Transformed a department within Ceremony of Roses from a general merch partner into a product development and cultural consultancy. Developed new creative service offerings, branding, and taste-driven product strategy at scale.',
       bul: ['Merch partner to product development and cultural consultancy', 'New creative service offerings', 'Branding and taste-driven product strategy, at scale'] },
 
-    { id: 'edglrd', name: 'EDGLRD', pillars: ['brand'], meta: 'Brand development · Tamashika', ph: true,
+    { id: 'edglrd', name: 'EDGLRD', pillars: ['brand'], meta: 'Brand development',
       imgs: [{ src: 'img/edglrd/edglrd-brand-01-lan.jpg' }, { src: 'img/edglrd/edglrd-brand-02-konbini.jpg' }, { src: 'img/edglrd/edglrd-brand-03-street.jpg' }, { src: 'img/edglrd/edglrd-brand-04-randoseru.jpg' }],
-      copy: 'Brand development for Tamashika with EDGLRD: the character, its world and the pictures that put it there. Placeholder copy.',
-      bul: ['Placeholder bullet', 'Placeholder bullet', 'Placeholder bullet'] },
+      copy: 'Drove product development and a product-driven marketing campaign to support the launch of the video game Tamashika by EDGLRD.',
+      bul: ['Product development', 'Product-driven marketing campaign', 'Launch support for Tamashika'] },
 
     { id: 'tsd', name: 'Transcendental', pillars: ['brand'], meta: 'Campaign concept · brand strategy',
       imgs: [{ src: 'img/archive/tsd/tsd-02-visual-style.jpg' }, { src: 'img/archive/tsd/tsd-01-campaign-content.jpg' }, { src: 'img/archive/tsd/tsd-03-partnerships.jpg' }],

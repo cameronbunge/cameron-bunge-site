@@ -149,8 +149,7 @@ window.SITE_CONTENT = {
    "pillars": [
     "brand"
    ],
-   "meta": "Brand development · Tamashika",
-   "ph": true,
+   "meta": "Brand development",
    "imgs": [
     {
      "src": "img/edglrd/edglrd-brand-01-lan.jpg"
@@ -165,11 +164,11 @@ window.SITE_CONTENT = {
      "src": "img/edglrd/edglrd-brand-04-randoseru.jpg"
     }
    ],
-   "copy": "Brand development for Tamashika with EDGLRD: the character, its world and the pictures that put it there. Placeholder copy.",
+   "copy": "Drove product development and a product-driven marketing campaign to support the launch of the video game Tamashika by EDGLRD.",
    "bul": [
-    "Placeholder bullet",
-    "Placeholder bullet",
-    "Placeholder bullet"
+    "Product development",
+    "Product-driven marketing campaign",
+    "Launch support for Tamashika"
    ]
   },
   {
