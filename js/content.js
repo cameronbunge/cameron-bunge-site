@@ -52,8 +52,7 @@ window.SITE_CONTENT = {
    "id": "arena",
    "name": "The Arena",
    "pillars": [
-    "brand",
-    "product"
+    "brand"
    ],
    "meta": "Brand strategy · Product strategy",
    "imgs": [
@@ -72,6 +71,20 @@ window.SITE_CONTENT = {
     "Product strategy",
     "Product development",
     "Brand strategy"
+   ]
+  },
+  {
+   "id": "arena-product",
+   "name": "The Arena",
+   "pillars": [
+    "product"
+   ],
+   "meta": "",
+   "imgs": [],
+   "copy": "Developed and co-designed 75 unique products to support the brand launch activation at Camp Flog Gnaw 2026.",
+   "bul": [
+    "75 unique products, developed and co-designed",
+    "Brand launch activation at Camp Flog Gnaw 2026"
    ]
   },
   {
@@ -258,7 +271,7 @@ window.SITE_CONTENT = {
    "pillars": [
     "product"
    ],
-   "meta": "Brand development · product · boots",
+   "meta": "",
    "ph": true,
    "imgs": [
     {
@@ -266,12 +279,8 @@ window.SITE_CONTENT = {
      "ph": true
     }
    ],
-   "copy": "Brand development and product for Slayyyter: the boots. Placeholder copy: two sentences on the brief and what was built.",
-   "bul": [
-    "Placeholder bullet",
-    "Placeholder bullet",
-    "Placeholder bullet"
-   ]
+   "copy": "TBD",
+   "bul": []
   },
   {
    "id": "edglrd-product",
@@ -279,7 +288,7 @@ window.SITE_CONTENT = {
    "pillars": [
     "product"
    ],
-   "meta": "Product development · Tamashika",
+   "meta": "",
    "imgs": [
     {
      "src": "img/edglrd/edglrd-01.jpg"
@@ -1560,7 +1569,7 @@ window.SITE_CONTENT = {
     {
      "groups": [
       {
-       "id": "arena",
+       "id": "arena-product",
        "imgs": [],
        "name": "The Arena"
       },

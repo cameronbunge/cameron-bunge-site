@@ -59,10 +59,14 @@ window.SITE = {
       { id: 'archive',  n: '',   name: 'Archive',       file: 'archive.html',   from: ['archive'] } ] }
   },
   projects: [
-    { id: 'arena', name: 'The Arena', pillars: ['brand', 'product'], meta: 'Brand strategy · Product strategy',
+    { id: 'arena', name: 'The Arena', pillars: ['brand'], meta: 'Brand strategy · Product strategy',
       imgs: [{ src: 'img/arena/arena-01-cyberpunk.jpg' }, { src: 'img/arena/arena-02-grunge-experimental.jpg' }, { src: 'img/arena/arena-03-retro-gaming.jpg' }],
       copy: "Led product strategy for a new film and TV studio, building the brand through product development and strategy.",
       bul: ['Product strategy', 'Product development', 'Brand strategy'] },
+    /* the Arena on the Product page: the product itself, pictures to come (11/3) */
+    { id: 'arena-product', name: 'The Arena', pillars: ['product'], meta: '', imgs: [],
+      copy: 'Developed and co-designed 75 unique products to support the brand launch activation at Camp Flog Gnaw 2026.',
+      bul: ['75 unique products, developed and co-designed', 'Brand launch activation at Camp Flog Gnaw 2026'] },
 
     { id: 'enc0re', name: 'enc0re', lc: true, pillars: ['brand'], meta: 'Branding · Content strategy',   /* lc: the name keeps its lowercase letters everywhere */
       imgs: [{ src: 'img/enc0re/enc0re-01-vellum.jpg' }, { src: 'img/enc0re/enc0re-02-playlist.jpg' }, { src: 'img/enc0re/enc0re-03-broadcast-006.jpg' }, { src: 'img/enc0re/enc0re-04-video.mp4', v: true, ar: '9 / 16' }, { src: 'img/enc0re/enc0re-05-the-floor.jpg' }, { src: 'img/enc0re/enc0re-06-lubelski.jpg' }, { src: 'img/enc0re/enc0re-07-maddie-ward.jpg' }, { src: 'img/enc0re/enc0re-12-bambii.jpg' }, { src: 'img/enc0re/enc0re-13-dh2.jpg' }],   /* the three photographs (tees, caps, matchboxes) moved to Photo + Video 10/11; Bambii and DH2 added 10/11 */
@@ -94,12 +98,12 @@ window.SITE = {
       copy: "A one-night art party for the Sight + Sound collective: creative direction and execution of the event, from the experiential design and brand partnerships to the identity, the poster and the artists' wall labels.",
       bul: ['Event concept and experiential design', 'Brand partnerships', 'Identity, poster and print'] },
 
-    { id: 'slayyyter', name: 'Slayyyter', pillars: ['product'], meta: 'Brand development · product · boots', ph: true,
+    { id: 'slayyyter', name: 'Slayyyter', pillars: ['product'], meta: '', ph: true,
       imgs: [{ src: 'img/placeholder-45.jpg', ph: true }],
-      copy: 'Brand development and product for Slayyyter: the boots. Placeholder copy: two sentences on the brief and what was built.',
-      bul: ['Placeholder bullet', 'Placeholder bullet', 'Placeholder bullet'] },
+      copy: 'TBD',
+      bul: [] },
 
-    { id: 'edglrd-product', name: 'EDGLRD', pillars: ['product'], meta: 'Product development · Tamashika',
+    { id: 'edglrd-product', name: 'EDGLRD', pillars: ['product'], meta: '',
       imgs: [{ src: 'img/edglrd/edglrd-01.jpg' }, { src: 'img/edglrd/edglrd-04.jpg' }],
       copy: 'The Tamashika plush keychain for EDGLRD: product development from the character to the boxed piece.',
       bul: ['Product development', 'Packaging', 'Production'] },
