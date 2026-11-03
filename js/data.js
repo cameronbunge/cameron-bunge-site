@@ -59,10 +59,10 @@ window.SITE = {
       { id: 'archive',  n: '',   name: 'Archive',       file: 'archive.html',   from: ['archive'] } ] }
   },
   projects: [
-    { id: 'arena', name: 'The Arena', pillars: ['brand', 'product'], meta: 'Brand platform · product · with Cultivar',
+    { id: 'arena', name: 'The Arena', pillars: ['brand', 'product'], meta: 'Brand strategy · Product strategy',
       imgs: [{ src: 'img/arena/arena-01-cyberpunk.jpg' }, { src: 'img/arena/arena-02-grunge-experimental.jpg' }, { src: 'img/arena/arena-03-retro-gaming.jpg' }],
-      copy: "Brand platform for The Arena: positioning, a product and commerce roadmap, and the launch system around it, from welcome kits to the Arena Rising gifting program.",
-      bul: ['Positioning and brand platform', 'Product line and commerce roadmap', 'Launch, welcome kits and gifting system'] },
+      copy: "Led product strategy for a new film and TV studio, building the brand through product development and strategy.",
+      bul: ['Product strategy', 'Product development', 'Brand strategy'] },
 
     { id: 'enc0re', name: 'enc0re', lc: true, pillars: ['brand'], meta: 'Brand + editorial · merch · Los Angeles',   /* lc: the name keeps its lowercase letters everywhere */
       imgs: [{ src: 'img/enc0re/enc0re-01-vellum.jpg' }, { src: 'img/enc0re/enc0re-02-playlist.jpg' }, { src: 'img/enc0re/enc0re-03-broadcast-006.jpg' }, { src: 'img/enc0re/enc0re-04-video.mp4', v: true, ar: '9 / 16' }, { src: 'img/enc0re/enc0re-05-the-floor.jpg' }, { src: 'img/enc0re/enc0re-06-lubelski.jpg' }, { src: 'img/enc0re/enc0re-07-maddie-ward.jpg' }, { src: 'img/enc0re/enc0re-12-bambii.jpg' }, { src: 'img/enc0re/enc0re-13-dh2.jpg' }],   /* the three photographs (tees, caps, matchboxes) moved to Photo + Video 10/11; Bambii and DH2 added 10/11 */

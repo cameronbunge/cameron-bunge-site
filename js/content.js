@@ -55,7 +55,7 @@ window.SITE_CONTENT = {
     "brand",
     "product"
    ],
-   "meta": "Brand platform · product · with Cultivar",
+   "meta": "Brand strategy · Product strategy",
    "imgs": [
     {
      "src": "img/arena/arena-01-cyberpunk.jpg"
@@ -67,11 +67,11 @@ window.SITE_CONTENT = {
      "src": "img/arena/arena-03-retro-gaming.jpg"
     }
    ],
-   "copy": "Brand platform for The Arena: positioning, a product and commerce roadmap, and the launch system around it, from welcome kits to the Arena Rising gifting program.",
+   "copy": "Led product strategy for a new film and TV studio, building the brand through product development and strategy.",
    "bul": [
-    "Positioning and brand platform",
-    "Product line and commerce roadmap",
-    "Launch, welcome kits and gifting system"
+    "Product strategy",
+    "Product development",
+    "Brand strategy"
    ]
   },
   {
