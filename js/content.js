@@ -81,7 +81,7 @@ window.SITE_CONTENT = {
    "pillars": [
     "brand"
    ],
-   "meta": "Brand + editorial · merch · Los Angeles",
+   "meta": "Branding · Content strategy",
    "imgs": [
     {
      "src": "img/enc0re/enc0re-01-vellum.jpg"
@@ -113,12 +113,12 @@ window.SITE_CONTENT = {
      "src": "img/enc0re/enc0re-13-dh2.jpg"
     }
    ],
-   "copy": "Brand and editorial lead for enc0re, a music social platform. Content formats, campaigns, the editorial program, the brand and talent partnerships that carry it, and the first run of merch: tees, caps and matchboxes.",
+   "copy": "Launched the media and editorial platform for enc0re, a music, media, and social platform. Built the brand and community from the ground up through collaborations with artists, promoters, and venues. Leads the editorial and media team.",
    "bul": [
-    "Brand and editorial program",
-    "Content formats and campaigns",
-    "Brand and talent partnerships",
-    "First merch run: tees, caps, matchboxes"
+    "Media and editorial platform, launched",
+    "Brand and community, built from the ground up",
+    "Collaborations with artists, promoters, and venues",
+    "Editorial and media team lead"
    ]
   },
   {

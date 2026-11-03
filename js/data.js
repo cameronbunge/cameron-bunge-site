@@ -64,10 +64,10 @@ window.SITE = {
       copy: "Led product strategy for a new film and TV studio, building the brand through product development and strategy.",
       bul: ['Product strategy', 'Product development', 'Brand strategy'] },
 
-    { id: 'enc0re', name: 'enc0re', lc: true, pillars: ['brand'], meta: 'Brand + editorial · merch · Los Angeles',   /* lc: the name keeps its lowercase letters everywhere */
+    { id: 'enc0re', name: 'enc0re', lc: true, pillars: ['brand'], meta: 'Branding · Content strategy',   /* lc: the name keeps its lowercase letters everywhere */
       imgs: [{ src: 'img/enc0re/enc0re-01-vellum.jpg' }, { src: 'img/enc0re/enc0re-02-playlist.jpg' }, { src: 'img/enc0re/enc0re-03-broadcast-006.jpg' }, { src: 'img/enc0re/enc0re-04-video.mp4', v: true, ar: '9 / 16' }, { src: 'img/enc0re/enc0re-05-the-floor.jpg' }, { src: 'img/enc0re/enc0re-06-lubelski.jpg' }, { src: 'img/enc0re/enc0re-07-maddie-ward.jpg' }, { src: 'img/enc0re/enc0re-12-bambii.jpg' }, { src: 'img/enc0re/enc0re-13-dh2.jpg' }],   /* the three photographs (tees, caps, matchboxes) moved to Photo + Video 10/11; Bambii and DH2 added 10/11 */
-      copy: 'Brand and editorial lead for enc0re, a music social platform. Content formats, campaigns, the editorial program, the brand and talent partnerships that carry it, and the first run of merch: tees, caps and matchboxes.',
-      bul: ['Brand and editorial program', 'Content formats and campaigns', 'Brand and talent partnerships', 'First merch run: tees, caps, matchboxes'] },
+      copy: 'Launched the media and editorial platform for enc0re, a music, media, and social platform. Built the brand and community from the ground up through collaborations with artists, promoters, and venues. Leads the editorial and media team.',
+      bul: ['Media and editorial platform, launched', 'Brand and community, built from the ground up', 'Collaborations with artists, promoters, and venues', 'Editorial and media team lead'] },
 
     { id: 'cultivar', name: 'Cultivar', pillars: ['brand'], meta: 'Rebrand · identity · with Ceremony of Roses', ph: true,
       imgs: [{ src: 'img/cultivar/cultivar-01-walkman-pitch.jpg' }, { src: 'img/cultivar/cultivar-02-arena-lighter.jpg' }],   /* pages in the Cultivar templates: the Walkman pitch, an Arena tech pack (10/11) */
