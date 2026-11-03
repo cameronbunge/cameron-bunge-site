@@ -335,7 +335,7 @@ window.SITE_CONTENT = {
    "pillars": [
     "campaign"
    ],
-   "meta": "Creative producer · agency lead · with Ceremony of Roses",
+   "meta": "Creative production · Apparel development",
    "imgs": [
     {
      "src": "img/csm-02.jpg"
@@ -364,11 +364,11 @@ window.SITE_CONTENT = {
      "ar": "640 / 1138"
     }
    ],
-   "copy": "Chainsaw Man Drop 1 for Crunchyroll: creative producer and agency lead on the campaign shoot, and oversaw the design and production of the full apparel collection.",
+   "copy": "Led creative production for Crunchyroll’s first fashion-lifestyle photoshoot, launching their new premium e-commerce store. Also oversaw the development of the apparel collection.",
    "bul": [
-    "Campaign shoot, concept to delivery",
-    "Apparel design and production oversight",
-    "Agency lead on the program"
+    "Creative production, concept to delivery",
+    "Launch campaign for the premium e-commerce store",
+    "Apparel collection development"
    ]
   },
   {

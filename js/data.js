@@ -109,10 +109,10 @@ window.SITE = {
       copy: 'Creative direction and production for the OutKast ATLiens 30th Anniversary × Atlanta Falcons campaign.',
       bul: ['Creative direction', 'Production: pre-production book, crew, casting and the shoot day', 'The campaign images'] },
 
-    { id: 'chainsaw-man', name: 'Chainsaw Man', pillars: ['campaign'], meta: 'Creative producer · agency lead · with Ceremony of Roses',
+    { id: 'chainsaw-man', name: 'Chainsaw Man', pillars: ['campaign'], meta: 'Creative production · Apparel development',
       imgs: [{ src: 'img/csm-02.jpg' }, { src: 'img/csm-01.jpg' }, { src: 'img/csm-06.jpg' }, { src: 'img/csm-03.jpg' }, { src: 'img/csm-05.jpg' }, { src: 'img/csm-07.jpg' }, { src: 'img/csm-04.jpg' }, { src: 'img/csm/csm-08-walkman-clip.mp4', v: true, ar: '640 / 1138' }],
-      copy: 'Chainsaw Man Drop 1 for Crunchyroll: creative producer and agency lead on the campaign shoot, and oversaw the design and production of the full apparel collection.',
-      bul: ['Campaign shoot, concept to delivery', 'Apparel design and production oversight', 'Agency lead on the program'] },
+      copy: "Led creative production for Crunchyroll’s first fashion-lifestyle photoshoot, launching their new premium e-commerce store. Also oversaw the development of the apparel collection.",
+      bul: ['Creative production, concept to delivery', 'Launch campaign for the premium e-commerce store', 'Apparel collection development'] },
 
     /* enc0re on the Campaign page: Artist.log, the shoot-and-interview series — shoots Cameron produced, interviews he did (10/11) */
     { id: 'enc0re-artistlog', name: 'enc0re', lc: true, pillars: ['campaign'], meta: 'Artist.log · Promoter Spotlight · shoot production · interviews',
