@@ -159,9 +159,9 @@ window.SITE = {
   /* home, hovering a section: the pictures swap for that section's highlights (up to seven, more than one per project allowed), then
      back to the set above when the pointer leaves. Chosen in the sort tool (HOME tab). A section with no list keeps the set above. */
   homeHover: {
-    brand:    ['img/enc0re/enc0re-02-playlist.jpg', 'img/oranje/oranje-04-stairs.jpg', 'img/sight-sound/sight-sound-01-art-party-poster.jpg', 'img/enc0re/enc0re-06-lubelski.jpg', 'img/oranje/oranje-01-poster.jpg', 'img/archive/tsd/tsd-02-visual-style.jpg', 'img/enc0re/enc0re-01-vellum.jpg'],
-    campaign: ['img/csm-02.jpg', 'img/csm-06.jpg', 'img/csm-01.jpg', 'img/iages/iages-02-wanted.jpg', 'img/csm-03.jpg', 'img/iages/iages-01-banner.jpg', 'img/enc0re/enc0re-artistlog-01-ayegy-cover.jpg'],
-    photo:    ['img/photo/editorial/editorial-05.jpg', 'img/photo/nightlife/nightlife-03-winston-house.jpg', 'img/photo/editorial/editorial-01.jpg', 'img/photo/nightlife/nightlife-07-group-cups.jpg', 'img/photo/personal-archive/archive-01-desert-road.jpg', 'img/photo/experimental/experimental-02-wires.jpg', 'img/photo/editorial/editorial-08-satin.jpg'],
+    brand:    ['img/enc0re/enc0re-02-playlist.jpg', 'img/edglrd/edglrd-brand-02-konbini.jpg', 'img/oranje/oranje-04-stairs.jpg', 'img/sight-sound/sight-sound-01-art-party-poster.jpg', 'img/edglrd/edglrd-brand-04-randoseru.jpg', 'img/oranje/oranje-01-poster.jpg', 'img/enc0re/enc0re-01-vellum.jpg'],
+    campaign: ['img/csm-02.jpg', 'img/atliens/atliens-01-hoodie.jpg', 'img/csm-01.jpg', 'img/iages/iages-02-wanted.jpg', 'img/atliens/atliens-03-jersey-back.jpg', 'img/iages/iages-01-banner.jpg', 'img/enc0re/enc0re-artistlog-01-ayegy-cover.jpg'],
+    photo:    ['img/photo/editorial/editorial-05.jpg', 'img/photo/nightlife/nightlife-02-finger.jpg', 'img/photo/personal-archive/archive-06-marcy-ave.jpg', 'img/photo/nightlife/nightlife-07-group-cups.jpg', 'img/photo/experimental/experimental-10-chairs.jpg', 'img/photo/personal-archive/archive-02-desert-rock.jpg', 'img/photo/editorial/editorial-08-satin.jpg'],
     product:  ['img/edglrd/edglrd-01.jpg', 'img/arena/arena-01-cyberpunk.jpg', 'img/edglrd/edglrd-04.jpg', 'img/arena/arena-02-grunge-experimental.jpg', 'img/arena/arena-03-retro-gaming.jpg']   /* the pictures of the Product page (10/11) */
   },
   /* photo: categories, each holding groups (projects) of images in order. A group's name is the title flashed before its pictures;
