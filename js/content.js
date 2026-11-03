@@ -417,7 +417,7 @@ window.SITE_CONTENT = {
    "pillars": [
     "campaign"
    ],
-   "meta": "Creative direction · music videos · photography",
+   "meta": "Creative direction · Music video · Photography",
    "imgs": [
     {
      "src": "img/iages/iages-01-banner.jpg"
@@ -444,13 +444,12 @@ window.SITE_CONTENT = {
      "cap": "iages — sounds like (live set)"
     }
    ],
-   "copy": "Creative direction for the artist iages: her music videos, the live set visualizer (co-created, shot and edited) and the photography around them.",
+   "copy": "Creative direction for the music artist iages. Created photo and video concepts to support the album rollout; directed, shot and edited the “sounds like” music video.",
    "bul": [
-    "Music video direction",
-    "Live set visualizer, co-created, shot and edited",
+    "Photo and video concepts for the album rollout",
+    "“sounds like” music video: directed, shot and edited",
     "Photography"
-   ],
-   "video": "https://www.youtube.com/embed/P6sR4A9P-UE"
+   ]
   },
   {
    "id": "mishka",
@@ -1910,24 +1909,24 @@ window.SITE_CONTENT = {
     },
     "iages": {
      "img/iages/iages-02-wanted.jpg": {
-      "x": 4,
-      "y": 7,
-      "w": 30
-     },
-     "img/iages/iages-05-live-set.mp4": {
-      "x": 38,
+      "x": 2,
       "y": 0,
-      "w": 38
+      "w": 22
      },
      "img/iages/iages-03-banner-close.jpg": {
-      "x": 70,
-      "y": 24,
-      "w": 26
+      "x": 77,
+      "y": 3,
+      "w": 21
      },
      "https://img.youtube.com/vi/P6sR4A9P-UE/hqdefault.jpg": {
-      "x": 40,
-      "y": 25,
-      "w": 28
+      "x": 27,
+      "y": 7,
+      "w": 46
+     },
+     "img/iages/iages-05-live-set.mp4": {
+      "x": 78,
+      "y": 27,
+      "w": 20
      }
     },
     "transcendental": {

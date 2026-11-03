@@ -120,11 +120,10 @@ window.SITE = {
       copy: 'End-to-end production, design and content creation for 30+ editorial and social pieces for enc0re.',
       bul: ['Shoot production and interviews', 'Editorial, graphic design and branding', 'Photo and video'] },
 
-    { id: 'iages', name: 'iages', pillars: ['campaign'], meta: 'Creative direction · music videos · photography',
+    { id: 'iages', name: 'iages', pillars: ['campaign'], meta: 'Creative direction · Music video · Photography',
       imgs: [{ src: 'img/iages/iages-01-banner.jpg' }, { src: 'img/iages/iages-02-wanted.jpg' }, { src: 'img/iages/iages-03-banner-close.jpg' }, { src: 'img/iages/iages-04-poster.jpg' }, { src: 'img/iages/iages-05-live-set.mp4', v: true, ar: '16 / 9' }, { src: 'https://img.youtube.com/vi/P6sR4A9P-UE/hqdefault.jpg', yt: 'P6sR4A9P-UE', si: 'ppBN__G3HXQs5zyh', ar: '16 / 9', cap: 'iages — sounds like (live set)' }],   /* the full live set, embedded from YouTube (11/3): {yt} draws the player, its src is the thumbnail that stands for it */
-      copy: 'Creative direction for the artist iages: her music videos, the live set visualizer (co-created, shot and edited) and the photography around them.',
-      bul: ['Music video direction', 'Live set visualizer, co-created, shot and edited', 'Photography'],
-      video: 'https://www.youtube.com/embed/P6sR4A9P-UE' },
+      copy: 'Creative direction for the music artist iages. Created photo and video concepts to support the album rollout; directed, shot and edited the “sounds like” music video.',
+      bul: ['Photo and video concepts for the album rollout', '“sounds like” music video: directed, shot and edited', 'Photography'] },
 
     /* Mishka: its own layout (layout: 'mishka') — the bag film running twice, left and right, and the logo turning in 3D between them */
     { id: 'mishka', name: 'Mishka', pillars: ['brand'], layout: 'mishka', meta: 'Visual identity · logo · social direction',
