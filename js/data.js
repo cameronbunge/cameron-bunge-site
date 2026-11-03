@@ -10,8 +10,8 @@ window.SITE = {
   /* about: opens over any page when the name is clicked. Set in caps, one narrow column, the way a colophon reads. Draft to rewrite. */
   about: {
     paras: [
-      'CAMERON BUNGE WORKS AT THE INTERSECTION OF CREATIVE, CONTENT AND STRATEGY — BUILDING BRANDS ACROSS THE MUSIC, FASHION AND MEDIA INDUSTRIES.',
-      'HIS WORK SPANS CREATIVE DIRECTION, PHOTOGRAPHY, VIDEO, EDITORIAL, SOCIAL MEDIA, BRAND DEVELOPMENT, PRODUCT DEVELOPMENT AND PARTNERSHIPS.',
+      'CAMERON BUNGE WORKS AT THE INTERSECTION OF CREATIVE, CONTENT, AND STRATEGY — BUILDING BRANDS ACROSS THE MUSIC, FASHION, AND MEDIA SPACES.',
+      'HIS WORK SPANS BRAND STRATEGY, CREATIVE DIRECTION, PARTNERSHIPS, PHOTOGRAPHY, VIDEO, SOCIAL MEDIA, BRAND DEVELOPMENT, AND PRODUCT DEVELOPMENT.',
       'HE IS HEAD OF BRAND AND MEDIA AT <span class="keep">enc0re</span>, A MUSIC SOCIAL PLATFORM, AND WORKS WITH CEREMONY OF ROSES, A CREATIVE AGENCY AND MERCHANDISE OPERATOR THAT IS PART OF SONY MUSIC. HE ALSO TAKES ON FREELANCE CREATIVE AND BRAND WORK.',
       'WORK INCLUDES CRUNCHYROLL (CHAINSAW MAN), OUTKAST × ATLANTA FALCONS, THE ARENA, <span class="keep">enc0re</span>, EDGLRD, SLAYYYTER, FIFTH SEASON, IAGES, ORANJE… AMONG OTHERS.'
     ],
@@ -29,8 +29,8 @@ window.SITE = {
      the home page, the section names. The hub writes them to content.js; store.js lays them over the pages. */
   site: {
     nameLines: ['Cameron', 'Bunge'], city: 'Los Angeles',
-    homeLines: ['Cameron works at the intersection of creative, content and strategy — building brands across the music, fashion and media industries.',
-                'His work spans creative direction, photography, video, editorial, social media, brand development, product development and partnerships.'],
+    homeLines: ['Cameron works at the intersection of creative, content, and strategy — building brands across the music, fashion, and media spaces.',
+                'His work spans brand strategy, creative direction, partnerships, photography, video, social media, brand development, and product development.'],
     sections: { brand: 'Brand', campaign: 'Campaign', photo: 'Photo + Video', product: 'Product', archive: 'Archive' }
   },
   /* the working sections every project is tagged with (pillars: [...]) — the sort tool and the tags use these */
