@@ -115,10 +115,10 @@ window.SITE = {
       bul: ['Creative production, concept to delivery', 'Launch campaign for the premium e-commerce store', 'Apparel collection development'] },
 
     /* enc0re on the Campaign page: Artist.log, the shoot-and-interview series — shoots Cameron produced, interviews he did (10/11) */
-    { id: 'enc0re-artistlog', name: 'enc0re', lc: true, pillars: ['campaign'], meta: 'Artist.log · Promoter Spotlight · shoot production · interviews',
+    { id: 'enc0re-artistlog', name: 'enc0re', lc: true, pillars: ['campaign'], meta: 'Shoot production · Interview + editorial · Graphic design · Branding · Photo + video',
       imgs: [{ src: 'img/enc0re/enc0re-artistlog-01-ayegy-cover.jpg' }, { src: 'img/enc0re/enc0re-artistlog-02-ayegy-inspiration.jpg' }, { src: 'img/enc0re/enc0re-artistlog-03-ayegy-show.jpg' }, { src: 'img/enc0re/enc0re-artistlog-04-shaking-cover.jpg' }, { src: 'img/enc0re/enc0re-artistlog-05-sncl-cover.jpg' }, { src: 'img/enc0re/enc0re-artistlog-06-sncl-philosophy.jpg' }, { src: 'img/enc0re/enc0re-artistlog-07-clip.mp4', v: true, ar: '9 / 16' }],
-      copy: 'Artist.log and Promoter Spotlight for enc0re: shoot-and-interview series with new artists and the people behind LA nightlife — Ayegy, Shaking, Nikki Ghalili of Start Now Change Later. Produced the shoots and led the interviews.',
-      bul: ['Shoot production', 'Interviews', 'Editorial series for enc0re'] },
+      copy: 'End-to-end production, design and content creation for 30+ editorial and social pieces for enc0re.',
+      bul: ['Shoot production and interviews', 'Editorial, graphic design and branding', 'Photo and video'] },
 
     { id: 'iages', name: 'iages', pillars: ['campaign'], meta: 'Creative direction · music videos · photography',
       imgs: [{ src: 'img/iages/iages-01-banner.jpg' }, { src: 'img/iages/iages-02-wanted.jpg' }, { src: 'img/iages/iages-03-banner-close.jpg' }, { src: 'img/iages/iages-04-poster.jpg' }, { src: 'img/iages/iages-05-live-set.mp4', v: true, ar: '16 / 9' }, { src: 'https://img.youtube.com/vi/P6sR4A9P-UE/hqdefault.jpg', yt: 'P6sR4A9P-UE', si: 'ppBN__G3HXQs5zyh', ar: '16 / 9', cap: 'iages — sounds like (live set)' }],   /* the full live set, embedded from YouTube (11/3): {yt} draws the player, its src is the thumbnail that stands for it */

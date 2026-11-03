@@ -378,7 +378,7 @@ window.SITE_CONTENT = {
    "pillars": [
     "campaign"
    ],
-   "meta": "Artist.log · Promoter Spotlight · shoot production · interviews",
+   "meta": "Shoot production · Interview + editorial · Graphic design · Branding · Photo + video",
    "imgs": [
     {
      "src": "img/enc0re/enc0re-artistlog-01-ayegy-cover.jpg"
@@ -404,11 +404,11 @@ window.SITE_CONTENT = {
      "ar": "9 / 16"
     }
    ],
-   "copy": "Artist.log and Promoter Spotlight for enc0re: shoot-and-interview series with new artists and the people behind LA nightlife — Ayegy, Shaking, Nikki Ghalili of Start Now Change Later. Produced the shoots and led the interviews.",
+   "copy": "End-to-end production, design and content creation for 30+ editorial and social pieces for enc0re.",
    "bul": [
-    "Shoot production",
-    "Interviews",
-    "Editorial series for enc0re"
+    "Shoot production and interviews",
+    "Editorial, graphic design and branding",
+    "Photo and video"
    ]
   },
   {
