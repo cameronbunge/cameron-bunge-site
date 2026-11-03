@@ -120,7 +120,7 @@ window.SITE = {
       bul: ['Shoot production', 'Interviews', 'Editorial series for enc0re'] },
 
     { id: 'iages', name: 'iages', pillars: ['campaign'], meta: 'Creative direction · music videos · photography',
-      imgs: [{ src: 'img/iages/iages-01-banner.jpg' }, { src: 'img/iages/iages-02-wanted.jpg' }, { src: 'img/iages/iages-03-banner-close.jpg' }, { src: 'img/iages/iages-04-poster.jpg' }, { src: 'img/iages/iages-05-live-set.mp4', v: true, ar: '16 / 9' }],
+      imgs: [{ src: 'img/iages/iages-01-banner.jpg' }, { src: 'img/iages/iages-02-wanted.jpg' }, { src: 'img/iages/iages-03-banner-close.jpg' }, { src: 'img/iages/iages-04-poster.jpg' }, { src: 'img/iages/iages-05-live-set.mp4', v: true, ar: '16 / 9' }, { src: 'https://img.youtube.com/vi/P6sR4A9P-UE/hqdefault.jpg', yt: 'P6sR4A9P-UE', si: 'ppBN__G3HXQs5zyh', ar: '16 / 9', cap: 'iages — sounds like (live set)' }],   /* the full live set, embedded from YouTube (11/3): {yt} draws the player, its src is the thumbnail that stands for it */
       copy: 'Creative direction for the artist iages: her music videos, the live set visualizer (co-created, shot and edited) and the photography around them.',
       bul: ['Music video direction', 'Live set visualizer, co-created, shot and edited', 'Photography'],
       video: 'https://www.youtube.com/embed/P6sR4A9P-UE' },

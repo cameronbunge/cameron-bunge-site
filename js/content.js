@@ -436,6 +436,13 @@ window.SITE_CONTENT = {
      "src": "img/iages/iages-05-live-set.mp4",
      "v": true,
      "ar": "16 / 9"
+    },
+    {
+     "src": "https://img.youtube.com/vi/P6sR4A9P-UE/hqdefault.jpg",
+     "yt": "P6sR4A9P-UE",
+     "si": "ppBN__G3HXQs5zyh",
+     "ar": "16 / 9",
+     "cap": "iages — sounds like (live set)"
     }
    ],
    "copy": "Creative direction for the artist iages: her music videos, the live set visualizer (co-created, shot and edited) and the photography around them.",
@@ -1917,6 +1924,11 @@ window.SITE_CONTENT = {
       "x": 70,
       "y": 24,
       "w": 26
+     },
+     "https://img.youtube.com/vi/P6sR4A9P-UE/hqdefault.jpg": {
+      "x": 40,
+      "y": 25,
+      "w": 28
      }
     },
     "transcendental": {

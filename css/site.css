@@ -103,14 +103,16 @@ body[data-copy^="light"] .copy { font-family: var(--display); font-stretch: 100%
 /* the row: every picture at its own proportion, one height (set from script so the row is the width asked for) */
 .nat { display: flex; flex-direction: row-reverse; flex-wrap: nowrap; justify-content: flex-start; align-items: flex-start; gap: 8px; --sh: 22vh; }   /* items come reversed from the script; reversed twice, they read left to right */
 .nat .c { height: var(--sh); flex: 0 0 auto; background: var(--cell); }
-.nat .c:has(video) { background: none; }   /* no box around a film (10/11) */
+.nat .c:has(video), .nat .c:has(iframe) { background: none; }   /* no box around a film (10/11) */
 .nat .c img, .nat .c video { display: block; height: 100%; width: auto; }
+.nat .c iframe { display: block; border: 0; height: 100%; width: auto; aspect-ratio: 16 / 9; background: #000; }   /* a YouTube player: as tall as the row, 16:9 (11/3) */
 .nat .c { position: relative; }
 /* PLACED: a project arranged by hand (placing tool): each picture fixed to the screen where it was put, at the width it was given */
 .set.placed .nat { display: block; height: 0; overflow: visible; width: 100%; }
 .set.placed .row { display: contents; }
 .set.placed .c { position: fixed; left: var(--x, 0); top: var(--y, 0); width: var(--w, 20vw); height: auto; transform: none; z-index: 2; }
 .set.placed .c img, .set.placed .c video { width: 100%; height: auto; max-width: none; max-height: none; }
+.set.placed .c iframe { width: 100%; height: auto; aspect-ratio: 16 / 9; }
 @media (min-width: 901px) { .set.placed .meta { flex-direction: column; align-items: flex-end; gap: 16px; } }   /* the terms stacked bottom right (10/29) */
 /* the placing tool: corner grips while PLACE is on */
 .nat .c .grip { display: none; position: absolute; right: 0; bottom: 0; width: 16px; height: 16px; cursor: nwse-resize; opacity: 0; background: linear-gradient(135deg, transparent 50%, #fff 50%); transition: opacity .2s ease; z-index: 3; }
@@ -118,13 +120,14 @@ body.placing .nat .c { cursor: grab; touch-action: none; }
 body.placing .nat .c .grip { display: block; }
 body.placing .nat .c:hover .grip, body.placing .nat .c.held .grip { opacity: .9; }
 body.placing .nat .c.held { cursor: grabbing; z-index: 4; }
-body.placing .nat .c img, body.placing .nat .c video { cursor: inherit; pointer-events: none; }
+body.placing .nat .c img, body.placing .nat .c video, body.placing .nat .c iframe { cursor: inherit; pointer-events: none; }   /* while placing, the player does not take the pointer: the cell drags */
 /* the grid: when a project has a column count (sort tool), its pictures run in rows of that many, each at its own proportion and the width
    of its column; a video spans two columns; the cells sit a little up or down so the grid does not read as a perfect grid (10/11) */
 .nat.grid { display: flex; flex-direction: column; flex-wrap: nowrap; gap: 10px; width: 100%; }
 .nat.grid .row { display: flex; gap: 6px; align-items: flex-start; }
 .nat.grid .c { flex: 0 0 auto; height: auto; transform: translateY(var(--oy, 0)); }   /* width and height set from script: justified rows */
 .nat.grid .c img, .nat.grid .c video { width: 100%; height: 100%; object-fit: contain; }
+.nat.grid .c iframe { width: 100%; height: 100%; }
 
 /* ---- page composition: Title Low, locked 10/11/2026 ---- */
 /* 4 LOW: names at the top, the title huge at the bottom-left, the copy bottom-right, the sheet on the right between the names and the copy */

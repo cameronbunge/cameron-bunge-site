@@ -33,9 +33,17 @@
     if (site.nameLines && site.nameLines.length && /^(index\.html)?$/.test(location.pathname.split('/').pop())) document.title = site.nameLines.join(' ');
   }
   if (!C) C = fromSite();
+  /* a YouTube embed ({yt}) is written into content.js by hand, not through the hub: unpublished changes that came back from this browser
+     keep any the file has since gained, so the next PUBLISH does not drop it */
+  function keepEmbeds(from, into) {
+    (from.projects || []).forEach(function (fp) {
+      var tp = (into.projects || []).filter(function (x) { return x.id === fp.id; })[0]; if (!tp) return;
+      (fp.imgs || []).forEach(function (m) { if (m.yt && !(tp.imgs || []).some(function (x) { return x.src === m.src; })) (tp.imgs = tp.imgs || []).push(m); });
+    });
+  }
   /* unpublished changes left in this browser come back, as long as nothing was published in between */
   var pending = null; try { pending = JSON.parse(localStorage.getItem(PEND) || 'null'); } catch (e) {}
-  if (pending && pending.content && pending.base === loadedAt) { C = pending.content; changes = pending.changes || ['UNPUBLISHED CHANGES']; }
+  if (pending && pending.content && pending.base === loadedAt) { var fresh = C; C = pending.content; changes = pending.changes || ['UNPUBLISHED CHANGES']; keepEmbeds(fresh, C); }
   else if (pending) { try { localStorage.removeItem(PEND); } catch (e) {} pending = null; }
   overlay(); words();
 

@@ -66,6 +66,7 @@
   function ratioOf(c) {
     var el = c.firstElementChild;
     if (el.tagName === 'VIDEO') { if (el.videoWidth) return el.videoWidth / el.videoHeight; var ar = (el.style.aspectRatio || '').split('/'); return ar.length === 2 ? parseFloat(ar[0]) / parseFloat(ar[1]) : 0.75; }
+    if (el.tagName === 'IFRAME') { var ar2 = (el.style.aspectRatio || '').split('/'); return ar2.length === 2 ? parseFloat(ar2[0]) / parseFloat(ar2[1]) : 16 / 9; }   /* a YouTube player: 16:9 */
     return el.naturalWidth ? el.naturalWidth / el.naturalHeight : 1.5;
   }
   /* the media never runs edge to edge: its left edge lines up with the first letter of the title's word (the B of BRAND), and it
@@ -218,7 +219,7 @@
   function freeze(set) {   /* the pictures as they stand, in stage units */
     var id = set.getAttribute('data-id'), st = stageRect(set), s = st.width / 100, lay = playout[id] = {};
     Array.prototype.forEach.call(set.querySelectorAll('.c'), function (c) {
-      var m = c.querySelector('img, video'), r = (m || c).getBoundingClientRect();
+      var m = c.querySelector('img, video, iframe'), r = (m || c).getBoundingClientRect();
       lay[c.getAttribute('data-src')] = { x: (r.left - st.left) / s, y: (r.top - st.top) / s, w: r.width / s };
     });
     set.classList.add('placed'); layoutPlaced(set);
@@ -301,7 +302,14 @@
     txts.forEach(function (t, k) { t.classList.toggle('on', k === i); });
     fitSheet();
   }
-  function media(m) { return (m.v ? '<video src="' + m.src + '"' + (m.ar ? ' style="aspect-ratio:' + m.ar + '"' : '') + ' muted autoplay loop playsinline></video>' : '<img src="' + m.src + '" alt="" draggable="false">') + '<span class="grip" aria-hidden="true"></span>'; }
+  /* a picture, a film, or a YouTube video ({ yt: id, si?: share id } — its src is the YouTube thumbnail, which stands for it in the hub
+     and the arrangements); the player is 16:9 unless the entry says otherwise */
+  function media(m, name) {
+    var pic = m.yt ? '<iframe src="https://www.youtube.com/embed/' + m.yt + (m.si ? '?si=' + m.si : '') + '" title="' + (name || 'YouTube video player').replace(/"/g, '&quot;') + '"' + (m.ar ? ' style="aspect-ratio:' + m.ar + '"' : '') + ' frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
+      : m.v ? '<video src="' + m.src + '"' + (m.ar ? ' style="aspect-ratio:' + m.ar + '"' : '') + ' muted autoplay loop playsinline></video>'
+      : '<img src="' + m.src + '" alt="" draggable="false">';
+    return pic + '<span class="grip" aria-hidden="true"></span>';
+  }
   var offsets = [0, 2, -1.5, 1, -2.5, 1.5, -1, 2.5, 0.5, -2];   /* the cells of a grid sit a touch up or down, in turn */
   function deal(imgs, cols) {   /* rows of so many */
     var rows = [], row = [];
@@ -330,10 +338,10 @@
     if (p.cols > 0) {
       var rows = p.rows && p.rows.length ? p.rows : deal(real, p.cols), j = 0;
       return '<div class="set' + (i === 0 ? ' on' : '') + '" data-id="' + p.id + '" data-n="' + real.length + '"><div class="nat grid" style="--cols:' + p.cols + '">' + rows.map(function (row) {
-        return '<div class="row">' + row.map(function (m) { return '<div class="c" data-src="' + m.src + '" style="--oy:' + offsets[(j++) % offsets.length] + '%">' + media(m) + '</div>'; }).join('') + '</div>';
+        return '<div class="row">' + row.map(function (m) { return '<div class="c" data-src="' + m.src + '" style="--oy:' + offsets[(j++) % offsets.length] + '%">' + media(m, p.name) + '</div>'; }).join('') + '</div>';
       }).join('') + '</div><p class="meta">' + meta + '</p></div>';
     }
-    return '<div class="set' + (i === 0 ? ' on' : '') + '" data-id="' + p.id + '" data-n="' + real.length + '"><div class="nat">' + real.slice().reverse().map(function (m) { return '<div class="c" data-src="' + m.src + '">' + media(m) + '</div>'; }).join('') + '</div><p class="meta">' + meta + '</p></div>';
+    return '<div class="set' + (i === 0 ? ' on' : '') + '" data-id="' + p.id + '" data-n="' + real.length + '"><div class="nat">' + real.slice().reverse().map(function (m) { return '<div class="c" data-src="' + m.src + '">' + media(m, p.name) + '</div>'; }).join('') + '</div><p class="meta">' + meta + '</p></div>';
   }).join('');
   /* the copy: right-aligned, floating above the bottom corner */
   document.getElementById('txts').innerHTML = entries.map(function (p, i) {
@@ -341,7 +349,7 @@
     var keep = function (t) { return (t || '').replace(/enc0re/gi, '<span class="keep">enc0re</span>'); };   /* the name keeps its case inside caps copy */
     return '<div class="txt' + (i === 0 ? ' on' : '') + '"><p class="copy' + ph + '">' + keep(p.copy) + '</p><ul class="bul' + ph + '">' + (p.bul || []).map(function (b) { return '<li>' + keep(b) + '</li>'; }).join('') + '</ul></div>';
   }).join('');
-  Array.prototype.forEach.call(document.querySelectorAll('#sets img, #sets video'), function (el) { el.addEventListener(el.tagName === 'VIDEO' ? 'loadedmetadata' : 'load', fitSheet); });
+  Array.prototype.forEach.call(document.querySelectorAll('#sets img, #sets video, #sets iframe'), function (el) { el.addEventListener(el.tagName === 'VIDEO' ? 'loadedmetadata' : 'load', fitSheet); });
   rows = Array.prototype.slice.call(document.querySelectorAll('#line li'));
   sets = Array.prototype.slice.call(document.querySelectorAll('#sets .set'));
   sets.forEach(function (set) { applyPlaced(set); Array.prototype.forEach.call(set.querySelectorAll('.c'), function (c) { placeable(c, set); }); });
