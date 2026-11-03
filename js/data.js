@@ -69,10 +69,10 @@ window.SITE = {
       copy: 'Launched the media and editorial platform for enc0re, a music, media, and social platform. Built the brand and community from the ground up through collaborations with artists, promoters, and venues. Leads the editorial and media team.',
       bul: ['Media and editorial platform, launched', 'Brand and community, built from the ground up', 'Collaborations with artists, promoters, and venues', 'Editorial and media team lead'] },
 
-    { id: 'cultivar', name: 'Cultivar', pillars: ['brand'], meta: 'Rebrand · identity · with Ceremony of Roses', ph: true,
+    { id: 'cultivar', name: 'Cultivar', pillars: ['brand'], meta: 'Branding · Strategy',
       imgs: [{ src: 'img/cultivar/cultivar-01-walkman-pitch.jpg' }, { src: 'img/cultivar/cultivar-02-arena-lighter.jpg' }],   /* pages in the Cultivar templates: the Walkman pitch, an Arena tech pack (10/11) */
-      copy: 'The rebrand of Ceremony of Roses as Cultivar: positioning, name, identity and the templates the agency now speaks through. Placeholder copy.',
-      bul: ['Positioning and name', 'Identity', 'Deck and tech pack templates'] },
+      copy: 'Transformed a department within Ceremony of Roses from a general merch partner into a product development and cultural consultancy. Developed new creative service offerings, branding, and taste-driven product strategy at scale.',
+      bul: ['Merch partner to product development and cultural consultancy', 'New creative service offerings', 'Branding and taste-driven product strategy, at scale'] },
 
     { id: 'edglrd', name: 'EDGLRD', pillars: ['brand'], meta: 'Brand development · Tamashika', ph: true,
       imgs: [{ src: 'img/edglrd/edglrd-brand-01-lan.jpg' }, { src: 'img/edglrd/edglrd-brand-02-konbini.jpg' }, { src: 'img/edglrd/edglrd-brand-03-street.jpg' }, { src: 'img/edglrd/edglrd-brand-04-randoseru.jpg' }],

@@ -127,8 +127,7 @@ window.SITE_CONTENT = {
    "pillars": [
     "brand"
    ],
-   "meta": "Rebrand · identity · with Ceremony of Roses",
-   "ph": true,
+   "meta": "Branding · Strategy",
    "imgs": [
     {
      "src": "img/cultivar/cultivar-01-walkman-pitch.jpg"
@@ -137,11 +136,11 @@ window.SITE_CONTENT = {
      "src": "img/cultivar/cultivar-02-arena-lighter.jpg"
     }
    ],
-   "copy": "The rebrand of Ceremony of Roses as Cultivar: positioning, name, identity and the templates the agency now speaks through. Placeholder copy.",
+   "copy": "Transformed a department within Ceremony of Roses from a general merch partner into a product development and cultural consultancy. Developed new creative service offerings, branding, and taste-driven product strategy at scale.",
    "bul": [
-    "Positioning and name",
-    "Identity",
-    "Deck and tech pack templates"
+    "Merch partner to product development and cultural consultancy",
+    "New creative service offerings",
+    "Branding and taste-driven product strategy, at scale"
    ]
   },
   {
