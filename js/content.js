@@ -64,6 +64,9 @@ window.SITE_CONTENT = {
     },
     {
      "src": "img/arena/arena-03-retro-gaming.jpg"
+    },
+    {
+     "src": "img/arena/arena-04-market-menu-poster.jpg"
     }
    ],
    "copy": "Led product strategy for a new film and TV studio, building the brand through product development and strategy.",
