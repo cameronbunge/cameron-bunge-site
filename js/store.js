@@ -33,12 +33,13 @@
     if (site.nameLines && site.nameLines.length && /^(index\.html)?$/.test(location.pathname.split('/').pop())) document.title = site.nameLines.join(' ');
   }
   if (!C) C = fromSite();
-  /* a YouTube embed ({yt}) is written into content.js by hand, not through the hub: unpublished changes that came back from this browser
-     keep any the file has since gained, so the next PUBLISH does not drop it */
+  /* a YouTube embed ({yt}) and a project's outside links (links) are written into content.js by hand, not through the hub: unpublished
+     changes that came back from this browser keep any the file has since gained, so the next PUBLISH does not drop them */
   function keepEmbeds(from, into) {
     (from.projects || []).forEach(function (fp) {
       var tp = (into.projects || []).filter(function (x) { return x.id === fp.id; })[0]; if (!tp) return;
       (fp.imgs || []).forEach(function (m) { if (m.yt && !(tp.imgs || []).some(function (x) { return x.src === m.src; })) (tp.imgs = tp.imgs || []).push(m); });
+      (fp.links || []).forEach(function (l) { if (!(tp.links || []).some(function (x) { return x.href === l.href; })) (tp.links = tp.links || []).push(l); });
     });
   }
   /* unpublished changes left in this browser come back, as long as nothing was published in between */

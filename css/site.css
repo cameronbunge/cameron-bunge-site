@@ -80,6 +80,9 @@ body[data-align="center"] .meta { justify-content: center; }
 /* the terms: directly under the pictures, in the brackets of the section nav, a size up */
 .meta { margin: 14px 0 0; display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 12px; font-family: var(--mono); font-weight: 700; font-size: 13px; color: var(--ink); }
 .meta .b { color: var(--ink); }
+.meta a.out { white-space: nowrap; }
+.meta a.out .b { color: var(--muted); }   /* a link among the terms: the nav's gray brackets, underlined on hover (11/23) */
+.meta a.out:hover { text-decoration: underline; text-underline-offset: 3px; }
 /* the copy — under review (keys 1–5): FLYER (caps, condensed bold, large) or LIGHT (the face of the city line under the name);
    RIGHT (right-aligned, floating above the bottom corner) or ABOVE TITLE (left, sitting on the title); or none */
 #txts { position: fixed; right: var(--gutter); bottom: 13vh; z-index: 3; width: 44ch; max-width: calc(100vw - 2 * var(--gutter)); text-align: right; }

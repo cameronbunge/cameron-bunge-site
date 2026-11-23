@@ -323,6 +323,9 @@
   /* the row of pictures, and directly under it the entry's terms in the brackets of the section nav */
   document.getElementById('sets').innerHTML = entries.map(function (p, i) {
     var meta = (p.meta || '').split(/\s*·\s*/).filter(Boolean).map(function (t) { return '<span><span class="b">[</span> ' + t.toUpperCase() + ' <span class="b">]</span></span>'; }).join('');
+    /* outside links ({ t, href } in the project's links — press and the like, written into content.js by hand) close the terms, in the
+       section nav's link brackets (gray), opening in a new tab (11/23) */
+    meta += (p.links || []).map(function (l) { return '<a class="out" href="' + String(l.href).replace(/"/g, '&quot;') + '" target="_blank" rel="noopener"><span class="b">[</span> ' + l.t.toUpperCase() + ' ↗ <span class="b">]</span></a>'; }).join('');
     var real = p.imgs.filter(function (m) { return !m.ph; });
     /* Mishka: the film twice, left and right, and the logo turning between them */
     if (p.layout === 'mishka') {

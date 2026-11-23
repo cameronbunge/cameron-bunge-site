@@ -74,6 +74,12 @@ window.SITE_CONTENT = {
     "Product strategy",
     "Product development",
     "Brand strategy"
+   ],
+   "links": [
+    {
+     "t": "Press — Fucking Young!",
+     "href": "https://fuckingyoung.es/the-arena-x-camp-flog-gnaw-drop-is-full-a-of-japanese-gaming-nostalgia/"
+    }
    ]
   },
   {

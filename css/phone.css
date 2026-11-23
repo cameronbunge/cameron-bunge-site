@@ -64,7 +64,7 @@
   body.pillar .set.soon .soonline { text-align: left; }
   /* the terms: in one wrapped line under the pictures */
   body.pillar .meta { display: flex; flex-flow: row wrap; justify-content: flex-start; gap: 6px 12px; margin: 14px 0 0; font-size: 11px; }
-  body.pillar .meta > span { white-space: nowrap; }
+  body.pillar .meta > span, body.pillar .meta > a { white-space: nowrap; }
   /* the copy: under the terms, in the city line's face */
   body.pillar #txts, body.pillar[data-copy$="left"] #txts { position: static; width: auto; max-width: 40ch; margin: 14px 0 0; text-align: left; }
   body.pillar[data-copy="none"] #txts { display: block; }

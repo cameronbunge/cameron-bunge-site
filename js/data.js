@@ -62,7 +62,8 @@ window.SITE = {
     { id: 'arena', name: 'The Arena', pillars: ['brand'], meta: 'Brand strategy · Product strategy',
       imgs: [{ src: 'img/arena/arena-01-cyberpunk.jpg' }, { src: 'img/arena/arena-02-grunge-experimental.jpg' }, { src: 'img/arena/arena-03-retro-gaming.jpg' }, { src: 'img/arena/arena-04-market-menu-poster.jpg' }],
       copy: "Led product strategy for a new film and TV studio, building the brand through product development and strategy.",
-      bul: ['Product strategy', 'Product development', 'Brand strategy'] },
+      bul: ['Product strategy', 'Product development', 'Brand strategy'],
+      links: [{ t: 'Press — Fucking Young!', href: 'https://fuckingyoung.es/the-arena-x-camp-flog-gnaw-drop-is-full-a-of-japanese-gaming-nostalgia/' }] },   /* press (11/23) */
     /* the Arena on the Product page: the product itself, pictures to come (11/3) */
     { id: 'arena-product', name: 'The Arena', pillars: ['product'], meta: '', imgs: [],
       copy: 'Developed and co-designed 75 unique products to support the brand launch activation at Camp Flog Gnaw 2026.',
