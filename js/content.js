@@ -2092,49 +2092,49 @@ window.SITE_CONTENT = {
       "w": 13.5
      },
      "img/arena/arena-05-market-fridge.jpg": {
-      "x": 1,
-      "y": 13.5,
+      "x": 8,
+      "y": 14,
       "w": 13
      },
      "img/arena/arena-04-market-menu-poster.jpg": {
-      "x": 16,
+      "x": 25,
       "y": 12.8,
       "w": 6.5
      },
      "img/arena/arena-11-pao-pao.jpg": {
-      "x": 25,
+      "x": 35,
       "y": 12.5,
       "w": 14.5
      },
      "img/arena/arena-02-grunge-experimental.jpg": {
-      "x": 41.5,
+      "x": 52.5,
       "y": 14.5,
       "w": 12
      },
      "img/arena/arena-12-arcade.jpg": {
-      "x": 55.5,
+      "x": 67,
       "y": 12,
       "w": 14
      },
      "img/arena/arena-09-market-staff.jpg": {
-      "x": 72,
+      "x": 84,
       "y": 13.5,
       "w": 13
      },
      "img/arena/arena-13-gacha.jpg": {
-      "x": 9,
-      "y": 23,
+      "x": 44,
+      "y": 23.2,
       "w": 13
      },
      "img/arena/arena-14-coin-exchange.jpg": {
-      "x": 33,
-      "y": 23.8,
+      "x": 62,
+      "y": 24,
       "w": 12.5
      },
      "img/arena/arena-03-retro-gaming.jpg": {
-      "x": 58,
-      "y": 24.2,
-      "w": 12
+      "x": 79.5,
+      "y": 23,
+      "w": 13.5
      }
     }
    },
