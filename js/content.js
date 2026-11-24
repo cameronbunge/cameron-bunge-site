@@ -54,7 +54,7 @@ window.SITE_CONTENT = {
    "pillars": [
     "brand"
    ],
-   "meta": "Brand strategy · Product strategy",
+   "meta": "Brand strategy · Art direction · Set design",
    "imgs": [
     {
      "src": "img/arena/arena-01-cyberpunk.jpg"
@@ -67,13 +67,43 @@ window.SITE_CONTENT = {
     },
     {
      "src": "img/arena/arena-04-market-menu-poster.jpg"
+    },
+    {
+     "src": "img/arena/arena-05-market-fridge.jpg"
+    },
+    {
+     "src": "img/arena/arena-06-market-storefront.jpg"
+    },
+    {
+     "src": "img/arena/arena-07-market-wall.jpg"
+    },
+    {
+     "src": "img/arena/arena-08-market-sign.jpg"
+    },
+    {
+     "src": "img/arena/arena-09-market-staff.jpg"
+    },
+    {
+     "src": "img/arena/arena-10-activation-overview.jpg"
+    },
+    {
+     "src": "img/arena/arena-11-pao-pao.jpg"
+    },
+    {
+     "src": "img/arena/arena-12-arcade.jpg"
+    },
+    {
+     "src": "img/arena/arena-13-gacha.jpg"
+    },
+    {
+     "src": "img/arena/arena-14-coin-exchange.jpg"
     }
    ],
-   "copy": "Led product strategy for a new film and TV studio, building the brand through product development and strategy.",
+   "copy": "Launched The Arena, a new film and TV studio, at Camp Flog Gnaw 2026 with an immersive Fatal Fury world at Dodger Stadium: an arcade, gacha machines, a coin exchange, the Pao Pao Cafe and The Arena Market 24/7. Led brand and product strategy for the launch, and handled all art direction and set design for The Arena Market, the merch store built as a 24/7 convenience store.",
    "bul": [
-    "Product strategy",
-    "Product development",
-    "Brand strategy"
+    "Brand strategy",
+    "Art direction and set design, The Arena Market 24/7",
+    "Brand launch activation at Camp Flog Gnaw 2026"
    ],
    "links": [
     {
@@ -89,10 +119,32 @@ window.SITE_CONTENT = {
     "product"
    ],
    "meta": "",
-   "imgs": [],
-   "copy": "Developed and co-designed 75 unique products to support the brand launch activation at Camp Flog Gnaw 2026.",
+   "imgs": [
+    {
+     "src": "img/arena/arena-product-01-apparel.jpg"
+    },
+    {
+     "src": "img/arena/arena-product-02-gacha.jpg"
+    },
+    {
+     "src": "img/arena/arena-product-03-screenprint.mp4",
+     "v": true,
+     "ar": "9 / 16"
+    },
+    {
+     "src": "img/arena/arena-product-04-embroidery.jpg"
+    },
+    {
+     "src": "img/arena/arena-product-05-sewing.mp4",
+     "v": true,
+     "ar": "9 / 16"
+    }
+   ],
+   "copy": "Oversaw all design and product development for The Arena's brand launch at Camp Flog Gnaw 2026, from apparel to the gacha machine prizes, and built the pricing strategy. Designs for most of the collection changed less than a week before the activation; everything was produced locally in Los Angeles and delivered on time.",
    "bul": [
-    "75 unique products, developed and co-designed",
+    "Design and product development, apparel and gacha",
+    "Pricing strategy",
+    "Produced locally in Los Angeles",
     "Brand launch activation at Camp Flog Gnaw 2026"
    ]
   },
