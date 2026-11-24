@@ -314,6 +314,28 @@ window.SITE_CONTENT = {
    ]
   },
   {
+   "id": "just-joking",
+   "name": "Just! Joking!",
+   "pillars": [
+    "brand"
+   ],
+   "meta": "",
+   "imgs": [],
+   "copy": "",
+   "bul": []
+  },
+  {
+   "id": "just-joking-product",
+   "name": "Just! Joking!",
+   "pillars": [
+    "product"
+   ],
+   "meta": "",
+   "imgs": [],
+   "copy": "",
+   "bul": []
+  },
+  {
    "id": "atliens",
    "name": "OutKast × Atlanta Falcons",
    "pillars": [

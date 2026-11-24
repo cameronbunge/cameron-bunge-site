@@ -109,6 +109,10 @@ window.SITE = {
       copy: 'The Tamashika plush keychain for EDGLRD: product development from the character to the boxed piece.',
       bul: ['Product development', 'Packaging', 'Production'] },
 
+    /* Just! Joking! — Cameron's t-shirt brand, on Brand and Product with the coming-soon line until pictures go in (11/23) */
+    { id: 'just-joking', name: 'Just! Joking!', pillars: ['brand'], meta: '', imgs: [], copy: '', bul: [] },
+    { id: 'just-joking-product', name: 'Just! Joking!', pillars: ['product'], meta: '', imgs: [], copy: '', bul: [] },
+
     { id: 'atliens', name: 'OutKast × Atlanta Falcons', pillars: ['campaign'], meta: 'Creative production · Creative direction',
       imgs: [{ src: 'img/atliens/atliens-cd-creative-direction.jpg' }, { src: 'img/atliens/atliens-cd-styling.jpg' }],   /* pages of the pre-pro book (10/11) */
       copy: 'Creative direction and production for the OutKast ATLiens 30th Anniversary × Atlanta Falcons campaign.',
