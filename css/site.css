@@ -83,6 +83,14 @@ body[data-align="center"] .meta { justify-content: center; }
 .meta a.out { white-space: nowrap; }
 .meta a.out .b { color: var(--muted); }   /* a link among the terms: the nav's gray brackets, underlined on hover (11/23) */
 .meta a.out:hover { text-decoration: underline; text-underline-offset: 3px; }
+/* several links fold into one [ PRESS ] term; its list opens above it, right-aligned (11/24) */
+.meta .press { position: relative; display: inline-block; }
+.meta .pressBtn { all: unset; cursor: pointer; white-space: nowrap; font: inherit; color: var(--ink); }
+.meta .pressBtn .b { color: var(--muted); }
+.meta .pressBtn:hover { text-decoration: underline; text-underline-offset: 3px; }
+.meta .pressList { display: none; position: absolute; right: 0; bottom: calc(100% + 10px); flex-direction: column; align-items: flex-end; gap: 8px; padding: 10px 0 10px 14px; background: var(--bg); z-index: 5; }
+.meta .press.open .pressList { display: flex; }
+.meta .press.open .arrow { display: inline-block; transform: rotate(180deg); }
 /* the copy — under review (keys 1–5): FLYER (caps, condensed bold, large) or LIGHT (the face of the city line under the name);
    RIGHT (right-aligned, floating above the bottom corner) or ABOVE TITLE (left, sitting on the title); or none */
 #txts { position: fixed; right: var(--gutter); bottom: 13vh; z-index: 3; width: 44ch; max-width: calc(100vw - 2 * var(--gutter)); text-align: right; }

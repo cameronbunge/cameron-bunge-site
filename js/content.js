@@ -99,16 +99,33 @@ window.SITE_CONTENT = {
      "src": "img/arena/arena-14-coin-exchange.jpg"
     }
    ],
-   "copy": "Launched The Arena, a new film and TV studio, at Camp Flog Gnaw 2026 with an immersive Fatal Fury world at Dodger Stadium: an arcade, gacha machines, a coin exchange, the Pao Pao Cafe and The Arena Market 24/7. Led brand and product strategy for the launch, and handled all art direction and set design for The Arena Market, the merch store built as a 24/7 convenience store.",
+   "copy": "Launched The Arena, a new film and TV studio, at Camp Flog Gnaw 2026 with an immersive Fatal Fury world at Dodger Stadium: an arcade, gacha machines, a coin exchange, the Pao Pao Cafe and The Arena Market 24/7. Led brand and product strategy for the launch, and handled all art direction and set design for The Arena Market, the merch store built as a 24/7 convenience store, designing many of its creative assets.",
    "bul": [
     "Brand strategy",
     "Art direction and set design, The Arena Market 24/7",
+    "Creative asset design for the store",
     "Brand launch activation at Camp Flog Gnaw 2026"
    ],
    "links": [
     {
-     "t": "Press — Fucking Young!",
+     "t": "Hypebeast",
+     "href": "https://hypebeast.com/2026/11/the-arena-debuted-immersive-gaming-experience-exclusive-merch-capsule-camp-flog-gnaw"
+    },
+    {
+     "t": "Office Magazine",
+     "href": "https://officemagazine.net/arena-and-camp-flog-gnaw-took-over-dodger-stadium"
+    },
+    {
+     "t": "Fucking Young!",
      "href": "https://fuckingyoung.es/the-arena-x-camp-flog-gnaw-drop-is-full-a-of-japanese-gaming-nostalgia/"
+    },
+    {
+     "t": "Culted",
+     "href": "https://www.instagram.com/p/Df-MvtsDUD0/"
+    },
+    {
+     "t": "hiiihorse",
+     "href": "https://www.instagram.com/p/Df0tSbBCdH5/"
     }
    ]
   },
@@ -2045,6 +2062,83 @@ window.SITE_CONTENT = {
     }
    },
    "savedAt": "2026-10-29T09:14:01.000Z"
+  },
+  "layout/brand": {
+   "sets": {
+    "arena": {
+     "img/arena/arena-10-activation-overview.jpg": {
+      "x": 24,
+      "y": 0.5,
+      "w": 16
+     },
+     "img/arena/arena-07-market-wall.jpg": {
+      "x": 42,
+      "y": 1.5,
+      "w": 6.5
+     },
+     "img/arena/arena-06-market-storefront.jpg": {
+      "x": 50.5,
+      "y": 0,
+      "w": 15
+     },
+     "img/arena/arena-01-cyberpunk.jpg": {
+      "x": 67.5,
+      "y": 3,
+      "w": 13
+     },
+     "img/arena/arena-08-market-sign.jpg": {
+      "x": 83,
+      "y": 0.5,
+      "w": 13.5
+     },
+     "img/arena/arena-05-market-fridge.jpg": {
+      "x": 1,
+      "y": 13.5,
+      "w": 13
+     },
+     "img/arena/arena-04-market-menu-poster.jpg": {
+      "x": 16,
+      "y": 12.8,
+      "w": 6.5
+     },
+     "img/arena/arena-11-pao-pao.jpg": {
+      "x": 25,
+      "y": 12.5,
+      "w": 14.5
+     },
+     "img/arena/arena-02-grunge-experimental.jpg": {
+      "x": 41.5,
+      "y": 14.5,
+      "w": 12
+     },
+     "img/arena/arena-12-arcade.jpg": {
+      "x": 55.5,
+      "y": 12,
+      "w": 14
+     },
+     "img/arena/arena-09-market-staff.jpg": {
+      "x": 72,
+      "y": 13.5,
+      "w": 13
+     },
+     "img/arena/arena-13-gacha.jpg": {
+      "x": 9,
+      "y": 23,
+      "w": 13
+     },
+     "img/arena/arena-14-coin-exchange.jpg": {
+      "x": 33,
+      "y": 23.8,
+      "w": 12.5
+     },
+     "img/arena/arena-03-retro-gaming.jpg": {
+      "x": 58,
+      "y": 24.2,
+      "w": 12
+     }
+    }
+   },
+   "savedAt": "2026-11-24T18:56:50.000Z"
   }
  }
 };

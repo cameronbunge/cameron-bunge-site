@@ -151,6 +151,14 @@
     pane.style.width = paneW.toFixed(1) + 'px'; centre(paneW);
     pane.style.setProperty('--pane-top', (bandTop - pageTop + Math.max(0, (bandBottom - bandTop - h - metaH) / 2)).toFixed(1) + 'px');
   }
+  /* the PRESS drop-down among a project's terms: its button opens and closes it, a click anywhere else closes it */
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('.pressBtn');
+    Array.prototype.forEach.call(document.querySelectorAll('.press.open'), function (el) { if (!btn || el !== btn.parentNode) { el.classList.remove('open'); el.querySelector('.pressBtn').setAttribute('aria-expanded', 'false'); } });
+    if (!btn) return;
+    e.preventDefault(); e.stopPropagation();
+    var on = btn.parentNode.classList.toggle('open'); btn.setAttribute('aria-expanded', on ? 'true' : 'false');
+  }, true);
   window.addEventListener('resize', alignTop);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(alignTop);
 
@@ -325,7 +333,9 @@
     var meta = (p.meta || '').split(/\s*·\s*/).filter(Boolean).map(function (t) { return '<span><span class="b">[</span> ' + t.toUpperCase() + ' <span class="b">]</span></span>'; }).join('');
     /* outside links ({ t, href } in the project's links — press and the like, written into content.js by hand) close the terms, in the
        section nav's link brackets (gray), opening in a new tab (11/23) */
-    meta += (p.links || []).map(function (l) { return '<a class="out" href="' + String(l.href).replace(/"/g, '&quot;') + '" target="_blank" rel="noopener"><span class="b">[</span> ' + l.t.toUpperCase() + ' ↗ <span class="b">]</span></a>'; }).join('');
+    var outs = (p.links || []).map(function (l) { return '<a class="out" href="' + String(l.href).replace(/"/g, '&quot;') + '" target="_blank" rel="noopener"><span class="b">[</span> ' + l.t.toUpperCase() + ' ↗ <span class="b">]</span></a>'; });
+    /* more than one link: a single [ PRESS ] term that opens the list above it (11/24) */
+    meta += outs.length > 1 ? '<span class="press"><button type="button" class="pressBtn" aria-expanded="false"><span class="b">[</span> PRESS <span class="arrow">↓</span> <span class="b">]</span></button><span class="pressList">' + outs.join('') + '</span></span>' : outs.join('');
     var real = p.imgs.filter(function (m) { return !m.ph; });
     /* Mishka: the film twice, left and right, and the logo turning between them */
     if (p.layout === 'mishka') {
