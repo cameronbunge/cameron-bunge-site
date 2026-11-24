@@ -29,8 +29,10 @@
             var pic = m.yt ? '<iframe src="https://www.youtube.com/embed/' + m.yt + (m.si ? '?si=' + m.si : '') + '" title="' + esc(g.name || 'YouTube video player') + '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
               : m.v ? '<video src="' + m.src + '" muted autoplay loop playsinline preload="metadata"' + (m.ar ? ' style="aspect-ratio:' + m.ar + '"' : '') + '></video>'
               : '<img src="' + m.src + '" alt="" loading="lazy" draggable="false">';
+            /* the date line only shows when the picture has a caption or date (a blank one shows nothing, not a placeholder) */
+            var when = String(m.cap || '').trim() || String(m.date || '').trim();
             return '<div class="c c' + (j + 1) + ' ' + (m.o || 'l') + (m.yt ? ' video' : '') + '" data-src="' + esc(m.src) + '">' + pic +
-              (j === items.length - 1 ? '<span class="date' + (/enc0re/i.test(m.cap || '') ? ' keep' : '') + '">' + esc(m.cap || m.date || 'MM.YYYY') + '</span>' : '') +
+              (j === items.length - 1 && when ? '<span class="date' + (/enc0re/i.test(m.cap || '') ? ' keep' : '') + '">' + esc(when) + '</span>' : '') +
               '<span class="grip" aria-hidden="true"></span></div>';
           }).join('') + '</div></section>');
         });
